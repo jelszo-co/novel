@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  frontend_test:
+  test:
 
     runs-on: ubuntu-latest
     env:
@@ -33,6 +33,36 @@ jobs:
       working-directory: ${{ env.working-directory }}
       env:
         CI: true
+
+      if: failure()
+
+    - uses: actions/checkout@master
+    - name: send failure message to discord
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        message: Yarn `test` has failed!
+        username: Novel Failure Bot
+        avatar_url: http://getdrawings.com/free-icon/github-icon-61.png
+        color: 15158332
+        
+  lint:
+        
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
         
     - name: yarn install
       run: yarn install --frozen-lockfile
@@ -42,12 +72,44 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
+      if: failure()
+
+    - uses: actions/checkout@master
+    - name: send failure message to discord
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        message: Yarn `lint` has failed!
+        username: Novel Failure Bot
+        avatar_url: http://getdrawings.com/free-icon/github-icon-61.png
+        color: 15158332
+
+  discord:
+    
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
     - uses: actions/setup-ruby@v1
     - name: Send Webhook Notification
       if: always()
       env:
         JOB_STATUS: ${{ job.status }}
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        HOOK_OS_NAME: ${{ runner.os }}
         WORKFLOW_NAME: ${{ github.workflow }}
       run: |
         git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
