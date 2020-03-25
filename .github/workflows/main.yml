@@ -40,14 +40,14 @@ jobs:
 
     - uses: actions/checkout@master
     - name: send discord failure message
-      if: success()
+      if: failure()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
         color: "#E74C3C"
-        message: "Ez most nagyon succes csak ne jelenne meg :("
+        message: "github actor: ${{ github.actor }}, github repo: ${{ github.repository }}, github event name: ${{ github.event_name }}, github ref: ${{ github.ref }}"
 
     - uses: actions/checkout@master
     - name: send discord failure message
