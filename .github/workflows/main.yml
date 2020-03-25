@@ -38,16 +38,18 @@ jobs:
       env:
         CI: true
 
-    - uses: actions/checkout@master
-    - name: send discord failure message
-      if: failure()
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
-        color: "#E74C3C"
-        message: "github actor: ${{ github.actor }}, github repo: ${{ github.repository }}, github event name: ${{ github.event_name }}, github ref: ${{ github.ref }}"
+    - uses: actions/setup-ruby@v1
+    - name: send success failure message
+      if: success()
+      env:
+        JOB_STATUS: ${{ job.status }}
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        HOOK_OS_NAME: ${{ runner.os }}
+        WORKFLOW_NAME: ${{ github.workflow }}
+      run: |
+        git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
+        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
+      shell: bash
 
     - uses: actions/checkout@master
     - name: send discord failure message
