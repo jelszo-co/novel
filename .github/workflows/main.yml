@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  test:
+  frontend test:
 
     runs-on: ubuntu-latest
     env:
@@ -48,7 +48,6 @@ jobs:
       env:
         JOB_STATUS: ${{ job.status }}
         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        HOOK_OS_NAME: ${{ runner.os }}
         WORKFLOW_NAME: ${{ github.workflow }}
       run: |
         git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
