@@ -99,7 +99,7 @@ jobs:
         username: "Novel linter bot"
         avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
         color: "#E74C3C"
-        message: "Oh no, @**ApOszTroF#8434!** You've made a Style Guide error! Would you please fix it? Now!"
+        message: "Yarn linter check didn't pass. For further informations, visit the Github repo!"
         
 
 
