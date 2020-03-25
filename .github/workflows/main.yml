@@ -6,6 +6,7 @@ on:
       - dev
 
 jobs:
+
   test:
 
     runs-on: ubuntu-latest
@@ -17,23 +18,63 @@ jobs:
         node-version: [12.x]
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     
     - name: yarn ci
-      run: |
-        yarn install --frozen-lockfile
+      run: yarn install --frozen-lockfile
       working-directory: ${{ env.working-directory }}
         
     - name: yarn test
-      run: |
-        yarn test 
+      run: yarn test 
       working-directory: ${{ env.working-directory }}
       env:
         CI: true
+  
+  lint:
+    
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: yarn install
+      run: yarn install --frozen-lockfile
+      working-directory: ${{ env.working-directory }}
+    
+    - name: yarn lint
+      run: yarn lint
+      working-directory: ${{ env.working-directory }}
+      
+  discord:
+    
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+      
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
     - uses: actions/setup-ruby@v1
     - name: Send Webhook Notification
