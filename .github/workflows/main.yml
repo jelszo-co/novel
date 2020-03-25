@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  frontend test:
+  frontend_test:
 
     runs-on: ubuntu-latest
     env:
