@@ -9,6 +9,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
     
     strategy:
       matrix:
@@ -20,15 +22,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        
-    - name: directory change
-      run: |
-        cd frontend
     
     - name: npm ci
       run: |
         npm ci
+      working-directory: ${{ env.working-directory }}
         
     - name: npm test
       run: |
         npm test
+      working-directory: ${{ env.working-directory }}
