@@ -33,19 +33,6 @@ jobs:
       working-directory: ${{ env.working-directory }}
       env:
         CI: true
-
-      if: failure()
-
-    - uses: actions/checkout@master
-    - name: send failure message to discord
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        message: Yarn `test` has failed!
-        username: Novel Failure Bot
-        avatar_url: http://getdrawings.com/free-icon/github-icon-61.png
-        color: 15158332
         
   lint:
         
@@ -71,19 +58,6 @@ jobs:
     - name: yarn lint
       run: yarn lint
       working-directory: ${{ env.working-directory }}
-
-      if: failure()
-
-    - uses: actions/checkout@master
-    - name: send failure message to discord
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        message: Yarn `lint` has failed!
-        username: Novel Failure Bot
-        avatar_url: http://getdrawings.com/free-icon/github-icon-61.png
-        color: 15158332
 
   discord:
     
