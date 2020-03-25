@@ -1,13 +1,9 @@
-name: Yarn test
+name: Commit action
 
 on: 
   push:
     branches:    
       - dev
-  pull_request:
-    branches: 
-      - master
-  
 
 jobs:
   test:
