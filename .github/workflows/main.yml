@@ -33,6 +33,37 @@ jobs:
       working-directory: ${{ env.working-directory }}
       env:
         CI: true
+
+  discord:
+    
+    needs: [test]
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - uses: actions/setup-ruby@v1
+    - name: Send Webhook Notification
+      if: always()
+      env:
+        JOB_STATUS: ${{ job.status }}
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        HOOK_OS_NAME: ${{ runner.os }}
+        WORKFLOW_NAME: ${{ github.workflow }}
+      run: |
+        git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
+        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
+      shell: bash
         
   lint:
         
@@ -65,35 +96,10 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        args: Oh hallow
+        username: "Novel linter bot"
+        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        color: "#E74C3C"
+        message: "Oh no, @**ApOszTroF#8434!** You've made a Style Guide error! Would you please fix it? Now!"
+        
 
-  discord:
-    
-    needs: [test]
-    runs-on: ubuntu-latest
-    env:
-      working-directory: ./frontend
-    
-    strategy:
-      matrix:
-        node-version: [12.x]
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
 
-    - uses: actions/setup-ruby@v1
-    - name: Send Webhook Notification
-      if: always()
-      env:
-        JOB_STATUS: ${{ job.status }}
-        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        HOOK_OS_NAME: ${{ runner.os }}
-        WORKFLOW_NAME: ${{ github.workflow }}
-      run: |
-        git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-      shell: bash
