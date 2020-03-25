@@ -59,10 +59,9 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
-      if: failure()
-
     - uses: actions/checkout@master
-    - name: send custom message with args
+    - name: send discord failure message
+      if: failure
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
@@ -70,7 +69,7 @@ jobs:
         username: "Novel linter bot"
         avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
         color: "#E74C3C"
-        message: "Yarn linter check didn't pass. For further informations visit the Github repo."
+        message: "Yarn linter check didn't pass."
 
   discord:
     
