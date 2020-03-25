@@ -2,7 +2,7 @@ import React from 'react';
 
 const Landing = () => (
   <div>
-    <h1>Üdvözöllek. {asd.hello}</h1>
+    <h1>Üdvözöllek.</h1>
   </div>
 );
 

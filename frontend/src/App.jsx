@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Landing from './pages/Landing';
 
 const App = () => (
-  <Router>
+  <Router data-test='component-app'>
     <Switch>
       <Route exact path='/' component={Landing} />
     </Switch>

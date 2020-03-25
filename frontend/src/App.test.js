@@ -1,11 +1,10 @@
 /* eslint-disable */
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 import App from './App';
-
-Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 test('renders without crashing', () => {
   const wrapper = shallow(<App />);
+  const textNode = wrapper.find("[data-test='landing-title']");
+  expect(textNode.length).toBe(1);
 });
