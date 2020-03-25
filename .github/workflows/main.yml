@@ -33,6 +33,44 @@ jobs:
       working-directory: ${{ env.working-directory }}
       env:
         CI: true
+        
+  lint:
+        
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: yarn install
+      run: yarn install --frozen-lockfile
+      working-directory: ${{ env.working-directory }}
+    
+    - name: yarn lint
+      run: yarn lint
+      working-directory: ${{ env.working-directory }}
+
+      if: failure()
+
+    - uses: actions/checkout@master
+    - name: send custom message with args
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        username: "Novel linter bot"
+        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        color: "#E74C3C"
+        message: "Yarn linter check didn't pass. For further informations visit the Github repo."
 
   discord:
     
@@ -64,42 +102,3 @@ jobs:
         git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
         bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
       shell: bash
-        
-  lint:
-        
-    runs-on: ubuntu-latest
-    env:
-      working-directory: ./frontend
-    
-    strategy:
-      matrix:
-        node-version: [12.x]
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-        
-    - name: yarn install
-      run: yarn install --frozen-lockfile
-      working-directory: ${{ env.working-directory }}
-    
-    - name: yarn lint
-      run: yarn lint
-      working-directory: ${{ env.working-directory }}
-
-    - uses: actions/checkout@master
-    - name: send custom message with args
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        username: "Novel linter bot"
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
-        color: "#E74C3C"
-        message: "Yarn linter check didn't pass. For further informations, visit the Github repo!"
-        
-
-
