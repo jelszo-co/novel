@@ -61,7 +61,7 @@ jobs:
 
     - uses: actions/checkout@master
     - name: send discord failure message
-      if: failure
+      if: failure()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
