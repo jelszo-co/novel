@@ -59,9 +59,17 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
+    - uses: actions/checkout@master
+    - name: send custom message with args
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        args: Oh hallow
+
   discord:
     
-    needs: [test, lint]
+    needs: [test]
     runs-on: ubuntu-latest
     env:
       working-directory: ./frontend
