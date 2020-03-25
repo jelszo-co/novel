@@ -40,12 +40,22 @@ jobs:
 
     - uses: actions/checkout@master
     - name: send discord failure message
+      if: succes()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        color: "#E74C3C"
+        message: "Ez most nagyon succes csak ne jelenne meg :("
+
+    - uses: actions/checkout@master
+    - name: send discord failure message
       if: failure()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        username: "Novel linter bot"
         avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
         color: "#E74C3C"
         message: "Yarn test check didn't pass."
@@ -82,7 +92,6 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        username: "Novel linter bot"
         avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
         color: "#E74C3C"
         message: "Yarn linter check didn't pass."
