@@ -3,7 +3,11 @@ name: NPM test
 on: 
   push:
     branches:    
-      - dev 
+      - dev
+  pull_request:
+    branches: 
+      - master
+  
 
 jobs:
   build:
@@ -14,21 +18,23 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [12.x]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     
-    - name: npm ci
+    - name: yarn ci
       run: |
-        npm ci
+        yarn install --frozen-lockfile
       working-directory: ${{ env.working-directory }}
         
-    - name: npm test
+    - name: yarn test
       run: |
-        npm test
+        yarn test 
       working-directory: ${{ env.working-directory }}
+      env:
+        CI: true
