@@ -39,7 +39,7 @@ jobs:
         CI: true
 
     - uses: actions/setup-ruby@v1
-    - name: send success failure message
+    - name: send discord success message
       if: success()
       uses: appleboy/discord-action@master
       with:
@@ -87,7 +87,7 @@ jobs:
       working-directory: ${{ env.working-directory }}
 
     - uses: actions/setup-ruby@v1
-    - name: send success failure message
+    - name: send discord success message
       if: success()
       uses: appleboy/discord-action@master
       with:
@@ -104,6 +104,6 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        avatar_url: "./actions/github-marks/red.png"
         color: "#E74C3C"
         message: "Yarn `linter` check didn't pass."
