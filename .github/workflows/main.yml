@@ -102,17 +102,6 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
-    - uses: actions/setup-ruby@v1
-    - name: send discord success message
-      if: success()
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "./actions/github-marks/green.png"
-        color: "#2ECC71"
-        message: "Yarn `linter` check has passed."
-
     - uses: actions/checkout@master
     - name: send discord failure message
       if: failure()
@@ -120,9 +109,9 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "https://mediaklikk.hu/wp-content/uploads/sites/4/2016/04/KissBenedekMtnegyzet-400x400.png"
+        avatar_url: "../actions/github-marks/red.png"
         color: "#E74C3C"
-        message: "Yarn `linter` check didn't pass."
+        message: "`Linter` check didn't pass."
 
   discord-linter:
 
