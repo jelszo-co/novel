@@ -120,7 +120,7 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "./actions/github-marks/red.png"
+        avatar_url: "https://mediaklikk.hu/wp-content/uploads/sites/4/2016/04/KissBenedekMtnegyzet-400x400.png"
         color: "#E74C3C"
         message: "Yarn `linter` check didn't pass."
 
