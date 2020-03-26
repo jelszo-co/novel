@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as Sentry from '@sentry/browser';
 import * as serviceWorker from './serviceWorker';
+import './i18n';
+
+import App from './App';
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
