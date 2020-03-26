@@ -38,18 +38,6 @@ jobs:
       env:
         CI: true
 
-    - uses: actions/setup-ruby@v1
-    - name: send discord success message
-      if: success()
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "./actions/github-marks/green.png"
-        color: "#2ECC71"
-        message: "Yarn `test` check has passed."
-
-
     - uses: actions/checkout@master
     - name: send discord failure message
       if: failure()
@@ -60,7 +48,35 @@ jobs:
         avatar_url: "./actions/github-marks/red.png"
         color: "#E74C3C"
         message: "Yarn `test` check didn't pass."
-        
+
+  discord-test:
+
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - uses: actions/setup-ruby@v1
+    - name: send discord success message
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        avatar_url: "./actions/github-marks/green.png"
+        color: "#2ECC71"
+        message: "Yarn `test` check has passed."
+
   lint:
         
     runs-on: ubuntu-latest
@@ -107,3 +123,31 @@ jobs:
         avatar_url: "./actions/github-marks/red.png"
         color: "#E74C3C"
         message: "Yarn `linter` check didn't pass."
+
+  discord-linter:
+
+    needs: linter
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - uses: actions/setup-ruby@v1
+    - name: send discord success message
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        avatar_url: "./actions/github-marks/green.png"
+        color: "#2ECC71"
+        message: "Yarn `linter` check has passed."
