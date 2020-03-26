@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import '../css/all/landing.scss';
+
 const Landing = () => (
-  <div>
+  <div id='landing'>
     <h1>Üdvözöllek.</h1>
     <p>
       Martyn Nóri vagyok. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -12,7 +14,9 @@ const Landing = () => (
       auctor. Donec adipiscing tristique risus nec feugiat in fermentum posuere
       urna.
     </p>
-    <Link to='/list'>Írásaim</Link>
+    <Link to='/list' className='button'>
+      Írásaim
+    </Link>
   </div>
 );
 

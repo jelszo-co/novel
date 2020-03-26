@@ -1,0 +1,27 @@
+#landing {
+  * {
+    text-align: center;
+  }
+  h1 {
+    text-transform: capitalize;
+    font-size: 5rem;
+    margin-top: 5%;
+  }
+  p {
+    width: 70%;
+    max-width: 1400px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+  }
+  .button {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    font-size: 3rem;
+    text-transform: uppercase;
+  }
+}

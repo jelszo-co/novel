@@ -1,7 +1,7 @@
 import React from 'react';
 
 const List = () => (
-  <div>
+  <div id='list'>
     <p>Hello</p>
   </div>
 );
