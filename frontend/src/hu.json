@@ -10,6 +10,8 @@
     "menu_contact": "Kapcsolat",
     "menu_login": "Fiók",
     "menu_user": "Fiókom",
-    "menu_admin": "Admin"
+    "menu_admin": "Admin",
+
+    "list_title": "írásaim"
   }
 }
