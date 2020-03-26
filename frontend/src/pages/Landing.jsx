@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../css/all/landing.scss';
 
+import Menu from './components/Menu';
+
 const Landing = () => {
   const { t } = useTranslation();
   return (
-    <div id='landing'>
-      <h1>{t('landing_welcome')}</h1>
-      <p>{t('landing_about')}</p>
-      <Link to='/list' className='button'>
-        {t('landing_button')}
-      </Link>
-    </div>
+    <Fragment>
+      <Menu />
+      <div id='landing'>
+        <h1>{t('landing_welcome')}</h1>
+        <p>{t('landing_about')}</p>
+        <Link to='/list' className='button'>
+          {t('landing_button')}
+        </Link>
+      </div>
+    </Fragment>
   );
 };
 export default Landing;
