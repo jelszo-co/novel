@@ -40,12 +40,14 @@ jobs:
 
     - name: set success variable
       if: success()
+      run: |
       env:
         test: ${{ passed. }}
         color-code: ${{ "#2ECC71" }}
 
     - name: set failure variable
       if: failure()
+      run: |
       env:
         test: ${{ failed. }}
         color_code: ${{ "#2ECC71" }}
