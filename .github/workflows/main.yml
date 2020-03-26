@@ -58,9 +58,10 @@ jobs:
         webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
         avatar_url: "https://i.imgur.com/YBD6GVz.png"
-        color: $env.color_code
+        color: $color_code
         username: "Novel Check Bot"
-        message: "`Test` has $env.status"
+        message: "`Test` has " 
+        args: $status
 
   lint:
         
@@ -107,6 +108,7 @@ jobs:
         webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
         avatar_url: "https://i.imgur.com/YBD6GVz.png"
-        color: $env.color_code
+        color: $color_code
         username: "Novel Check Bot"
-        message: "`Test` has $env.status"
+        message: "`Lint` has " 
+        args: $status
