@@ -42,14 +42,14 @@ jobs:
       if: success()
       run: |
       env:
-        status: passed.
+        status: "`Test` has passed"
         color-code: "#2ECC71"
 
     - name: set failure variable
       if: failure()
       run: |
       env:
-        status: failed.
+        status: "`Test` has failed."
         color_code: "#2ECC71"
 
     - name: send discord message
@@ -60,8 +60,7 @@ jobs:
         avatar_url: "https://i.imgur.com/YBD6GVz.png"
         color: $color_code
         username: "Novel Check Bot"
-        message: "`Test` has " 
-        args: $status
+        message: $status
 
   lint:
         
@@ -92,14 +91,14 @@ jobs:
       if: success()
       run: |
       env:
-        status: passed.
+        status: "`Lint` has passed"
         color-code: "#2ECC71"
 
     - name: set failure variable
       if: failure()
       run: |
       env:
-        status: failed.
+        status: "`Lint` has failed."
         color_code: "#2ECC71"
 
     - name: send discord message
@@ -110,5 +109,4 @@ jobs:
         avatar_url: "https://i.imgur.com/YBD6GVz.png"
         color: $color_code
         username: "Novel Check Bot"
-        message: "`Lint` has " 
-        args: $status
+        message: $status
