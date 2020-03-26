@@ -38,9 +38,8 @@ jobs:
       env:
         CI: true
 
-    - uses: actions/setup-ruby@v1
-      if: success()
     - name: send discord success message
+      if: success()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
@@ -51,9 +50,8 @@ jobs:
         message: "`Test` has passed."
 
 
-    - uses: actions/setup-ruby@v1
-      if: failure()
     - name: send discord failure message
+      if: failure()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_FAIL }}
@@ -89,9 +87,9 @@ jobs:
       working-directory: ${{ env.working-directory }}
 
       
-    - uses: actions/setup-ruby@v1
-      if: success()
+
     - name: send discord success message
+      if: success()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
@@ -102,9 +100,9 @@ jobs:
         message: "`Lint` has passed."
 
 
-    - uses: actions/setup-ruby@v1
-      if: failure()
+
     - name: send discord failure message
+      if: failure()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_FAIL }}
