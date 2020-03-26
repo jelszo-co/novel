@@ -9,7 +9,7 @@ import App from './App';
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: 'https://c551d274f672470987b42eb6e4c41a5f@sentry.io/5173451',
-    release: 'novel@' + process.env.npm_package_version,
+    release: `novel@${process.env.npm_package_version}`,
   });
 }
 
