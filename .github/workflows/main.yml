@@ -42,14 +42,14 @@ jobs:
       if: success()
       run: |
       env:
-        test: ${{ passed. }}
+        test: ${{ "passed." }}
         color-code: ${{ "#2ECC71" }}
 
     - name: set failure variable
       if: failure()
       run: |
       env:
-        test: ${{ failed. }}
+        test: ${{ "failed." }}
         color_code: ${{ "#2ECC71" }}
 
     - name: send discord message
