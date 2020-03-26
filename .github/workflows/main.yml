@@ -1,4 +1,4 @@
-name: Yarn test
+name: Yarn check
 
 on: 
   push:
@@ -38,6 +38,18 @@ jobs:
       env:
         CI: true
 
+    - uses: actions/setup-ruby@v1
+    - name: send discord success message
+      if: success()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        avatar_url: "./actions/github-marks/green.png"
+        color: "#2ECC71"
+        message: "Yarn `test` check has passed."
+
+
     - uses: actions/checkout@master
     - name: send discord failure message
       if: failure()
@@ -45,10 +57,9 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        username: "Novel linter bot"
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        avatar_url: "./actions/github-marks/red.png"
         color: "#E74C3C"
-        message: "Yarn test check didn't pass."
+        message: "Yarn `test` check didn't pass."
         
   lint:
         
@@ -75,6 +86,17 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
+    - uses: actions/setup-ruby@v1
+    - name: send discord success message
+      if: success()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        avatar_url: "./actions/github-marks/green.png"
+        color: "#2ECC71"
+        message: "Yarn `linter` check has passed."
+
     - uses: actions/checkout@master
     - name: send discord failure message
       if: failure()
@@ -82,38 +104,6 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        username: "Novel linter bot"
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        avatar_url: "./actions/github-marks/red.png"
         color: "#E74C3C"
-        message: "Yarn linter check didn't pass."
-
-  discord:
-    
-    needs: [test]
-    runs-on: ubuntu-latest
-    env:
-      working-directory: ./frontend
-    
-    strategy:
-      matrix:
-        node-version: [12.x]
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - uses: actions/setup-ruby@v1
-    - name: Send Webhook Notification
-      if: always()
-      env:
-        JOB_STATUS: ${{ job.status }}
-        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        HOOK_OS_NAME: ${{ runner.os }}
-        WORKFLOW_NAME: ${{ github.workflow }}
-      run: |
-        git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-      shell: bash
+        message: "Yarn `linter` check didn't pass."
