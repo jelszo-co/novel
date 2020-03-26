@@ -42,15 +42,15 @@ jobs:
       if: success()
       run: |
       env:
-        test: ${{ "passed." }}
-        color-code: ${{ "#2ECC71" }}
+        status: passed.
+        color-code: "#2ECC71"
 
     - name: set failure variable
       if: failure()
       run: |
       env:
-        test: ${{ "failed." }}
-        color_code: ${{ "#2ECC71" }}
+        status: failed.
+        color_code: "#2ECC71"
 
     - name: send discord message
       uses: appleboy/discord-action@master
@@ -58,9 +58,9 @@ jobs:
         webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
         avatar_url: "https://i.imgur.com/YBD6GVz.png"
-        color: $color_code
+        color: $env.color_code
         username: "Novel Check Bot"
-        message: "`Test` has $test."
+        message: "`Test` has $env.status"
 
   lint:
         
@@ -86,3 +86,27 @@ jobs:
     - name: yarn lint
       run: yarn lint
       working-directory: ${{ env.working-directory }}
+
+    - name: set success variable
+      if: success()
+      run: |
+      env:
+        status: passed.
+        color-code: "#2ECC71"
+
+    - name: set failure variable
+      if: failure()
+      run: |
+      env:
+        status: failed.
+        color_code: "#2ECC71"
+
+    - name: send discord message
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
+        avatar_url: "https://i.imgur.com/YBD6GVz.png"
+        color: $env.color_code
+        username: "Novel Check Bot"
+        message: "`Test` has $env.status"
