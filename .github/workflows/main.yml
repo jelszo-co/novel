@@ -38,8 +38,8 @@ jobs:
       env:
         CI: true
 
-      if: success()
     - uses: actions/setup-ruby@v1
+      if: success()
     - name: send discord success message
       uses: appleboy/discord-action@master
       with:
@@ -51,8 +51,8 @@ jobs:
         message: "`Test` has passed."
 
 
-      if: failure()
     - uses: actions/setup-ruby@v1
+      if: failure()
     - name: send discord failure message
       uses: appleboy/discord-action@master
       with:
@@ -60,6 +60,7 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN_FAIL }}
         avatar_url: "https://i.imgur.com/66VzOSm.png"
         color: "#E74C3C"
+        username: "Novel Check Bot"
         message: "`Test` has failed."
 
   lint:
@@ -87,8 +88,9 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
-      if: success()
+      
     - uses: actions/setup-ruby@v1
+      if: success()
     - name: send discord success message
       uses: appleboy/discord-action@master
       with:
@@ -97,11 +99,11 @@ jobs:
         avatar_url: "https://i.imgur.com/YBD6GVz.png"
         color: "#2ECC71"
         username: "Novel Check Bot"
-        message: "`Test` has passed."
+        message: "`Lint` has passed."
 
 
-      if: failure()
     - uses: actions/setup-ruby@v1
+      if: failure()
     - name: send discord failure message
       uses: appleboy/discord-action@master
       with:
@@ -109,4 +111,5 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN_FAIL }}
         avatar_url: "https://i.imgur.com/66VzOSm.png"
         color: "#E74C3C"
-        message: "`Test` has failed."
+        username: "Novel Check Bot"
+        message: "`Lint` has failed."
