@@ -1,11 +1,29 @@
 /* eslint-disable */
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
-import App from './App';
+import { shallow } from 'enzyme';
+import { Route } from 'react-router';
 
-Enzyme.configure({ adapter: new EnzymeAdapter() });
+import App from './App';
+import Landing from './pages/Landing';
+import List from './pages/List';
+import err404 from './pages/404';
+
+const wrapper = shallow(<App />);
+const pathMap = wrapper.find(Route).reduce((pathMap, route) => {
+  const routeProps = route.props();
+  pathMap[routeProps.path] = routeProps.component;
+  return pathMap;
+}, {});
 
 test('renders without crashing', () => {
-  const wrapper = shallow(<App />);
+  shallow(<App />);
+});
+
+describe('routes point to correct component', () => {
+  test('should show Landing for /', () => expect(pathMap['/']).toBe(Landing));
+
+  test('should show list for /list', () => expect(pathMap['/list']).toBe(List));
+
+  test('should show 404 for undefined', () =>
+    expect(pathMap['undefined']).toBe(err404));
 });
