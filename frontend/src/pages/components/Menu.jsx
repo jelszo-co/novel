@@ -52,9 +52,14 @@ const Menu = () => {
       <li>{displayRole(role)}</li>
     </ul>
   ) : (
-    <p id='menu-btn' onClick={() => changeMenu(!showMenu)}>
+    <a
+      href
+      id='menu-btn'
+      onClick={() => changeMenu(true)}
+      onKeyDown={() => changeMenu(true)}
+    >
       {t('menu_invoke')}
-    </p>
+    </a>
   );
 };
 

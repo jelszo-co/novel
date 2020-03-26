@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ import Menu from './components/Menu';
 const Landing = () => {
   const { t } = useTranslation();
   return (
-    <Fragment>
+    <>
       <Menu />
       <div id='landing'>
         <h1>{t('landing_welcome')}</h1>
@@ -18,7 +18,7 @@ const Landing = () => {
           {t('landing_button')}
         </Link>
       </div>
-    </Fragment>
+    </>
   );
 };
 export default Landing;

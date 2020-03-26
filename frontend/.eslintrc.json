@@ -17,6 +17,7 @@
   },
   "plugins": ["react"],
   "rules": {
-    "jsx-quotes": "off"
+    "jsx-quotes": "off",
+    "arrow-parens": [2, "as-needed"]
   }
 }
