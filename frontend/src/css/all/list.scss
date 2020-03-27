@@ -26,6 +26,61 @@
   }
 }
 
+#list {
+  .list-container {
+    .year-heading {
+      display: flex;
+      flex-direction: row;
+      h2 {
+        width: 50pt;
+        text-align: center;
+      }
+    }
+    .list-line {
+      display: block;
+      width: 500px;
+      height: 2pt;
+      background: $white;
+      align-self: center;
+    }
+    .novel-card {
+      position: relative;
+      margin-left: 50pt;
+      * {
+        text-decoration: none;
+      }
+      .date-cont {
+        position: absolute;
+        top: 0;
+        left: -25pt;
+        transform: translateX(-50%);
+        border: 1.5pt solid $white;
+        border-radius: 3px;
+        padding: 2pt 7pt;
+        * {
+          margin: 0;
+          padding: 0;
+          text-align: center;
+        }
+        .date-mon {
+          text-transform: uppercase;
+          line-height: 0.9rem;
+        }
+        .date-day {
+          font-size: 1.8rem;
+          line-height: 1.2rem;
+        }
+      }
+    }
+  }
+  .only {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
 .matched {
   background: $white;
   color: $bg;

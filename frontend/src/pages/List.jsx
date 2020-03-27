@@ -22,7 +22,7 @@ class List extends Component {
               title: 'Első',
               path: 'elso',
               lore: 'Az én els novellám.',
-              uploadedAt: '2020-01-01T12:00:00.000Z',
+              uploadedAt: '2020-01-21T12:00:00.000Z',
             },
 
             {
@@ -73,26 +73,43 @@ class List extends Component {
           </span>
         ));
       };
-      return Object.entries(inp).map(yr =>
-        yr[1]
-          .filter(({ title, lore }) => title.match(patt) || lore.match(patt))
-          .map(({ id, title, lore, path, uploadedAt }) => {
-            return (
-              <div className='novel-card' key={id}>
-                <Link to={`/novels/${path}`}>
-                  <h3 className='novel-title'>
-                    {param ? highlight(title) : title}
-                  </h3>
-                  <p className='novel-lore'>{param ? highlight(lore) : lore}</p>
-                </Link>
-                <div className='date-cont'></div>
-                <Moment format='MMM'>{uploadedAt}</Moment>
-                <br />
-                <Moment format='D'>{uploadedAt}</Moment>
-              </div>
-            );
-          }),
-      );
+      return Object.entries(inp).map((yr, i) => (
+        <div key={i} className='yr-wrapper'>
+          {!(+yr[0] === new Date().getFullYear()) && (
+            <div className='year-heading'>
+              <h2>{yr[0]}</h2>
+              <span className='list-line' />
+            </div>
+          )}
+          {yr[1]
+            .filter(({ title, lore }) => title.match(patt) || lore.match(patt))
+            .map(({ id, title, lore, path, uploadedAt }, j) => {
+              return (
+                <div className='novel-card' key={id}>
+                  <Link to={`/novels/${path}`}>
+                    <h3 className='novel-title'>
+                      {param ? highlight(title) : title}
+                    </h3>
+                    <p className='novel-lore'>
+                      {param ? highlight(lore) : lore}
+                    </p>
+                    {j !== yr[1].length - 1 && <span className='list-line' />}
+                  </Link>
+                  <div
+                    className={`date-cont ${j === 0 ? 'date-lowered' : null}`}
+                  >
+                    <p className='date-mon'>
+                      <Moment format='MMM'>{uploadedAt}</Moment>
+                    </p>
+                    <p className='date-day'>
+                      <Moment format='D'>{uploadedAt}</Moment>
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      ));
     };
 
     const { t } = this.props;
@@ -110,11 +127,11 @@ class List extends Component {
           />
           <Search className='search-icon' />
         </div>
-        <div id='hu' className={`${listMode}`}>
+        <div id='hu' className={`list-container ${listMode}`}>
           {listNovels(novels.HU)}
         </div>
         {listMode === 'dual' && (
-          <div id='en' className={`${listMode}`}>
+          <div id='en' className={`list-container ${listMode}`}>
             {listNovels(novels.EN)}
           </div>
         )}
