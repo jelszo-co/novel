@@ -15,7 +15,7 @@ Title.defaultProps = {
 
 Title.propTypes = {
   children: PropTypes.string.isRequired,
-  style: PropTypes.objectOf(PropTypes.object()),
+  style: PropTypes.object,
 };
 
 export default Title;
