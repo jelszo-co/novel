@@ -20,7 +20,7 @@ const useOutsideAlerter = (ref, changeMenu) => {
 };
 
 const Menu = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [role] = useState('anonymous');
   const [showMenu, changeMenu] = useState(false);
   const wrapperRef = useRef(null);
@@ -38,6 +38,14 @@ const Menu = () => {
         return <Link to='/login'>{t('menu_login')}</Link>;
     }
   };
+
+  const changeLang = ln => {
+    localStorage.setItem('lng', ln);
+    i18n.changeLanguage(ln);
+  };
+
+  const clg = localStorage.getItem('lng');
+
   return showMenu ? (
     <ul id='menu-list' ref={wrapperRef}>
       <li>
@@ -50,6 +58,20 @@ const Menu = () => {
         <Link to='/contact'>{t('menu_contact')}</Link>
       </li>
       <li>{displayRole(role)}</li>
+      <li className='lang-switcher'>
+        <button
+          className={clg === 'en' && 'clg'}
+          onClick={() => changeLang('en')}
+        >
+          en
+        </button>
+        <button
+          className={clg === 'hu' && 'clg'}
+          onClick={() => changeLang('hu')}
+        >
+          hu
+        </button>
+      </li>
     </ul>
   ) : (
     <button

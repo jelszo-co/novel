@@ -143,7 +143,7 @@ class List extends Component {
             type='text'
             name='search'
             id='search-bar'
-            placeholder={t('search')}
+            placeholder={t('list_search')}
             onChange={e => this.setState({ param: e.target.value })}
           />
           <Search className='search-icon' />
