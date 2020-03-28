@@ -82,56 +82,53 @@ class List extends Component {
       const patt = new RegExp(`(${param.trim()})`, 'gi');
       const highlight = text => {
         const parts = text.split(patt);
-        return parts.map(part => (
-          <span
-            key={part}
-            className={
-              part.toLowerCase() === param.toLowerCase() ? 'matched' : ''
-            }
-          >
-            {part}
-          </span>
-        ));
+        if (param.length <= 2) {
+          return text;
+        } else {
+          return parts.map(part => (
+            <span
+              key={part}
+              className={
+                part.toLowerCase() === param.toLowerCase() ? 'matched' : ''
+              }
+            >
+              {part}
+            </span>
+          ));
+        }
       };
       return inp.map(yr => {
         const cyr = Object.keys(yr)[0];
+        const novels = Object.entries(yr)[0][1].filter(
+          ({ title, lore }) => title.match(patt) || lore.match(patt),
+        );
         return (
           <div key={cyr} className='yr-wrapper'>
-            {+cyr !== new Date().getFullYear() && (
+            {+cyr !== new Date().getFullYear() && novels.length > 0 && (
               <div className='year-heading'>
                 <h2>{cyr}</h2>
                 <span className='list-line' />
               </div>
             )}
-            {Object.entries(yr)[0][1]
-              .filter(
-                ({ title, lore }) => title.match(patt) || lore.match(patt),
-              )
-              .map(({ id, title, lore, path, uploadedAt }, j) => (
-                <div className='novel-card' key={id}>
-                  <Link to={`/novels/${path}`}>
-                    <h3 className='novel-title'>
-                      {param ? highlight(title) : title}
-                    </h3>
-                    <p className='novel-lore'>
-                      {param ? highlight(lore) : lore}
-                    </p>
-                    {j !== Object.entries(yr)[0][1].length - 1 && (
-                      <span className='list-line' />
-                    )}
-                  </Link>
-                  <div
-                    className={`date-cont ${j === 0 ? 'date-lowered' : null}`}
-                  >
-                    <p className='date-mon'>
-                      <Moment format='MMM'>{uploadedAt}</Moment>
-                    </p>
-                    <p className='date-day'>
-                      <Moment format='D'>{uploadedAt}</Moment>
-                    </p>
-                  </div>
+            {novels.map(({ id, title, lore, path, uploadedAt }, j) => (
+              <div className='novel-card' key={id}>
+                <Link to={`/novels/${path}`}>
+                  <h3 className='novel-title'>
+                    {param ? highlight(title) : title}
+                  </h3>
+                  <p className='novel-lore'>{param ? highlight(lore) : lore}</p>
+                  {j !== novels.length - 1 && <span className='list-line' />}
+                </Link>
+                <div className={`date-cont ${j === 0 ? 'date-lowered' : null}`}>
+                  <p className='date-mon'>
+                    <Moment format='MMM'>{uploadedAt}</Moment>
+                  </p>
+                  <p className='date-day'>
+                    <Moment format='D'>{uploadedAt}</Moment>
+                  </p>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         );
       });
