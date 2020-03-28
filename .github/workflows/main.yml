@@ -137,8 +137,8 @@ jobs:
       run: yarn run build --if-present
       working-directory: ${{ env.frontend-directory }}
 
-    - name: install st
-      run: apt install libpq-dev
+    - name: install libpq-dev
+      run: sudo apt update && sudo apt install libpq-dev
 
     - name: copy builded files
       run: cp frontend/build/* backend/frontend/ -r
