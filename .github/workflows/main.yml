@@ -137,17 +137,16 @@ jobs:
       run: yarn run build --if-present
       working-directory: ${{ env.frontend-directory }}
 
-    - name: install st
-      run: sudo apt install libpq-dev
+    - name: install libpq-dev
+      run: sudo apt update && sudo apt install libpq-dev
 
-    - name: copy builded files
+    - name: copy build files
       run: mkdir backend/frontend && cp frontend/build/* backend/frontend/ -r
 
     - name: add firebase secrets
-      run: gpg --quiet --batch --yes --decrypt --passphrase=${{secrets.FIREBASE_DECRYPT_KEY}} --output backend/firebase.json backend/firebase.json.gpg
-    #   run: echo ${{secrets.FIREBASE_ADMIN_PRIVATE_KEY}} > backend/firebase.json
+      run: echo ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }} > backend/firebase.json
 
-    - name: Set up Python
+    - name: setup python
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
