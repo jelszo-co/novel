@@ -18,4 +18,6 @@ class Novel(models.Model):
         self.path = path.replace(' ', '-').replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó',
                                                                                                          'o').replace(
             'ö', 'o').replace('ő', 'o').replace('ú', 'u').replace('ü', 'u').replace('ű', 'u')
+        if not self.lore:
+            self.lore = ''
         super(Novel, self).save(*args, **kwargs)

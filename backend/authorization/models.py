@@ -8,4 +8,4 @@ class User(models.Model):
     isAdmin = models.BooleanField(default=False)
     isAnonymous = models.BooleanField(default=True)
     isAuthenticated = models.BooleanField(default=True)
-    favorites = models.ManyToManyField(Novel)
+    favorites = models.ManyToManyField(Novel, blank=True)
