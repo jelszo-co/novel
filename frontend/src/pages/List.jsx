@@ -98,9 +98,12 @@ class List extends Component {
       };
       return inp.map(yr => {
         const cyr = Object.keys(yr)[0];
-        const cNovels = Object.entries(yr)[0][1].filter(
-          ({ title, lore }) => title.match(patt) || lore.match(patt),
-        );
+        const cNovels =
+          param.length >= 3
+            ? Object.entries(yr)[0][1].filter(
+                ({ title, lore }) => title.match(patt) || lore.match(patt),
+              )
+            : Object.entries(yr)[0][1];
         return (
           <div key={cyr} className='yr-wrapper'>
             {+cyr !== new Date().getFullYear() && cNovels.length > 0 && (
