@@ -1,4 +1,4 @@
-name: Yarn check
+name: Yarn check & Deploy to Heroku
 
 on: 
   push:
@@ -141,4 +141,4 @@ jobs:
         git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
     - name: Deploy to Heroku
       run: |
-        git push heroku HEAD:master -f
+        git push heroku HEAD:refs/heads/master -f
