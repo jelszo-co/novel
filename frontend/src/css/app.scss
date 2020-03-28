@@ -12,6 +12,12 @@ body {
   font-family: 'Markazi Text';
 }
 
+*:focus,
+*:active,
+*:active:focus {
+  outline: none;
+}
+
 h1,
 h2,
 h3,
