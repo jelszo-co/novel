@@ -166,23 +166,23 @@ jobs:
       run: git config --global user.name jelszo &&  git config --global user.email support@jelszo.co
 
     
-    - name: Add remote origin
-      run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      working-directory: ${{ env.backend-directory }}
+    # - name: Add remote origin
+    #   run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+    #   working-directory: ${{ env.backend-directory }}
     
-    - name: git pull just because why not
-      run: git pull heroku master
+    # - name: git pull just because why not
+    #   run: git pull heroku master
       
-    - name: git add
-      run: git add .
-      working-directory: ${{ env.backend-directory }}
+    # - name: git add
+    #   run: git add .
+    #   working-directory: ${{ env.backend-directory }}
 
-    - name: git commit
-      run: git commit -m "deploy"
-      working-directory: ${{ env.backend-directory }}
+    # - name: git commit
+    #   run: git commit -m "deploy"
+    #   working-directory: ${{ env.backend-directory }}
 
     - name: Deploy to Heroku
-      run: git push --set-upstream heroku master
+      run: git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git origin/master:master # --set-upstream heroku master
       working-directory: ${{ env.backend-directory }}
 
     - name: send discord success message
