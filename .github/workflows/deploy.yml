@@ -1,0 +1,91 @@
+name: Deploy to Heroku
+
+on: 
+  push:
+    branches:    
+      - dev
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: yarn install
+      run: yarn install --frozen-lockfile
+      working-directory: ${{ env.working-directory }}
+        
+    - name: yarn test
+      run: yarn test 
+      working-directory: ${{ env.working-directory }}
+      env:
+        CI: true
+
+  lint:
+        
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: yarn install
+      run: yarn install --frozen-lockfile
+      working-directory: ${{ env.working-directory }}
+    
+    - name: yarn lint
+      run: yarn lint
+      working-directory: ${{ env.working-directory }}
+
+  deploy:
+
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: yarn install
+      run: yarn install --frozen-lockfile
+      working-directory: ${{ env.working-directory }}
+      
+    - name: yarn build
+      run: yarn run build --if-present
+      working-directory: ${{ env.working-directory }}
+    
+    - name: Add remote origin
+      run: |
+        git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+    - name: Deploy to Heroku
+      run: |
+        git push heroku HEAD:master -f
