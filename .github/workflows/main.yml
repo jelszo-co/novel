@@ -15,7 +15,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      working-directory: ./frontend
+      frontend-directory: ./frontend
     
     strategy:
       matrix:
@@ -30,11 +30,11 @@ jobs:
     
     - name: yarn install
       run: yarn install --frozen-lockfile
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.frontend-directory }}
         
     - name: yarn test
       run: yarn test 
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.frontend-directory }}
       env:
         CI: true
 
@@ -65,7 +65,7 @@ jobs:
         
     runs-on: ubuntu-latest
     env:
-      working-directory: ./frontend
+      frontend-directory: ./frontend
     
     strategy:
       matrix:
@@ -80,11 +80,11 @@ jobs:
         
     - name: yarn install
       run: yarn install --frozen-lockfile
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.frontend-directory }}
     
     - name: yarn lint
       run: yarn lint
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.frontend-directory }}
 
     - name: send discord success message
       if: success()
@@ -115,7 +115,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     env:
-      working-directory: ./frontend
+      frontend-directory: ./frontend
+      backend-directory: ./backend
     
     strategy:
       matrix:
@@ -130,15 +131,63 @@ jobs:
     
     - name: yarn install
       run: yarn install --frozen-lockfile
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.frontend-directory }}
       
     - name: yarn build
       run: yarn run build --if-present
-      working-directory: ${{ env.working-directory }}
+      working-directory: ${{ env.frontend-directory }}
+
+    - name: install st
+      run: apt install libpq-dev
+
+    - name: copy builded files
+      run: cp frontend/build/* backend/frontend/ -r
+
+    - name: add firebase secrets
+      run: echo ${secrets.FIREBASE_ADMIN_PRIVATE_KEY} > backend/firebase.json
+
+    - name: pip install
+      run: pip3 install -r backend/requirements.txt
+
+    - name: python test
+      run: python3 manage.py test
+      working-directory: ${{ backend-directory }}
+
+    - name: git init
+      run: git init
+      working-directory: ${{ backend-directory }}
     
     - name: Add remote origin
-      run: |
-        git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      working-directory: ${{ backend-directory }}
+
+    - name: git commit
+      run: git commit -am "deploy"
+      working-directory: ${{ backend-directory }}
+
     - name: Deploy to Heroku
-      run: |
-        git push heroku HEAD:refs/heads/master -f
+      run: git push --set-upstream heroku master
+      working-directory: ${{ backend-directory }}
+
+    - name: send discord success message
+      if: success()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
+        avatar_url: "https://i.imgur.com/YBD6GVz.png"
+        color: "#2ECC71"
+        username: "Novel Check Bot"
+        message: "`Deploy` has done."
+
+
+    - name: send discord failure message
+      if: failure()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID_FAIL }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_FAIL }}
+        avatar_url: "https://i.imgur.com/66VzOSm.png"
+        color: "#E74C3C"
+        username: "Novel Check Bot"
+        message: "`Deploy` has failed."
