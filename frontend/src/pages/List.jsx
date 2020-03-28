@@ -82,7 +82,7 @@ class List extends Component {
       const patt = new RegExp(`(${param.trim()})`, 'gi');
       const highlight = text => {
         const parts = text.split(patt);
-        return parts.map((part, i) => (
+        return parts.map(part => (
           <span
             key={part}
             className={
@@ -93,7 +93,7 @@ class List extends Component {
           </span>
         ));
       };
-      return inp.map((yr, i) => {
+      return inp.map(yr => {
         const cyr = Object.keys(yr)[0];
         return (
           <div key={cyr} className='yr-wrapper'>
