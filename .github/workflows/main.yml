@@ -146,6 +146,11 @@ jobs:
     - name: add firebase secrets
       run: echo ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }} > backend/firebase.json
 
+    - name: setup python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
     - name: pip install
       run: pip3 install -r backend/requirements.txt
 
