@@ -138,13 +138,18 @@ jobs:
       working-directory: ${{ env.frontend-directory }}
 
     - name: install st
-      run: apt install libpq-dev
+      run: sudo apt install libpq-dev
 
     - name: copy builded files
-      run: cp frontend/build/* backend/frontend/ -r
+      run: mkdir backend/frontend && cp frontend/build/* backend/frontend/ -r
 
     - name: add firebase secrets
-      run: echo ${secrets.FIREBASE_ADMIN_PRIVATE_KEY} > backend/firebase.json
+      run: echo ${{secrets.FIREBASE_ADMIN_PRIVATE_KEY}} > backend/firebase.json
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
 
     - name: pip install
       run: pip3 install -r backend/requirements.txt
