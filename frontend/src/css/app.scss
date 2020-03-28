@@ -29,3 +29,9 @@ h6 {
   font-family: 'forum';
   font-weight: normal;
 }
+
+*::selection,
+*::-moz-selection {
+  background: $white;
+  color: $bg;
+}

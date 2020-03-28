@@ -24,7 +24,7 @@ class List extends Component {
                 title: 'Ingatlan megtekintés',
                 path: 'elso',
                 lore:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                  'Képzeljük el: bemegyünk egy házba, amit meg szeretnénk venni. Az ingatlanközvetítő pedig megkezdi a körbevezetést. Azonban a bútorok és szobák leírása helyett a házban elhunytak története tárul elénk.',
                 uploadedAt: '2020-01-21T12:00:00.000Z',
               },
 
@@ -33,7 +33,7 @@ class List extends Component {
                 title: 'Utolsó percek',
                 path: 'elso-novellam',
                 lore:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                  'Egy rövid történet arról, hogy mi történik az ember lelkében a vélt/valós halál előtt. Mire gondolunk, mit akarunk, hogyan próbálunk erősek maradni.',
                 uploadedAt: '2020-01-01T12:00:00.000Z',
               },
             ],
@@ -46,7 +46,7 @@ class List extends Component {
                 title: '...',
                 path: 'elso-harmadik',
                 lore:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                  'Mit is jelent a mai világban követni egy mozgalmat? Tudhatjuk, hogy valami radikális már a csatlakozás pillanatában? Vagy csak később döbbenünk rá, mit is tettünk? És ha igen, van még visszaút?',
                 uploadedAt: '2021-01-01T12:00:00.000Z',
               },
             ],
@@ -55,10 +55,10 @@ class List extends Component {
             2018: [
               {
                 id: 3,
-                title: 'Negyedik',
+                title: 'Egy igazán sötét történet',
                 path: 'elso-harmadik',
                 lore:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                  'Mi történik este a sötét sikátorokban? A fekete foltokban, ahova nem ér el a lámpa fénye? Mik lakoznak a homályban gyanútlan emberekre várva?',
                 uploadedAt: '2021-01-01T12:00:00.000Z',
               },
             ],
