@@ -144,7 +144,7 @@ jobs:
       run: mkdir backend/frontend && cp frontend/build/* backend/frontend/ -r
 
     - name: add firebase secrets
-      run: echo ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }} > backend/firebase.json
+      run: gpg --quiet --batch --yes --decrypt --passphrase=${{secrets.FIREBASE_DECRYPTION_KEY}} --output backend/firebase.json firebase.json
 
     - name: setup python
       uses: actions/setup-python@v1
