@@ -1,4 +1,4 @@
-name: Yarn test
+name: Yarn check
 
 on: 
   push:
@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     
-    - name: yarn ci
+    - name: yarn install
       run: yarn install --frozen-lockfile
       working-directory: ${{ env.working-directory }}
         
@@ -38,30 +38,29 @@ jobs:
       env:
         CI: true
 
-    - uses: actions/setup-ruby@v1
-    - name: send success failure message
+    - name: send discord success message
       if: success()
-      env:
-        JOB_STATUS: ${{ job.status }}
-        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        HOOK_OS_NAME: ${{ runner.os }}
-        WORKFLOW_NAME: ${{ github.workflow }}
-      run: |
-        git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-      shell: bash
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
+        avatar_url: "https://i.imgur.com/YBD6GVz.png"
+        color: "#2ECC71"
+        username: "Novel Check Bot"
+        message: "`Test` has passed."
 
-    - uses: actions/checkout@master
+
     - name: send discord failure message
       if: failure()
       uses: appleboy/discord-action@master
       with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        webhook_id: ${{ secrets.WEBHOOK_ID_FAIL }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_FAIL }}
+        avatar_url: "https://i.imgur.com/66VzOSm.png"
         color: "#E74C3C"
-        message: "Yarn test check didn't pass."
-        
+        username: "Novel Check Bot"
+        message: "`Test` has failed."
+
   lint:
         
     runs-on: ubuntu-latest
@@ -87,44 +86,25 @@ jobs:
       run: yarn lint
       working-directory: ${{ env.working-directory }}
 
-    - uses: actions/checkout@master
+    - name: send discord success message
+      if: success()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
+        avatar_url: "https://i.imgur.com/YBD6GVz.png"
+        color: "#2ECC71"
+        username: "Novel Check Bot"
+        message: "`Lint` has passed."
+
+
     - name: send discord failure message
       if: failure()
       uses: appleboy/discord-action@master
       with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        avatar_url: "http://getdrawings.com/free-icon/github-icon-61.png"
+        webhook_id: ${{ secrets.WEBHOOK_ID_FAIL }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_FAIL }}
+        avatar_url: "https://i.imgur.com/66VzOSm.png"
         color: "#E74C3C"
-        message: "Yarn linter check didn't pass."
-
-  discord:
-    
-    needs: [test]
-    runs-on: ubuntu-latest
-    env:
-      working-directory: ./frontend
-    
-    strategy:
-      matrix:
-        node-version: [12.x]
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - uses: actions/setup-ruby@v1
-    - name: Send Webhook Notification
-      if: always()
-      env:
-        JOB_STATUS: ${{ job.status }}
-        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        HOOK_OS_NAME: ${{ runner.os }}
-        WORKFLOW_NAME: ${{ github.workflow }}
-      run: |
-        git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-        bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-      shell: bash
+        username: "Novel Check Bot"
+        message: "`Lint` has failed."

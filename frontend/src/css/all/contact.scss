@@ -1,0 +1,33 @@
+@import '../variables';
+#contact {
+  .card {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    p {
+      margin: 0 0 10px;
+      &:nth-child(1) {
+        font-family: 'Forum';
+        font-size: 2.5rem;
+      }
+    }
+    a {
+      font-size: 1.7rem;
+      text-decoration: none;
+    }
+    .separator {
+      vertical-align: middle;
+      margin: -10px 5pt 0;
+      height: 3rem;
+      width: 2pt;
+      background: $white;
+      display: inline-block;
+    }
+    .role {
+      font-family: 'Markazi Text';
+      font-size: 2.7rem;
+    }
+  }
+}

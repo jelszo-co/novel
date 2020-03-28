@@ -4,14 +4,16 @@ import './css/app.scss';
 
 import Landing from './pages/Landing';
 import List from './pages/List';
-import err404 from './pages/404';
+import Contact from './pages/Contact';
+import Err from './pages/404';
 
 const App = () => (
   <Router data-test='router'>
     <Switch>
-      <Route exact path='/list' component={List} />
       <Route exact path='/' component={Landing} />
-      <Route component={err404} />
+      <Route exact path='/list' component={List} />
+      <Route exact path='/contact' component={Contact} />
+      <Route component={Err} />
     </Switch>
   </Router>
 );

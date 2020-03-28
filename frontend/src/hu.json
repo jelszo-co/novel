@@ -1,0 +1,24 @@
+{
+  "translation": {
+    "err_body": "Nálunk ilyen oldal nem létezik.",
+    "landing_welcome": "Üdvözöllek.",
+    "landing_about": "Martyn Nóri vagyok. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A scelerisque purus semper eget duis at tellus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. In nisl nisi scelerisque eu ultrices vitae auctor. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna.",
+    "landing_button": "Írásaim",
+
+    "menu_invoke": "Menü",
+    "menu_home": "Kezdőlap",
+    "menu_list": "Novellák",
+    "menu_contact": "Kapcsolat",
+    "menu_login": "Fiók",
+    "menu_user": "Fiókom",
+    "menu_admin": "Admin",
+
+    "list_title": "írásaim",
+    "list_search": "Keresés",
+
+    "contact_header": "Kapcsolat",
+    "contact_name": "Martyn Nóri",
+    "contact_role": "Író",
+    "contact_send_mail": "E-mail küldése"
+  }
+}
