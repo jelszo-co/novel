@@ -13,37 +13,57 @@ import '../css/all/list.scss';
 class List extends Component {
   constructor(props) {
     super(props);
+    this.yrWrapper = React.createRef();
     this.state = {
       novels: {
-        HU: {
-          2020: [
-            {
-              id: 1,
-              title: 'Első',
-              path: 'elso',
-              lore: 'Az én els novellám.',
-              uploadedAt: '2020-01-21T12:00:00.000Z',
-            },
+        HU: [
+          {
+            2020: [
+              {
+                id: 1,
+                title: 'Első',
+                path: 'elso',
+                lore:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                uploadedAt: '2020-01-21T12:00:00.000Z',
+              },
 
-            {
-              id: 2,
-              title: 'Második',
-              path: 'elso-novellam',
-              lore: 'Az én els novellám.',
-              uploadedAt: '2020-01-01T12:00:00.000Z',
-            },
-          ],
+              {
+                id: 2,
+                title: 'Második',
+                path: 'elso-novellam',
+                lore:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                uploadedAt: '2020-01-01T12:00:00.000Z',
+              },
+            ],
+          },
 
-          2021: [
-            {
-              id: 3,
-              title: 'Harmadik',
-              path: 'elso-harmadik',
-              lore: 'Az én els novellám.',
-              uploadedAt: '2021-01-01T12:00:00.000Z',
-            },
-          ],
-        },
+          {
+            2019: [
+              {
+                id: 3,
+                title: 'Harmadik',
+                path: 'elso-harmadik',
+                lore:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                uploadedAt: '2021-01-01T12:00:00.000Z',
+              },
+            ],
+          },
+          {
+            2018: [
+              {
+                id: 3,
+                title: 'Negyedik',
+                path: 'elso-harmadik',
+                lore:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
+                uploadedAt: '2021-01-01T12:00:00.000Z',
+              },
+            ],
+          },
+        ],
 
         EN: {},
       },
@@ -73,18 +93,21 @@ class List extends Component {
           </span>
         ));
       };
-      return Object.entries(inp).map((yr, i) => (
-        <div key={i} className='yr-wrapper'>
-          {!(+yr[0] === new Date().getFullYear()) && (
-            <div className='year-heading'>
-              <h2>{yr[0]}</h2>
-              <span className='list-line' />
-            </div>
-          )}
-          {yr[1]
-            .filter(({ title, lore }) => title.match(patt) || lore.match(patt))
-            .map(({ id, title, lore, path, uploadedAt }, j) => {
-              return (
+      return inp.map((yr, i) => {
+        const cyr = Object.keys(yr)[0];
+        return (
+          <div key={i} className='yr-wrapper'>
+            {+cyr !== new Date().getFullYear() && (
+              <div className='year-heading'>
+                <h2>{cyr}</h2>
+                <span className='list-line'></span>
+              </div>
+            )}
+            {Object.entries(yr)[0][1]
+              .filter(
+                ({ title, lore }) => title.match(patt) || lore.match(patt),
+              )
+              .map(({ id, title, lore, path, uploadedAt }, j) => (
                 <div className='novel-card' key={id}>
                   <Link to={`/novels/${path}`}>
                     <h3 className='novel-title'>
@@ -93,7 +116,9 @@ class List extends Component {
                     <p className='novel-lore'>
                       {param ? highlight(lore) : lore}
                     </p>
-                    {j !== yr[1].length - 1 && <span className='list-line' />}
+                    {j !== Object.entries(yr)[0][1].length - 1 && (
+                      <span className='list-line' />
+                    )}
                   </Link>
                   <div
                     className={`date-cont ${j === 0 ? 'date-lowered' : null}`}
@@ -106,10 +131,10 @@ class List extends Component {
                     </p>
                   </div>
                 </div>
-              );
-            })}
-        </div>
-      ));
+              ))}
+          </div>
+        );
+      });
     };
 
     const { t } = this.props;
