@@ -24,5 +24,13 @@
   "rules": {
     "jsx-quotes": "off",
     "arrow-parens": [2, "as-needed"]
-  }
+  },
+  "overrides": [
+    {
+      "files": "src/pages/List.jsx",
+      "rules": {
+        "react/no-array-index-key": "off"
+      }
+    }
+  ]
 }

@@ -13,6 +13,8 @@
     "menu_admin": "Admin",
 
     "list_title": "írásaim",
-    "search": "Keresés"
+    "search": "Keresés",
+
+    "err_body": "Nálunk ilyen oldal nem létezik."
   }
 }

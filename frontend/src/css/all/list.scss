@@ -106,6 +106,18 @@
     left: 50%;
     transform: translateX(-50%);
   }
+  .dual {
+    position: absolute;
+    top: 30%;
+    transform: translateX(-50%);
+    left: 25%;
+  }
+  .dual-en {
+    position: absolute;
+    top: 30%;
+    left: 75%;
+    transform: translateX(-50%);
+  }
 }
 
 .matched {

@@ -65,14 +65,14 @@ class List extends Component {
           },
         ],
 
-        EN: {},
+        EN: [],
       },
       param: '',
     };
     const { novels } = this.state;
     this.state = {
       ...this.state,
-      listMode: Object.keys(novels.EN).length > 0 ? 'dual' : 'only',
+      listMode: novels.EN.length > 0 ? 'dual' : 'only',
     };
   }
 
@@ -84,40 +84,39 @@ class List extends Component {
         const parts = text.split(patt);
         if (param.length <= 2) {
           return text;
-        } else {
-          return parts.map(part => (
-            <span
-              key={part}
-              className={
-                part.toLowerCase() === param.toLowerCase() ? 'matched' : ''
-              }
-            >
-              {part}
-            </span>
-          ));
         }
+        return parts.map((part, i) => (
+          <span
+            key={i}
+            className={
+              part.toLowerCase() === param.toLowerCase() ? 'matched' : ''
+            }
+          >
+            {part}
+          </span>
+        ));
       };
       return inp.map(yr => {
         const cyr = Object.keys(yr)[0];
-        const novels = Object.entries(yr)[0][1].filter(
+        const cNovels = Object.entries(yr)[0][1].filter(
           ({ title, lore }) => title.match(patt) || lore.match(patt),
         );
         return (
           <div key={cyr} className='yr-wrapper'>
-            {+cyr !== new Date().getFullYear() && novels.length > 0 && (
+            {+cyr !== new Date().getFullYear() && cNovels.length > 0 && (
               <div className='year-heading'>
                 <h2>{cyr}</h2>
                 <span className='list-line' />
               </div>
             )}
-            {novels.map(({ id, title, lore, path, uploadedAt }, j) => (
+            {cNovels.map(({ id, title, lore, path, uploadedAt }, j) => (
               <div className='novel-card' key={id}>
                 <Link to={`/novels/${path}`}>
                   <h3 className='novel-title'>
                     {param ? highlight(title) : title}
                   </h3>
                   <p className='novel-lore'>{param ? highlight(lore) : lore}</p>
-                  {j !== novels.length - 1 && <span className='list-line' />}
+                  {j !== cNovels.length - 1 && <span className='list-line' />}
                 </Link>
                 <div className={`date-cont ${j === 0 ? 'date-lowered' : null}`}>
                   <p className='date-mon'>
@@ -153,7 +152,10 @@ class List extends Component {
           {listNovels(novels.HU)}
         </div>
         {listMode === 'dual' && (
-          <div id='en' className={`list-container ${listMode}`}>
+          <div
+            id='en'
+            className={`list-container ${listMode === 'dual' && 'dual-en'}`}
+          >
             {listNovels(novels.EN)}
           </div>
         )}
