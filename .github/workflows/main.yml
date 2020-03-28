@@ -169,6 +169,10 @@ jobs:
     - name: Add remote origin
       run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
       working-directory: ${{ env.backend-directory }}
+
+    - name: Debug
+      run: git remote -v
+      working-directory: ${{ env.backend-directory }}
     
     - name: git pull just because why not
       run: git pull heroku master
