@@ -140,8 +140,8 @@ jobs:
     - name: install libpq-dev
       run: sudo apt update && sudo apt install libpq-dev
 
-    - name: copy builded files
-      run: cp frontend/build/* backend/frontend/ -r
+    - name: copy build files
+      run: mkdir backend/frontend && cp frontend/build/* backend/frontend/ -r
 
     - name: add firebase secrets
       run: echo ${secrets.FIREBASE_ADMIN_PRIVATE_KEY} > backend/firebase.json
