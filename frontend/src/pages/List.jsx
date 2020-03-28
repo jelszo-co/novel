@@ -21,7 +21,7 @@ class List extends Component {
             2020: [
               {
                 id: 1,
-                title: 'Első',
+                title: 'Ingatlan megtekintés',
                 path: 'elso',
                 lore:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
@@ -30,7 +30,7 @@ class List extends Component {
 
               {
                 id: 2,
-                title: 'Második',
+                title: 'Utolsó percek',
                 path: 'elso-novellam',
                 lore:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
@@ -43,7 +43,7 @@ class List extends Component {
             2019: [
               {
                 id: 3,
-                title: 'Harmadik',
+                title: '...',
                 path: 'elso-harmadik',
                 lore:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. At consectetur lorem donec massa sapien faucibus et molestie.',
@@ -84,7 +84,7 @@ class List extends Component {
         const parts = text.split(patt);
         return parts.map((part, i) => (
           <span
-            key={i}
+            key={part}
             className={
               part.toLowerCase() === param.toLowerCase() ? 'matched' : ''
             }
@@ -96,11 +96,11 @@ class List extends Component {
       return inp.map((yr, i) => {
         const cyr = Object.keys(yr)[0];
         return (
-          <div key={i} className='yr-wrapper'>
+          <div key={cyr} className='yr-wrapper'>
             {+cyr !== new Date().getFullYear() && (
               <div className='year-heading'>
                 <h2>{cyr}</h2>
-                <span className='list-line'></span>
+                <span className='list-line' />
               </div>
             )}
             {Object.entries(yr)[0][1]
