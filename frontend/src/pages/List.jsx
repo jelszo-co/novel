@@ -20,7 +20,6 @@ class List extends Component {
           {
             2020: [
               {
-                id: 1,
                 title: 'Ingatlan megtekintés',
                 path: 'elso',
                 lore:
@@ -29,7 +28,6 @@ class List extends Component {
               },
 
               {
-                id: 2,
                 title: 'Utolsó percek',
                 path: 'elso-novellam',
                 lore:
@@ -42,7 +40,6 @@ class List extends Component {
           {
             2019: [
               {
-                id: 3,
                 title: '...',
                 path: 'elso-harmadik',
                 lore:
@@ -54,7 +51,6 @@ class List extends Component {
           {
             2018: [
               {
-                id: 3,
                 title: 'Egy igazán sötét történet',
                 path: 'elso-harmadik',
                 lore:
@@ -100,9 +96,7 @@ class List extends Component {
         const cyr = Object.keys(yr)[0];
         const cNovels =
           param.length >= 3
-            ? Object.entries(yr)[0][1].filter(
-                ({ title, lore }) => title.match(patt) || lore.match(patt),
-              )
+            ? Object.entries(yr)[0][1].filter(({ title }) => title.match(patt))
             : Object.entries(yr)[0][1];
         return (
           <div key={cyr} className='yr-wrapper'>
@@ -112,8 +106,8 @@ class List extends Component {
                 <span className='list-line' />
               </div>
             )}
-            {cNovels.map(({ id, title, lore, path, uploadedAt }, j) => (
-              <div className='novel-card' key={id}>
+            {cNovels.map(({ title, lore, path, uploadedAt }, j) => (
+              <div className='novel-card' key={title}>
                 <Link to={`/novels/${path}`}>
                   <h3 className='novel-title'>
                     {param ? highlight(title) : title}
