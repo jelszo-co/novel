@@ -9,9 +9,13 @@ const Title = ({ children, style }) => (
   </h2>
 );
 
+Title.defaultProps = {
+  style: {},
+};
+
 Title.propTypes = {
   children: PropTypes.string.isRequired,
-  style: PropTypes.object,
+  style: PropTypes.objectOf(PropTypes.object()),
 };
 
 export default Title;
