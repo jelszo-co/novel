@@ -151,23 +151,23 @@ jobs:
 
     - name: python test
       run: python3 manage.py test
-      working-directory: ${{ backend-directory }}
+      working-directory: ${{ env.backend-directory }}
 
     - name: git init
       run: git init
-      working-directory: ${{ backend-directory }}
+      working-directory: ${{ env.backend-directory }}
     
     - name: Add remote origin
       run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      working-directory: ${{ backend-directory }}
+      working-directory: ${{ env.backend-directory }}
 
     - name: git commit
       run: git commit -am "deploy"
-      working-directory: ${{ backend-directory }}
+      working-directory: ${{ env.backend-directory }}
 
     - name: Deploy to Heroku
       run: git push --set-upstream heroku master
-      working-directory: ${{ backend-directory }}
+      working-directory: ${{ env.backend-directory }}
 
     - name: send discord success message
       if: success()
