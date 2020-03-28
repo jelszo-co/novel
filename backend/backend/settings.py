@@ -50,7 +50,9 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'frontend')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,8 +104,7 @@ if not DEBUG:
         dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
         integrations=[DjangoIntegration()], )
 
-
-STATIC_URL = '/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend')
