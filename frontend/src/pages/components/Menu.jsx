@@ -60,12 +60,14 @@ const Menu = () => {
       <li>{displayRole(role)}</li>
       <li className='lang-switcher'>
         <button
+          type='button'
           className={clg === 'en' && 'clg'}
           onClick={() => changeLang('en')}
         >
           en
         </button>
         <button
+          type='button'
           className={clg === 'hu' && 'clg'}
           onClick={() => changeLang('hu')}
         >
@@ -75,6 +77,7 @@ const Menu = () => {
     </ul>
   ) : (
     <button
+      type='button'
       id='menu-btn'
       onClick={() => changeMenu(true)}
       onKeyDown={() => changeMenu(true)}

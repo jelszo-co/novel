@@ -15,7 +15,7 @@ const Contact = () => {
       <div className='card'>
         <p>
           {t('contact_name')}
-          <span className='separator'></span>
+          <span className='separator' />
           <span className='role'>{t('contact_role')}</span>
         </p>
         <a title={t('contact_send_mail')} href='mailto:martynnori@gmail.com'>
