@@ -5,6 +5,11 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 import django_heroku
 
+try:
+    django_heroku.settings(locals())
+except KeyError:
+    pass
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 cred = credentials.Certificate(os.path.join(BASE_DIR, 'firebase.json'))
@@ -92,17 +97,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-
 if not DEBUG:
     sentry_sdk.init(
         dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
         integrations=[DjangoIntegration()], )
 
-try:
-    django_heroku.settings(locals())
-except KeyError:
-    pass
+
 STATIC_URL = '/'
 
 STATICFILES_DIRS = [
