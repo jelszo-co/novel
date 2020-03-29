@@ -52,14 +52,14 @@ class NovelTools(View):
         permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
                           'You don\'t have permission to edit this novel'))
     def put(self, request, *args, **kwargs):
+        required_fields = {'title', 'lore', 'content', 'lang'}
         path = kwargs.get('path', '')
         try:
             novel = Novel.objects.get(path=path)
         except Novel.DoesNotExist:
             return JsonResponse({"error": "Novel not found"}, status=404)
         body = json.loads(request.body.decode('utf-8'))
-        if 'title' not in body.keys() or 'lore' not in body.keys() or 'content' not in body.keys() or 'lang' not in body.keys() or \
-                body['lang'] not in {'HU', 'EN'}:
+        if set(body.keys()) != required_fields or body['lang'] not in {'HU', 'EN'}:
             return JsonResponse({"error": "Bad request"}, status=400)
         novel.title = body['title']
         novel.lore = body['lore']
