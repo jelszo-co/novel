@@ -52,9 +52,6 @@ jobs:
 
     - name: Run codacy-coverage-reporter
       run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
-      with:
-        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        working-directory: ${{ env.frontend-directory }}
 
     - name: send discord success message
       if: success()
