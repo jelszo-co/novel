@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from authorization.decorator import permission_needed
+from authorization.models import User
 from novel.models import Novel
 
 
@@ -43,7 +44,8 @@ class NovelTools(View):
             'lore': novel.lore,
             'content': novel.content,
             'uploadedAt': novel.uploadedAt.isoformat(),
-            'favorite': False
+            'favorite': False,
+            'lang': novel.lang
         }, charset='utf-8')
 
     @method_decorator(
@@ -56,9 +58,9 @@ class NovelTools(View):
         except Novel.DoesNotExist:
             return JsonResponse({"error": "Novel not found"}, status=404)
         body = json.loads(request.body.decode('utf-8'))
-        if 'title' not in body or 'lore' not in body or 'content' not in body or 'lang' not in body or body[
-            'lang'] not in Novel._meta.get_field('lang').choices:
-            return JsonResponse({"error": "You have to be logged in to upload novels"}, status=400)
+        if 'title' not in body.keys() or 'lore' not in body.keys() or 'content' not in body.keys() or 'lang' not in body.keys() or \
+                body['lang'] not in {'HU', 'EN'}:
+            return JsonResponse({"error": "Bad request"}, status=400)
         novel.title = body['title']
         novel.lore = body['lore']
         novel.content = body['content']
@@ -71,3 +73,34 @@ class NovelTools(View):
             'content': novel.content,
             'lang': novel.lang
         })
+
+    @method_decorator(
+        permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
+                          'You don\'t have permission to edit this novel'))
+    def delete(self, request, *args, **kwargs):
+        path = kwargs.get('path', '')
+        try:
+            novel = Novel.objects.get(path=path)
+        except Novel.DoesNotExist:
+            return JsonResponse({"error": "Novel not found"}, status=404)
+        novel.delete()
+        return JsonResponse({"success": "Deleted successfully"})
+
+
+class NovelFavoriteToggle(View):
+    @method_decorator(
+        permission_needed('request.fb_user.isAnonymous', 'Log in to mark novels as favorite',
+                          "Log in with a non-Anonymous account"))
+    def post(self, request, *args, **kwargs):
+        path = kwargs.get('path', '')
+        try:
+            novel = Novel.objects.get(path=path)
+        except Novel.DoesNotExist:
+            return JsonResponse({"error": "Novel not found"}, status=404)
+        favs = request.fb_user.favorites
+        if favs.filter(pk=novel.pk).exists():
+            favs.remove(novel)
+            return JsonResponse({'liked': False})
+        else:
+            favs.add(novel)
+            return JsonResponse({'liked': True})
