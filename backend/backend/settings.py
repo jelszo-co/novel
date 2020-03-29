@@ -16,9 +16,6 @@ DEBUG = os.environ.get('DJANGO_DEBUG_MODE', 0) == '1'
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1 ::1').split(' ')
 
-if 'DYNO' in os.environ:
-    django_heroku.settings(locals(), secret_key=False, allowed_hosts=False)
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +39,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+if 'DYNO' in os.environ:
+    django_heroku.settings(locals(), secret_key=False, allowed_hosts=False)
+
 
 ROOT_URLCONF = 'backend.urls'
 
