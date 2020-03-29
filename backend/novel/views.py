@@ -5,7 +5,6 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from authorization.decorator import permission_needed
-from authorization.models import User
 from novel.models import Novel
 
 

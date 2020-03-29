@@ -12,3 +12,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', frontend_view)
 ]
+
+handler404 = 'backend.frontend_view.frontend_view'
