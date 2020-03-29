@@ -1,4 +1,4 @@
-name: Yarn check & Deploy to Heroku
+name: Test & Deploy to Heroku
 
 on: 
   push:
@@ -51,8 +51,11 @@ jobs:
         CI: true
 
     - name: Run codacy-coverage-reporter
-      uses: mrfyda/codacy-coverage-reporter-action@master
-      with:
+      run: |
+        curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux"))) | .[0].browser_download_url')"
+        chmod +x codacy-coverage-reporter
+        ./codacy-coverage-reporter report -r frontend/coverage/clover.xml
+      env: 
         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
     - name: send discord success message
