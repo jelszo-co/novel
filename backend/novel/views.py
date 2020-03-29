@@ -43,14 +43,13 @@ class NovelTools(View):
             'lore': novel.lore,
             'content': novel.content,
             'uploadedAt': novel.uploadedAt.isoformat(),
-            'liked': False
+            'favorite': False
         }, charset='utf-8')
 
     @method_decorator(
         permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
                           'You don\'t have permission to edit this novel'))
     def put(self, request, *args, **kwargs):
-        needed_params = {}
         path = kwargs.get('path', '')
         try:
             novel = Novel.objects.get(path=path)
