@@ -3,12 +3,26 @@
 </p>
 <h1 align='center'>Novel</h1>
 <h3 align="center">The website of Nóri Martyn, an emerging novel writer</h3>
+<p align='center'><a href='https://github.com/jelszo-co/novel'>Visit Site</a> • <a href='https://github.com/jelszo-co/novel/issues/new'>Report issue</a></p>
 
-![GitHub](https://img.shields.io/github/license/jelszo-co/novel?style=flat-square)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjelszo-co%2Fnovel%2Fbadge%3Fref%3Ddev&style=flat-square)](https://actions-badge.atrox.dev/jelszo-co/novel/goto?ref=dev)
-![GitHub repo size](https://img.shields.io/github/repo-size/jelszo-co/novel?color=%2370cc00&label=Repo%20size&style=flat-square)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bf56d16a163f4916aebfb8ba18d11f81?style=flat-square)](https://www.codacy.com/gh/jelszo-co/novel?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jelszo-co/novel&amp;utm_campaign=Badge_Grade)
+<p align='center'>
+<img src='https://img.shields.io/github/license/jelszo-co/novel?style=flat-square'>
+<img src='https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjelszo-co%2Fnovel%2Fbadge%3Fref%3Ddev&style=flat-square'>
+<img src='https://img.shields.io/github/repo-size/jelszo-co/novel?color=%2370cc00&label=Repo%20size&style=flat-square'>
+<img src='https://api.codacy.com/project/badge/Grade/bf56d16a163f4916aebfb8ba18d11f81?style=flat-square'>
+</p>
 
+## Creators
+Created by [__Jelszo Co__](https://github.com/jelszo-co):
+
+* [__Kiss Benedek Máté__](https://github.com/Tasztalos69) - *Frontend developer*
+
+* [__Tóth Bence__](https://github.com/bnctth) - *Backend developer*
+
+* [__Jóvári Norbert__](https://github.com/JvrR9945) - *DevOps Engineer*
+
+## Technology
+<!-- TODO add links for tech -->
 ### Tech stack:
 
 * __JavaScript/React__ - *Frontend framework*
@@ -23,3 +37,7 @@
 * __Jira__ - *Issue tracker*
 * __Codacy__ - *Code analyzer*
 * __Github Actions__ - *CI provider*
+
+## License
+
+This product is licensed under the MIT license. For further information, see [LICENSE](LICENSE).
