@@ -5,9 +5,6 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 import django_heroku
 
-if 'DYNO' in os.environ:
-    django_heroku.settings(locals(),secret_key=False,allowed_hosts=False)
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 cred = credentials.Certificate(os.path.join(BASE_DIR, 'firebase.json'))
@@ -18,6 +15,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'REALLY NOT SAFE')
 DEBUG = os.environ.get('DJANGO_DEBUG_MODE', 0) == '1'
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost 127.0.0.1 ::1').split(' ')
+
+if 'DYNO' in os.environ:
+    django_heroku.settings(locals(), secret_key=False, allowed_hosts=False)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
