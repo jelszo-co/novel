@@ -266,6 +266,7 @@ jobs:
 
     - name: send discord up-to-date message
       if: failure()
+      continue-on-error: false
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
@@ -274,9 +275,6 @@ jobs:
         color: "#F1C40F"
         username: "Novel Check Bot"
         message: "Heroku branch is up to date."
-
-    - name: stop job
-      run: exit 1
 
     - name: Deploy to heroku
       run: git push
