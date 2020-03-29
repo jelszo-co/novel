@@ -117,6 +117,7 @@ jobs:
     env:
       frontend-directory: ./frontend
       backend-directory: ./backend
+      heroku-directory: ./heroku
     
     strategy:
       matrix:
@@ -158,33 +159,28 @@ jobs:
       run: python3 manage.py test
       working-directory: ${{ env.backend-directory }}
 
-    - name: git init
-      run: git init
-      working-directory: ${{ env.backend-directory }}
+    - name: clone heroku
+      run: git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git ${{env.heroku-directory}}
+
+    - name: copy to heroku
+      run: cp backend/* heroku/ -r && cp .gitignore heroku/
 
     - name: git config
       run: git config --global user.name jelszo &&  git config --global user.email support@jelszo.co
 
-    
-    - name: Add remote origin
-      run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      working-directory: ${{ env.backend-directory }}
 
-    
-    - name: git pull just because why not
-      run: git pull -v heroku master
-      
     - name: git add
       run: git add .
-      working-directory: ${{ env.backend-directory }}
+      working-directory: ${{env.heroku-directory}}
 
     - name: git commit
       run: git commit -m "deploy"
-      working-directory: ${{ env.backend-directory }}
+      working-directory: ${{env.heroku-directory}}
 
-    - name: Deploy to Heroku
-      run: git push --set-upstream heroku master
-      working-directory: ${{ env.backend-directory }}
+    - name: Deploy to heroku
+      run: git push
+      working-directory: ${{env.heroku-directory}}
+
 
     - name: send discord success message
       if: success()
