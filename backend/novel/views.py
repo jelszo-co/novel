@@ -44,7 +44,7 @@ class NovelTools(View):
             'lore': novel.lore,
             'content': novel.content,
             'uploadedAt': novel.uploadedAt.isoformat(),
-            'favorite': False,
+            'favorite': request.fb_user.favorites.filter(pk=novel.pk).exists(),
             'lang': novel.lang
         }, charset='utf-8')
 
@@ -104,3 +104,14 @@ class NovelFavoriteToggle(View):
         else:
             favs.add(novel)
             return JsonResponse({'liked': True})
+
+    @method_decorator(
+        permission_needed('not request.fb_user.isAdmin', 'Log in to see this value',
+                          'You have to be admin to see this value'))
+    def get(self, request, *args, **kwargs):
+        path = kwargs.get('path', '')
+        try:
+            novel = Novel.objects.get(path=path)
+        except Novel.DoesNotExist:
+            return JsonResponse({"error": "Novel not found"}, status=404)
+        return JsonResponse({'favorites': len(novel.user_set.all())})
