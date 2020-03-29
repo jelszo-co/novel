@@ -200,8 +200,7 @@ jobs:
       run: git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git ${{env.heroku-directory}}
 
     - name: copy to heroku
-      run: cp backend/* heroku/ -r && cp .gitignore heroku/
-
+      run: cp backend/* heroku/ -r
     - name: git config
       run: git config --global user.name jelszo &&  git config --global user.email support@jelszo.co
 
