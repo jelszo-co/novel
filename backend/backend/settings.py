@@ -40,10 +40,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 if 'DYNO' in os.environ:
     django_heroku.settings(locals(), secret_key=False, allowed_hosts=False)
-
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -66,14 +71,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-
-if 'DYNO' not in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -105,7 +102,7 @@ if not DEBUG:
         dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
         integrations=[DjangoIntegration()], )
 
-STATIC_URL = '/static/' 
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend')
