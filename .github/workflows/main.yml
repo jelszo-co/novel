@@ -206,7 +206,7 @@ jobs:
 
 
     - name: git add
-      run: git add .
+      run: git rm . --cached -r && git add .
       working-directory: ${{env.heroku-directory}}
 
     - name: git commit
