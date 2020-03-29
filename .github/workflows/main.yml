@@ -51,9 +51,9 @@ jobs:
         CI: true
 
     - name: Run codacy-coverage-reporter
-      run: |
-        export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }}
-        bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      uses: mrfyda/codacy-coverage-reporter-action@master
+      with:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
     - name: send discord success message
       if: success()
@@ -287,7 +287,6 @@ jobs:
         color: "#2ECC71"
         username: "Novel Check Bot"
         message: "`Deploy` has done."
-
 
     - name: send discord failure message
       if: failure()
