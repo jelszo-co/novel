@@ -261,7 +261,6 @@ jobs:
       working-directory: ${{env.heroku-directory}}
 
     - name: git commit
-      continue-on-error: false
       run: git commit -m "deploy"
       working-directory: ${{env.heroku-directory}}
 
