@@ -105,7 +105,7 @@ if not DEBUG:
         dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
         integrations=[DjangoIntegration()], )
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend')
