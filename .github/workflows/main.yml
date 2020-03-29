@@ -50,6 +50,11 @@ jobs:
       env:
         CI: true
 
+    - name: Run codacy-coverage-reporter
+      uses: mrfyda/codacy-coverage-reporter-action@master
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+
     - name: send discord success message
       if: success()
       uses: appleboy/discord-action@master
