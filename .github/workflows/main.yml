@@ -22,7 +22,7 @@ jobs:
         node-version: [12.x]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -52,8 +52,10 @@ jobs:
 
     - name: Run codacy-coverage-reporter
       uses: mrfyda/codacy-coverage-reporter-action@master
+      run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        working-directory: ${{ env.frontend-directory }}
 
     - name: send discord success message
       if: success()
@@ -260,6 +262,17 @@ jobs:
     - name: git commit
       run: git commit -m "deploy"
       working-directory: ${{env.heroku-directory}}
+
+    - name: send discord up-to-date message
+      if: failure()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN_CASUAL }}
+        avatar_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+        color: "#F1C40F"
+        username: "Novel Check Bot"
+        message: "Heroku branch is up to date."
 
     - name: Deploy to heroku
       run: git push
