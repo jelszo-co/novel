@@ -1,5 +1,6 @@
 from django.conf import settings
 from firebase_admin.auth import verify_id_token
+from firebase_admin.exceptions import FirebaseError
 
 from authorization.models import User
 
@@ -17,7 +18,7 @@ class AuthorizationMiddleware:
                 user.isAnonymous = payload['firebase']['sign_in_provider'] == "anonymous"
                 user.save()
                 request.fb_user = user
-            except:
+            except (FirebaseError, User.DoesNotExist):
                 request.fb_user = User.objects.get_or_create(uid='unauthenticated', isAuthenticated=False)[0]
         else:
             request.fb_user = User.objects.get_or_create(uid='unauthenticated', isAuthenticated=False)[0]
