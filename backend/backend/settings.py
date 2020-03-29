@@ -5,10 +5,8 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 import django_heroku
 
-try:
-    django_heroku.settings(locals())
-except KeyError:
-    pass
+if 'DYNO' in os.environ:
+    django_heroku.settings(locals(),secret_key=False,allowed_hosts=False)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -67,12 +65,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if 'DYNO' not in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
