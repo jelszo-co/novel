@@ -61,7 +61,7 @@ jobs:
         username: "Novel Check Bot"
         message: "`Frontend-Test` has failed."
 
-  lint:
+  fronetend-lint:
         
     runs-on: ubuntu-latest
     env:
