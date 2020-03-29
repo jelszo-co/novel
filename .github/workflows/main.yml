@@ -261,12 +261,12 @@ jobs:
       working-directory: ${{env.heroku-directory}}
 
     - name: git commit
+      continue-on-error: false
       run: git commit -m "deploy"
       working-directory: ${{env.heroku-directory}}
 
     - name: send discord up-to-date message
       if: failure()
-      continue-on-error: false
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
