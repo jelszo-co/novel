@@ -51,9 +51,9 @@ jobs:
         CI: true
 
     - name: Run codacy-coverage-reporter
-      run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
-      env:
-        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      run: |
+        export CODACY_PROJECT_TOKEN = ${{ secrets.CODACY_PROJECT_TOKEN }}
+        bash <(curl -Ls https://coverage.codacy.com/get.sh)
 
     - name: send discord success message
       if: success()
