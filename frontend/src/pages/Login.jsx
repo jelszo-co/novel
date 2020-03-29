@@ -67,7 +67,6 @@ class Login extends Component {
         alertUser('regPass');
       }
       if (!err) {
-        alert('Succesful!', 'You did it! Awesome!');
         // Handle firebase here
       }
     };
@@ -83,7 +82,6 @@ class Login extends Component {
         alertUser('loginPass');
       }
       if (!err) {
-        alert('Succesful!', 'You did it! Awesome!');
         // Handle firebase here
       }
     };
@@ -115,13 +113,13 @@ class Login extends Component {
         <div id='login-social'>
           <Google
             title={t('login_google_title')}
-            onClick={() => alert('Gulugulu')}
-            onKeyPress={() => alert('Gulugulu')}
+            onClick={() => {}}
+            onKeyPress={() => {}}
           />
           <Facebook
             title={t('login_fb_title')}
-            onClick={() => alert('Fészbuk')}
-            onKeyPress={() => alert('Fészbuk')}
+            onClick={() => {}}
+            onKeyPress={() => {}}
           />
         </div>
         <div id='form-cont'>
