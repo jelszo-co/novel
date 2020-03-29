@@ -266,7 +266,6 @@ jobs:
 
     - name: send discord up-to-date message
       if: failure()
-      continue-on-error: false
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
