@@ -204,9 +204,9 @@ jobs:
     - name: git config
       run: git config --global user.name jelszo &&  git config --global user.email support@jelszo.co
 
-    - name: git purge cache
-      run: git rm . --cached -r
-      working-directory: ${{env.heroku-directory}}
+    # - name: git purge cache
+    #   run: git rm . --cached -r
+    #   working-directory: ${{env.heroku-directory}}
 
 
     - name: git add
