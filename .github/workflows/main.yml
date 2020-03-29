@@ -54,6 +54,7 @@ jobs:
       uses: mrfyda/codacy-coverage-reporter-action@master
       with:
         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
     - name: send discord success message
       if: success()
