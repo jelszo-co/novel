@@ -50,10 +50,25 @@ class NovelTools(View):
         permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
                           'You don\'t have permission to edit this novel'))
     def put(self, request, *args, **kwargs):
-        # path = kwargs.get('path', '')
-        # try:
-        #     novel = Novel.objects.get(path=path)
-        # except Novel.DoesNotExist:
-        #     return JsonResponse({"error": "Novel not found"}, status=404)
-        # print(json.loads(request.body.decode('utf-8')))
-        raise NotImplementedError('All code is commented for codacy')
+        needed_params = {}
+        path = kwargs.get('path', '')
+        try:
+            novel = Novel.objects.get(path=path)
+        except Novel.DoesNotExist:
+            return JsonResponse({"error": "Novel not found"}, status=404)
+        body = json.loads(request.body.decode('utf-8'))
+        if 'title' not in body or 'lore' not in body or 'content' not in body or 'lang' not in body or body[
+            'lang'] not in Novel._meta.get_field('lang').choices:
+            return JsonResponse({"error": "You have to be logged in to upload novels"}, status=400)
+        novel.title = body['title']
+        novel.lore = body['lore']
+        novel.content = body['content']
+        novel.lang = body['lang']
+        novel.save()
+        return JsonResponse({
+            'title': novel.title,
+            'path': novel.path,
+            'lore': novel.lore,
+            'content': novel.content,
+            'lang': novel.lang
+        })
