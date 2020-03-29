@@ -51,7 +51,6 @@ jobs:
         CI: true
 
     - name: Run codacy-coverage-reporter
-      uses: mrfyda/codacy-coverage-reporter-action@master
       run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
