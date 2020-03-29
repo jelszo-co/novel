@@ -105,7 +105,9 @@
         line-height: 1.6rem;
         align-self: center;
         border-bottom: 2.5pt solid $white;
-        cursor: pointer;
+        &[type='submit'] {
+          cursor: pointer;
+        }
       }
     }
   }

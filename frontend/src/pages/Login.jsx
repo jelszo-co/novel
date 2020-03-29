@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import Title from './components/Title';
 import Menu from './components/Menu';
@@ -26,8 +27,19 @@ class Login extends Component {
   }
 
   render() {
-    const alertColor = '#ab1717',
-      emailPatt = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+    const {
+      fullName,
+      regEmail,
+      regPass,
+      loginEmail,
+      loginPass,
+      showValidator,
+      valid1,
+      valid2,
+      valid3,
+    } = this.state;
+    const alertColor = '#ab1717';
+    const emailPatt = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/g;
     const alertUser = (field, expires = true) => {
       const sc = `input[name=${field}]`;
       document.querySelector(sc).style.borderColor = alertColor;
@@ -86,24 +98,13 @@ class Login extends Component {
       if (name === 'regPass') {
         this.setState({
           valid1: value.length >= 8,
-          valid2: value.match(pattLet) ? true : false,
-          valid3: value.match(pattNum) ? true : false,
+          valid2: value.match(pattLet),
+          valid3: value.match(pattNum),
         });
       }
     };
 
     const { t } = this.props;
-    const {
-      fullName,
-      regEmail,
-      regPass,
-      loginEmail,
-      loginPass,
-      showValidator,
-      valid1,
-      valid2,
-      valid3,
-    } = this.state;
 
     const grey = 'rgba(255, 255, 255, 0.7)';
 
@@ -136,7 +137,7 @@ class Login extends Component {
                 placeholder={t('form_name')}
                 value={fullName}
                 onChange={e => handleChange(e)}
-              ></input>
+              />
               <input
                 required
                 name='regEmail'
@@ -146,7 +147,7 @@ class Login extends Component {
                 placeholder={t('form_email')}
                 value={regEmail}
                 onChange={e => handleChange(e)}
-              ></input>
+              />
               <input
                 required
                 name='regPass'
@@ -159,7 +160,7 @@ class Login extends Component {
                 onChange={e => handleChange(e)}
                 onFocus={() => this.setState({ showValidator: 1 })}
                 onBlur={() => this.setState({ showValidator: 0 })}
-              ></input>
+              />
               <ul
                 className='pass-validation'
                 style={{ opacity: showValidator }}
@@ -209,7 +210,7 @@ class Login extends Component {
               </ul>
             </div>
 
-            <input type='submit' value={t('form_register_submit')}></input>
+            <input type='submit' value={t('form_register_submit')} />
           </form>
 
           <form id='login-form' onSubmit={e => handleLogin(e)} noValidate>
@@ -224,7 +225,7 @@ class Login extends Component {
                 placeholder={t('form_email')}
                 value={loginEmail}
                 onChange={e => handleChange(e)}
-              ></input>
+              />
               <input
                 required
                 name='loginPass'
@@ -234,14 +235,18 @@ class Login extends Component {
                 placeholder={t('form_password')}
                 value={loginPass}
                 onChange={e => handleChange(e)}
-              ></input>
+              />
             </div>
-            <input type='submit' value={t('form_login_submit')}></input>
+            <input type='submit' value={t('form_login_submit')} />
           </form>
         </div>
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  t: PropTypes.func.isRequired,
+};
 
 export default withTranslation()(Login);
