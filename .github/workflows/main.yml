@@ -22,7 +22,7 @@ jobs:
         node-version: [12.x]
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -52,6 +52,7 @@ jobs:
 
     - name: Run codacy-coverage-reporter
       uses: mrfyda/codacy-coverage-reporter-action@master
+      run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         working-directory: ${{ env.frontend-directory }}
@@ -262,7 +263,7 @@ jobs:
       run: git commit -m "deploy"
       working-directory: ${{env.heroku-directory}}
 
-    - name: send discord failure message
+    - name: send discord up-to-date message
       if: failure()
       uses: appleboy/discord-action@master
       with:
