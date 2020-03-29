@@ -1,4 +1,4 @@
-name: Yarn check & Deploy to Heroku
+name: Test & Deploy to Heroku
 
 on: 
   push:
@@ -274,6 +274,9 @@ jobs:
         color: "#F1C40F"
         username: "Novel Check Bot"
         message: "Heroku branch is up to date."
+
+    - name: stop job
+      run: exit 1
 
     - name: Deploy to heroku
       run: git push
