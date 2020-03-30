@@ -114,3 +114,17 @@ class NovelFavoriteToggle(View):
         except Novel.DoesNotExist:
             return JsonResponse({"error": "Novel not found"}, status=404)
         return JsonResponse({'favorites': len(novel.user_set.all())})
+
+
+class UserFavorites(View):
+    @method_decorator(
+        permission_needed('request.fb_user.isAnonymous', 'Log in to have novels as favorite',
+                          "Log in with a non-Anonymous account"))
+    def get(self, request, *args, **kwargs):
+        resp = []
+        for fav in request.fb_user.favorites.all():
+            resp.append({
+                'title': fav.title,
+                'path': fav.path
+            })
+        return JsonResponse(resp, safe=False, charset='utf-8')
