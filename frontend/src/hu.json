@@ -19,6 +19,22 @@
     "contact_header": "Kapcsolat",
     "contact_name": "Martyn Nóri",
     "contact_role": "Író",
-    "contact_send_mail": "E-mail küldése"
+    "contact_send_mail": "E-mail küldése",
+
+    "login_title": "Fiók",
+    "login_google_title": "Bejelentkezés Google-val",
+    "login_fb_title": "Bejelentkezés Facebook-kal",
+
+    "form_register_title": "Regisztráció",
+    "form_login_title": "Bejelentkezés",
+    "form_name": "Teljes Név",
+    "form_email": "E-mail",
+    "form_password": "Jelszó",
+    "form_register_submit": "Regisztrálok",
+    "form_login_submit": "Bejelentkezek",
+
+    "form_val_1": "8+ karakter",
+    "form_val_2": "1 kis és 1 nagy karakter",
+    "form_val_3": "1 szám"
   }
 }
