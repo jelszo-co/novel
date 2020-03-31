@@ -9,6 +9,7 @@ from django.views import View
 from docx import Document
 
 from authorization.decorator import permission_needed
+from novel.decorator import get_novel_by_path
 from novel.models import Novel
 
 
@@ -36,12 +37,9 @@ class GetAllNovels(View):
 
 
 class NovelTools(View):
+    @method_decorator(get_novel_by_path)
     def get(self, request, *args, **kwargs):
-        path = kwargs.get('path', '')
-        try:
-            novel = Novel.objects.get(path=path)
-        except Novel.DoesNotExist:
-            return JsonResponse({"error": "Novel not found"}, status=404)
+        novel = request.novel
         return JsonResponse({
             'title': novel.title,
             'lore': novel.lore,
@@ -51,15 +49,12 @@ class NovelTools(View):
             'lang': novel.lang
         }, charset='utf-8')
 
+    @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
                                         'You don\'t have permission to edit this novel'))
     def put(self, request, *args, **kwargs):
         required_fields = {'title', 'lore', 'content', 'lang', 'private'}
-        path = kwargs.get('path', '')
-        try:
-            novel = Novel.objects.get(path=path)
-        except Novel.DoesNotExist:
-            return JsonResponse({"error": "Novel not found"}, status=404)
+        novel = request.novel
         body = json.loads(request.body.decode('utf-8'))
         if set(body.keys()) != required_fields or body['lang'] not in {'HU', 'EN'}:
             return JsonResponse({"error": "Bad request.", 'neededFields': required_fields}, status=400)
@@ -78,27 +73,20 @@ class NovelTools(View):
             'private': novel.private
         })
 
+    @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
                                         'You don\'t have permission to edit this novel'))
     def delete(self, request, *args, **kwargs):
-        path = kwargs.get('path', '')
-        try:
-            novel = Novel.objects.get(path=path)
-        except Novel.DoesNotExist:
-            return JsonResponse({"error": "Novel not found"}, status=404)
-        novel.delete()
+        request.novel.delete()
         return JsonResponse({"success": "Deleted successfully"})
 
 
 class NovelFavoriteToggle(View):
+    @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('request.fb_user.isAnonymous', 'Log in to mark novels as favorite',
                                         "Log in with a non-Anonymous account"))
     def post(self, request, *args, **kwargs):
-        path = kwargs.get('path', '')
-        try:
-            novel = Novel.objects.get(path=path)
-        except Novel.DoesNotExist:
-            return JsonResponse({"error": "Novel not found"}, status=404)
+        novel = request.novel
         favs = request.fb_user.favorites
         if favs.filter(pk=novel.pk).exists():
             favs.remove(novel)
@@ -107,15 +95,11 @@ class NovelFavoriteToggle(View):
             favs.add(novel)
             return JsonResponse({'liked': True})
 
+    @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('not request.fb_user.isAdmin', 'Log in to see this value',
                                         'You have to be admin to see this value'))
     def get(self, request, *args, **kwargs):
-        path = kwargs.get('path', '')
-        try:
-            novel = Novel.objects.get(path=path)
-        except Novel.DoesNotExist:
-            return JsonResponse({"error": "Novel not found"}, status=404)
-        return JsonResponse({'favorites': len(novel.user_set.all())})
+        return JsonResponse({'favorites': len(request.novel.user_set.all())})
 
 
 class UserFavorites(View):
