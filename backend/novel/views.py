@@ -1,8 +1,12 @@
 import json
+from zipfile import BadZipFile
 
+from django.db import IntegrityError
 from django.http import JsonResponse
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
 from django.views import View
+from docx import Document
 
 from authorization.decorator import permission_needed
 from novel.models import Novel
@@ -47,11 +51,10 @@ class NovelTools(View):
             'lang': novel.lang
         }, charset='utf-8')
 
-    @method_decorator(
-        permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
-                          'You don\'t have permission to edit this novel'))
+    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
+                                        'You don\'t have permission to edit this novel'))
     def put(self, request, *args, **kwargs):
-        required_fields = {'title', 'lore', 'content', 'lang'}
+        required_fields = {'title', 'lore', 'content', 'lang', 'private'}
         path = kwargs.get('path', '')
         try:
             novel = Novel.objects.get(path=path)
@@ -59,23 +62,24 @@ class NovelTools(View):
             return JsonResponse({"error": "Novel not found"}, status=404)
         body = json.loads(request.body.decode('utf-8'))
         if set(body.keys()) != required_fields or body['lang'] not in {'HU', 'EN'}:
-            return JsonResponse({"error": "Bad request"}, status=400)
+            return JsonResponse({"error": "Bad request.", 'neededFields': required_fields}, status=400)
         novel.title = body['title']
         novel.lore = body['lore']
         novel.content = body['content']
         novel.lang = body['lang']
+        novel.private = body['private']
         novel.save()
         return JsonResponse({
             'title': novel.title,
             'path': novel.path,
             'lore': novel.lore,
             'content': novel.content,
-            'lang': novel.lang
+            'lang': novel.lang,
+            'private': novel.private
         })
 
-    @method_decorator(
-        permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
-                          'You don\'t have permission to edit this novel'))
+    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
+                                        'You don\'t have permission to edit this novel'))
     def delete(self, request, *args, **kwargs):
         path = kwargs.get('path', '')
         try:
@@ -87,9 +91,8 @@ class NovelTools(View):
 
 
 class NovelFavoriteToggle(View):
-    @method_decorator(
-        permission_needed('request.fb_user.isAnonymous', 'Log in to mark novels as favorite',
-                          "Log in with a non-Anonymous account"))
+    @method_decorator(permission_needed('request.fb_user.isAnonymous', 'Log in to mark novels as favorite',
+                                        "Log in with a non-Anonymous account"))
     def post(self, request, *args, **kwargs):
         path = kwargs.get('path', '')
         try:
@@ -104,9 +107,8 @@ class NovelFavoriteToggle(View):
             favs.add(novel)
             return JsonResponse({'liked': True})
 
-    @method_decorator(
-        permission_needed('not request.fb_user.isAdmin', 'Log in to see this value',
-                          'You have to be admin to see this value'))
+    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'Log in to see this value',
+                                        'You have to be admin to see this value'))
     def get(self, request, *args, **kwargs):
         path = kwargs.get('path', '')
         try:
@@ -117,9 +119,8 @@ class NovelFavoriteToggle(View):
 
 
 class UserFavorites(View):
-    @method_decorator(
-        permission_needed('request.fb_user.isAnonymous', 'Log in to have novels as favorite',
-                          "Log in with a non-Anonymous account"))
+    @method_decorator(permission_needed('request.fb_user.isAnonymous', 'Log in to have novels as favorite',
+                                        "Log in with a non-Anonymous account"))
     def get(self, request, *args, **kwargs):
         resp = []
         for fav in request.fb_user.favorites.all():
@@ -128,3 +129,28 @@ class UserFavorites(View):
                 'path': fav.path
             })
         return JsonResponse(resp, safe=False, charset='utf-8')
+
+
+class NewUpload(View):
+    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to upload novels',
+                                        'You don\'t have permission to upload novels'))
+    def post(self, request, *args, **kwargs):
+        try:
+            d = Document(request.FILES['noveldoc'])
+        except (BadZipFile, MultiValueDictKeyError):
+            return JsonResponse({"error": "Wrong file"}, status=400)
+        if len(d.paragraphs) < 2:
+            return JsonResponse({"error": "Wrong file"}, status=400)
+        try:
+            novel = Novel.objects.create(title=d.paragraphs[0].text, private=True)
+        except IntegrityError:
+            return JsonResponse({"error": "Not unique title"}, status=400)
+        content = ''
+        for p in d.paragraphs[1:]:
+            content += p.text + '\n'
+        novel.content = content
+        novel.save()
+        return JsonResponse({
+            'title': novel.title,
+            'path': novel.path
+        })

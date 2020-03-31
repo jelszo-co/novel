@@ -13,6 +13,9 @@ class Novel(models.Model):
         ('EN', 'English')
     ], default='HU')
 
+    def __str__(self):
+        return self.title
+
     def save(self, *args, **kwargs):
         path = self.title.lower()
         self.path = path.replace(' ', '-').replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó',
