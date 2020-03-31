@@ -173,7 +173,7 @@ jobs:
       run: pip3 install -r backend/requirements.txt
 
     - name: python test
-      run: coverage run --omit "*/venv/*"  manage.py test && coverage xml
+      run: coverage run --omit "*/venv/*,manage.py"  manage.py test && coverage xml
       working-directory: ${{ env.backend-directory }}
 
     - name: Run codacy-coverage-reporter

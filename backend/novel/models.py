@@ -13,7 +13,7 @@ class Novel(models.Model):
         ('EN', 'English')
     ], default='HU')
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         return self.title
 
     def save(self, *args, **kwargs):

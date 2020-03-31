@@ -32,7 +32,7 @@ class DisableCSRFOnDebug:
         self.get_response = get_response
 
     def __call__(self, request):
-        if settings.DEBUG:
+        if settings.DEBUG:  # pragma: no cover
             setattr(request, '_dont_enforce_csrf_checks', True)
         response = self.get_response(request)
         return response

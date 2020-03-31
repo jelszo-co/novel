@@ -9,8 +9,8 @@ from novel.models import Novel
 class GetNovelTestCase(TestCase):
     @freezegun.freeze_time('2020.01.01T12:00:00')
     def setUp(self):
-        self.n1 = Novel.objects.create(title='Az ördögűző', private=False, lore='Ezt csak a teszthez használom',
-                                       content='Forgó fejű baba', lang='HU')
+        self.n1 = Novel.objects.create(title='Az ördögűző', private=False, lore='', content='Forgó fejű baba',
+                                       lang='HU')
         self.n2 = Novel.objects.create(title='Utolsó percek', private=True,
                                        lore='Az igazi biztos kinn van az oldalon ;)',
                                        content='Halál', lang='HU')

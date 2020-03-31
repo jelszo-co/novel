@@ -10,7 +10,7 @@ class User(models.Model):
     isAuthenticated = models.BooleanField(default=True)
     favorites = models.ManyToManyField(Novel, blank=True)
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         if self.uid == 'unauthenticated':
             return '*service account - needed for backend*'
         return f'{self.uid} - {"anonim" if self.isAnonymous else ""}{"admin" if self.isAdmin else ""}'
