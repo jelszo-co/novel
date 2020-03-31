@@ -15,28 +15,28 @@
 ## Creators
 Created by [__Jelszo Co__](https://github.com/jelszo-co):
 
-  * [__Kiss Benedek Máté__](https://github.com/Tasztalos69) - *Frontend developer*
+* [__Kiss Benedek Máté__](https://github.com/Tasztalos69) - *Frontend developer*
 
-  * [__Tóth Bence__](https://github.com/bnctth) - *Backend developer*
+* [__Tóth Bence__](https://github.com/bnctth) - *Backend developer*
 
-  * [__Jóvári Norbert__](https://github.com/JvrR9945) - *DevOps Engineer*
+* [__Jóvári Norbert__](https://github.com/JvrR9945) - *DevOps Engineer*
 
 ## Technology
 <!-- TODO add links for tech -->
 ### Tech stack
 
-  * __JavaScript/React__ - *Frontend framework*
-  * __Python/Django__ - *Backend framework*
-  * __PostgreSQL__ - *Database*
-  * __Firebase__ - *Authentication*
-  * __Heroku__ - *Hosting*
+* __JavaScript/React__ - *Frontend framework*
+* __Python/Django__ - *Backend framework*
+* __PostgreSQL__ - *Database*
+* __Firebase__ - *Authentication*
+* __Heroku__ - *Hosting*
 
 ### DevOps
 
-  * __Sentry__ - *Error tracker*
-  * __Jira__ - *Issue tracker*
-  * __Codacy__ - *Code analyzer*
-  * __Github Actions__ - *CI provider*
+* __Sentry__ - *Error tracker*
+* __Jira__ - *Issue tracker*
+* __Codacy__ - *Code analyzer*
+* __Github Actions__ - *CI provider*
 
 ## License
 
