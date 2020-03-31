@@ -173,8 +173,16 @@ jobs:
       run: pip3 install -r backend/requirements.txt
 
     - name: python test
-      run: python3 manage.py test
+      run: coverage run --omit "*/venv/*"  manage.py test && coverage xml
       working-directory: ${{ env.backend-directory }}
+
+    - name: Run codacy-coverage-reporter
+      run: |
+        curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux"))) | .[0].browser_download_url')"
+        chmod +x codacy-coverage-reporter
+        ./codacy-coverage-reporter report -r backend/coverage.xml
+      env: 
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
     - name: send discord success message
       if: success()
