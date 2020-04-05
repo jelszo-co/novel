@@ -1,0 +1,116 @@
+name: Master Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  master-deploy:
+    runs-on: ubuntu-latest
+    env:
+      frontend-directory: ./frontend
+      backend-directory: ./backend
+      heroku-directory: ./heroku
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: set env
+        run: echo ::set-env name=VERSION::$(echo ./node_modules/.bin/sentry-cli releases propose-version)
+
+      - name: create release
+        run: ./node_modules/.bin/sentry-cli releases new -p novel-frontend -p novel-backend ${{ env.VERSION }}
+
+      - name: associate commits
+        run: ./node_modules/.bin/sentry-cli releases set-commits --auto ${{ env.VERSION }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+        working-directory: ${{ env.frontend-directory }}
+
+      - name: yarn build
+        run: yarn run build --if-present
+        working-directory: ${{ env.frontend-directory }}
+
+      - name: copy build files
+        run: mkdir backend/frontend && cp frontend/build/* backend/frontend/ -r
+
+      - name: add firebase secrets
+        run: gpg --quiet --batch --yes --decrypt --passphrase=${{secrets.FIREBASE_DECRYPT_KEY}} --output backend/firebase.json backend/firebase.json.gpg
+
+      - name: clone heroku
+        run: git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME_MASTER }}.git ${{env.heroku-directory}}
+
+      - name: copy to heroku
+        run: cp backend/* heroku/ -r
+      - name: git config
+        run: git config --global user.name jelszo &&  git config --global user.email support@jelszo.co
+
+      - name: git add
+        run: git add .
+        working-directory: ${{env.heroku-directory}}
+
+      - name: git commit
+        run: git commit -m "deploy"
+        working-directory: ${{env.heroku-directory}}
+
+      - name: send discord up-to-date message
+        if: failure()
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN_CASUAL }}
+          avatar_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+          color: "#F1C40F"
+          username: "Novel Check Bot"
+          message: "Heroku branch is up to date."
+
+      - name: Deploy to heroku
+        run: git push
+        working-directory: ${{env.heroku-directory}}
+
+      - name: finalize Sentry
+        run: ./node_modules/.bin/sentry-cli releases finalize ${{ env.VERSION }}
+
+      - name: send discord success message
+        if: success()
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID_SUCCESS }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN_SUCCESS }}
+          avatar_url: "https://i.imgur.com/YBD6GVz.png"
+          color: "#2ECC71"
+          username: "Novel Check Bot"
+          message: "`Deploy` is done."
+
+      - name: send discord failure message
+        if: failure()
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID_FAIL }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN_FAIL }}
+          avatar_url: "https://i.imgur.com/66VzOSm.png"
+          color: "#E74C3C"
+          username: "Novel Check Bot"
+          message: "`Deploy` is failed."
