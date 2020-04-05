@@ -23,7 +23,20 @@ class Login extends Component {
       valid2: false,
       valid3: false,
       showValidator: 0,
+      didForgotPass: false,
     };
+  }
+
+  changeResetMode() {
+    document.querySelector('.form-group-forgot-pass').style.opacity = 0;
+    document.querySelector('#login-form input[type=submit]').style.opacity = 0;
+    setTimeout(() => {
+      this.setState({ didForgotPass: !this.state.didForgotPass });
+      document.querySelector('.form-group-forgot-pass').style.opacity = 1;
+      document.querySelector(
+        '#login-form input[type=submit]',
+      ).style.opacity = 1;
+    }, 200);
   }
 
   render() {
@@ -37,6 +50,7 @@ class Login extends Component {
       valid1,
       valid2,
       valid3,
+      didForgotPass,
     } = this.state;
     const alertColor = '#ab1717';
     const emailPatt = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/g;
@@ -51,7 +65,7 @@ class Login extends Component {
         }, 800);
       }
     };
-    const handleRegister = e => {
+    const handleRegister = (e) => {
       e.preventDefault();
       let err = false;
       if (fullName.length === 0) {
@@ -70,7 +84,7 @@ class Login extends Component {
         // Handle firebase here
       }
     };
-    const handleLogin = e => {
+    const handleLogin = (e) => {
       e.preventDefault();
       let err = false;
       if (!loginEmail.match(emailPatt)) {
@@ -123,7 +137,11 @@ class Login extends Component {
           />
         </div>
         <div id='form-cont'>
-          <form id='register-form' onSubmit={e => handleRegister(e)} noValidate>
+          <form
+            id='register-form'
+            onSubmit={(e) => handleRegister(e)}
+            noValidate
+          >
             <h3 className='form-title'>{t('form_register_title')}</h3>
             <div className='form-group form-group-validator'>
               <input
@@ -134,7 +152,7 @@ class Login extends Component {
                 autoCorrect='on'
                 placeholder={t('form_name')}
                 value={fullName}
-                onChange={e => handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
               <input
                 required
@@ -144,7 +162,7 @@ class Login extends Component {
                 autoCorrect='on'
                 placeholder={t('form_email')}
                 value={regEmail}
-                onChange={e => handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
               <input
                 required
@@ -155,7 +173,7 @@ class Login extends Component {
                 autoCorrect='off'
                 placeholder={t('form_password')}
                 value={regPass}
-                onChange={e => handleChange(e)}
+                onChange={(e) => handleChange(e)}
                 onFocus={() => this.setState({ showValidator: 1 })}
                 onBlur={() => this.setState({ showValidator: 0 })}
               />
@@ -211,9 +229,16 @@ class Login extends Component {
             <input type='submit' value={t('form_register_submit')} />
           </form>
 
-          <form id='login-form' onSubmit={e => handleLogin(e)} noValidate>
+          <form id='login-form' onSubmit={(e) => handleLogin(e)} noValidate>
             <h3 className='form-title'>{t('form_login_title')}</h3>
             <div className='form-group'>
+              <p
+                className='forgot-back'
+                onClick={() => this.changeResetMode()}
+                style={{ opacity: didForgotPass ? 1 : 0 }}
+              >
+                {t('forgot_back')}
+              </p>
               <input
                 required
                 name='loginEmail'
@@ -222,20 +247,41 @@ class Login extends Component {
                 autoCorrect='on'
                 placeholder={t('form_email')}
                 value={loginEmail}
-                onChange={e => handleChange(e)}
+                onChange={(e) => handleChange(e)}
               />
-              <input
-                required
-                name='loginPass'
-                type='password'
-                autoComplete='current-password'
-                autoCorrect='off'
-                placeholder={t('form_password')}
-                value={loginPass}
-                onChange={e => handleChange(e)}
-              />
+              <div className='form-group-forgot-pass'>
+                {!didForgotPass ? (
+                  <>
+                    <input
+                      required
+                      name='loginPass'
+                      type='password'
+                      autoComplete='current-password'
+                      autoCorrect='off'
+                      placeholder={t('form_password')}
+                      value={loginPass}
+                      onChange={(e) => handleChange(e)}
+                    />
+                    <p
+                      className='forgot-link'
+                      onClick={() => this.changeResetMode()}
+                    >
+                      {t('forgot_pass')}
+                    </p>
+                  </>
+                ) : (
+                  <p className='forgot-instructions'>
+                    {t('forgot_instructions')}
+                  </p>
+                )}
+              </div>
             </div>
-            <input type='submit' value={t('form_login_submit')} />
+            <input
+              type='submit'
+              value={
+                didForgotPass ? t('form_login_reset') : t('form_login_submit')
+              }
+            />
           </form>
         </div>
       </div>

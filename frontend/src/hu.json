@@ -32,9 +32,14 @@
     "form_password": "Jelszó",
     "form_register_submit": "Regisztrálok",
     "form_login_submit": "Bejelentkezek",
+    "form_login_reset": "Küldés",
 
     "form_val_1": "8+ karakter",
     "form_val_2": "1 kis és 1 nagy karakter",
-    "form_val_3": "1 szám"
+    "form_val_3": "1 szám",
+
+    "forgot_pass": "Elfelejtett jelszó?",
+    "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
+    "forgot_back": "Vissza"
   }
 }

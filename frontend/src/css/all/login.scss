@@ -45,6 +45,7 @@
       .form-group {
         display: flex;
         flex-direction: column;
+        transition: 0.2s all ease-in-out;
         input {
           border-bottom: 2pt solid $white;
           font-size: 1.3rem;
@@ -52,6 +53,43 @@
           margin: 20px 0;
           align-self: stretch;
           transition: 0.1s all ease-in-out;
+        }
+        p.forgot-back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: translateY(-200%);
+          font-size: 1.4rem;
+          cursor: pointer;
+          transition: 0.1s all ease-in-out;
+          opacity: 0;
+        }
+
+        .form-group-forgot-pass {
+          display: block;
+          margin: 20px 0;
+          align-self: stretch;
+          transition: 0.2s all ease-in-out;
+          input {
+            margin: 0;
+            width: 100%;
+          }
+          p.forgot-link {
+            margin: 0;
+            margin-top: 3pt;
+            text-align: right;
+            text-decoration: underline;
+            font-size: 1.2rem;
+            cursor: pointer;
+          }
+          p.forgot-instructions {
+            text-align: center;
+            margin: 5.5px 0;
+            font-size: 1.15rem;
+            line-height: 1.2rem;
+            width: 96%;
+            margin-left: 2%;
+          }
         }
         position: relative;
       }
@@ -105,6 +143,7 @@
         line-height: 1.6rem;
         align-self: center;
         border-bottom: 2.5pt solid $white;
+        transition: 0.2s all ease-in-out;
         &[type='submit'] {
           cursor: pointer;
         }

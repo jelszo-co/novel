@@ -6,7 +6,7 @@ import '../../css/components/menu.scss';
 
 const useOutsideAlerter = (ref, changeMenu) => {
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         changeMenu(false);
       }
@@ -26,7 +26,7 @@ const Menu = () => {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, changeMenu);
 
-  const displayRole = r => {
+  const displayRole = (r) => {
     switch (r) {
       case 'anonymous':
         return <Link to='/login'>{t('menu_login')}</Link>;
@@ -39,7 +39,7 @@ const Menu = () => {
     }
   };
 
-  const changeLang = ln => {
+  const changeLang = (ln) => {
     localStorage.setItem('lng', ln);
     i18n.changeLanguage(ln);
   };
@@ -61,14 +61,14 @@ const Menu = () => {
       <li className='lang-switcher'>
         <button
           type='button'
-          className={clg === 'en' && 'clg'}
+          className={clg === 'en' ? 'clg' : ''}
           onClick={() => changeLang('en')}
         >
           en
         </button>
         <button
           type='button'
-          className={clg === 'hu' && 'clg'}
+          className={clg === 'hu' ? 'clg' : ''}
           onClick={() => changeLang('hu')}
         >
           hu
