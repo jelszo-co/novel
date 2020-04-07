@@ -25,13 +25,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: set env
-        run: echo ::set-env name=VERSION::$(echo ./node_modules/.bin/sentry-cli releases propose-version)
+        run: echo ::set-env name=VERSION::$(./node_modules/.bin/sentry-cli releases propose-version)
 
       - name: create release
         run: ./node_modules/.bin/sentry-cli releases new -p novel-frontend -p novel-backend ${{ env.VERSION }}
+        working-directory: ${{ env.frontend-directory }}
 
       - name: associate commits
         run: ./node_modules/.bin/sentry-cli releases set-commits --auto ${{ env.VERSION }}
+        working-directory: ${{ env.frontend-directory }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -75,16 +77,16 @@ jobs:
         run: git commit -m "deploy"
         working-directory: ${{env.heroku-directory}}
 
-      - name: send discord up-to-date message
-        if: failure()
-        uses: appleboy/discord-action@master
-        with:
-          webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN_CASUAL }}
-          avatar_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-          color: "#F1C40F"
-          username: "Novel Check Bot"
-          message: "Heroku branch is up to date."
+      # - name: send discord up-to-date message
+      #   if: failure()
+      #   uses: appleboy/discord-action@master
+      #   with:
+      #     webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
+      #     webhook_token: ${{ secrets.WEBHOOK_TOKEN_CASUAL }}
+      #     avatar_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+      #     color: "#F1C40F"
+      #     username: "Novel Check Bot"
+      #     message: "Heroku branch is up to date."
 
       - name: Deploy to heroku
         run: git push
@@ -92,6 +94,7 @@ jobs:
 
       - name: finalize Sentry
         run: ./node_modules/.bin/sentry-cli releases finalize ${{ env.VERSION }}
+        working-directory: ${{ env.frontend-directory }}
 
       - name: send discord success message
         if: success()
