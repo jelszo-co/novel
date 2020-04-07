@@ -8,8 +8,8 @@ import { ReactComponent as Cross } from '../../assets/cross.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';
 
 const Popup = ({ popup }) => {
-  const cont = useRef(null);
-  const line = useRef(null);
+  const cont = useRef();
+  const line = useRef();
 
   useEffect(() => {
     TweenMax.fromTo(
@@ -22,7 +22,7 @@ const Popup = ({ popup }) => {
       cont.current,
       0.2,
       { opacity: 1, top: '1%' },
-      { opacity: 0, top: '-1%', delay: 4.2 },
+      { opacity: 0, top: '-1%', delay: 3.6 },
     );
   });
 

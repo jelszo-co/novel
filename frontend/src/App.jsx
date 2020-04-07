@@ -6,6 +6,7 @@ import Landing from './pages/Landing';
 import List from './pages/List';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import Novel from './pages/Novel';
 import Err from './pages/404';
 
 // Redux
@@ -28,6 +29,7 @@ const App = () => {
           <Route exact path='/list' component={List} />
           <Route exact path='/contact' component={Contact} />
           <Route exact path='/login' component={Login} />
+          <Route exact path='/novels/:title' component={Novel} />
           <Route component={Err} />
         </Switch>
       </Router>
