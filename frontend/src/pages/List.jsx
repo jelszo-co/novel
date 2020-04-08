@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -102,10 +101,6 @@ const List = ({ novels: { loading, list } }) => {
       </div>
     )
   );
-};
-
-List.propTypes = {
-  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

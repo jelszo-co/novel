@@ -30,6 +30,11 @@ h6 {
   font-weight: normal;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 *::selection,
 *::-moz-selection {
   background: $white;

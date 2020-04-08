@@ -41,7 +41,10 @@
 
     "forgot_pass": "Elfelejtett jelszó?",
     "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
-    "forgot_back": "Vissza",
+    "back": "Vissza",
+
+    "comments_header": "Kommentek",
+    "comment_placeholder": "Komment írása...",
 
     "err_novel_list": "Hiba a novellák lekérdezésében."
   }

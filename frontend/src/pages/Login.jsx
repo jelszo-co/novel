@@ -236,7 +236,7 @@ class Login extends Component {
                 onKeyDown={() => this.changeResetMode()}
                 style={{ opacity: didForgotPass ? 1 : 0 }}
               >
-                {t('forgot_back')}
+                {t('back')}
               </button>
               <input
                 required

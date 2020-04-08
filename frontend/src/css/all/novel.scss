@@ -6,9 +6,11 @@
     left: 1%;
     .novel-title {
       position: relative;
-      font-size: 3rem;
+      font-size: 4rem;
     }
     .novel-date {
+      display: block;
+      margin-top: 10px;
       font-size: 1.6rem;
       font-weight: 200;
       letter-spacing: 1px;
@@ -18,8 +20,78 @@
       width: 2.6rem;
       fill: $white;
       vertical-align: middle;
-      margin-bottom: 13px;
+      margin-bottom: 6px;
       margin-left: 20px;
+    }
+  }
+  .novel-back {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: $white;
+  }
+  .novel-content {
+    margin-top: 20%;
+    text-align: center;
+    //text-align-last: center;
+    width: 70%;
+    margin-left: 15%;
+    font-size: 1.7rem;
+    //letter-spacing: 0.3px;
+    line-height: 2rem;
+  }
+
+  .comments-header {
+    margin-top: 6%;
+    margin-left: 25pt;
+    font-family: 'Forum';
+    font-size: 3.5rem;
+  }
+
+  .comments {
+    width: 60%;
+    margin: 4% 20% 0;
+
+    .write {
+      width: 100%;
+      position: relative;
+
+      input {
+        width: calc(100% - 120px);
+        background: none;
+        border: none;
+        border-bottom: 2.5pt solid $white;
+        font-family: 'Markazi text';
+        font-size: 1.8rem;
+        line-height: 1rem;
+        padding: 0.1rem 70px 0.1rem 0;
+        margin: 0;
+      }
+
+      .char-limit {
+        position: absolute;
+        top: 0.1rem;
+        right: 50px;
+        font-size: 1.6rem;
+        opacity: 0.8;
+      }
+      button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        fill: $white;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        svg {
+          width: 45px;
+          height: 45px;
+        }
+      }
     }
   }
 }
