@@ -35,12 +35,15 @@
   .novel-content {
     margin-top: 20%;
     text-align: center;
-    //text-align-last: center;
-    width: 70%;
-    margin-left: 15%;
+    width: 60%;
+    margin-left: 20%;
     font-size: 1.7rem;
-    //letter-spacing: 0.3px;
+    letter-spacing: 0.1px;
     line-height: 2rem;
+
+    p {
+      margin-bottom: 20px;
+    }
   }
 
   .comments-header {

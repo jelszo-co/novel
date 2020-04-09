@@ -23,6 +23,7 @@ const Novel = ({ match }) => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`)
       .then(res => {
+        console.log(res.data.content);
         setNovel(res.data);
       })
       .catch(err => {
@@ -33,7 +34,6 @@ const Novel = ({ match }) => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/comment/${match.params.title}`)
       .then(res => {
-        console.log(res.data);
         setComments(res.data);
       })
       .catch(err => console.error(err.response));
@@ -66,7 +66,11 @@ const Novel = ({ match }) => {
             {uploadedAt}
           </Moment>
         </div>
-        <div className='novel-content'>{content}</div>
+        <div className='novel-content'>
+          {content.split('\r\n').map((item, i) => (
+            <p key={i}>{item}</p>
+          ))}
+        </div>
         <h2 className='comments-header'>{t('comments_header')}</h2>
         <div className='comments'>
           <form className='write' onSubmit={e => handleComment(e)}>

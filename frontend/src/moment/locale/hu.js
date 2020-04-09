@@ -1,4 +1,5 @@
 //! moment.js locale configuration
+/* eslint-disable */
 
 (function (global, factory) {
   typeof exports === 'object' &&
