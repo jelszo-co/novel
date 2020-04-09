@@ -33,7 +33,7 @@ const Popup = ({ popup }) => {
       <div className='popup' key={id} ref={cont}>
         {type === 'err' ? <Cross /> : <Tick />}
         {msg}
-        <div className='popup-line' ref={line}></div>
+        <div className='popup-line' ref={line} />
       </div>
     ))
   );

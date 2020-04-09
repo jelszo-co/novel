@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+// Redux
+import { Provider } from 'react-redux';
+import store from './store';
+import { getNovels } from './actions/novels';
+import { useTranslation } from 'react-i18next';
+
 import './css/app.scss';
+
 import Popup from './pages/components/Popup';
 import Landing from './pages/Landing';
 import List from './pages/List';
@@ -8,12 +16,6 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Novel from './pages/Novel';
 import Err from './pages/404';
-
-// Redux
-import { Provider } from 'react-redux';
-import store from './store';
-import { getNovels } from './actions/novels';
-import { useTranslation } from 'react-i18next';
 
 const App = () => {
   const { t } = useTranslation();
