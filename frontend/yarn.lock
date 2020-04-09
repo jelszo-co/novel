@@ -1348,10 +1348,10 @@
     dom-accessibility-api "^0.4.2"
     pretty-format "^25.1.0"
 
-"@testing-library/jest-dom@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.3.0.tgz#2ae813b8b0eb69e8808f75d3af8efa3f0dc4d7ec"
-  integrity sha512-Cdhpc3BHL888X55qBNyra9eM0UG63LCm/FqCWTa1Ou/0MpsUbQTM9vW1NU6/jBQFoSLgkFfDG5XVpm2V0dOm/A==
+"@testing-library/jest-dom@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.4.0.tgz#9ac08b6dc7a750fe3bf7658116dd246890f836d2"
+  integrity sha512-dsXGGNiZhZVrBgQ7lxznZmzKvJ3DfhmTH7jkgfyDCjgyGbviLrGVWLQO6rXYfootU81mw96HaYH2L7DthJEC7A==
   dependencies:
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__jest-dom" "^5.0.2"
@@ -5536,10 +5536,10 @@ https-proxy-agent@^4.0.0:
     agent-base "5"
     debug "4"
 
-i18next@^19.3.4:
-  version "19.3.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.3.4.tgz#512de50ee6075df825c646e1ce646a104f0938c9"
-  integrity sha512-ef7AxxutzdhBsBNugE9jgqsbwesG1muJOtZ9ZrPARPs/jXegViTp4+8JCeMp8BAyTIo1Zn0giqc8+2UpqFjU0w==
+i18next@^19.4.0:
+  version "19.4.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.4.0.tgz#492a03aac701d9efeeee86509d101a09d960b000"
+  integrity sha512-NvSz/Pb5KiLqhL+nqHu5SXNUtWDpHkVosVwD6PRSZWtBpVs6pXzqrRhyFdFvVivQcQheSxiHD3Oq1WKxoWy1ow==
   dependencies:
     "@babel/runtime" "^7.3.1"
 
