@@ -119,9 +119,12 @@ class NewUpload(View):
     @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to upload novels',
                                         'You don\'t have permission to upload novels'))
     def post(self, request, *args, **kwargs):
+        fn = 'noveldoc'
         try:
-            d = Document(request.FILES['noveldoc'])
-        except (BadZipFile, MultiValueDictKeyError):
+            d = Document(request.FILES[fn])
+        except MultiValueDictKeyError:
+            return JsonResponse({"error": f"No file with name: {fn}"}, status=400)
+        except BadZipFile:
             return JsonResponse({"error": "Wrong file"}, status=400)
         if len(d.paragraphs) < 2:
             return JsonResponse({"error": "Wrong file"}, status=400)

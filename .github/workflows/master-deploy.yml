@@ -77,17 +77,6 @@ jobs:
         run: git commit -m "deploy"
         working-directory: ${{env.heroku-directory}}
 
-      # - name: send discord up-to-date message
-      #   if: failure()
-      #   uses: appleboy/discord-action@master
-      #   with:
-      #     webhook_id: ${{ secrets.WEBHOOK_ID_CASUAL }}
-      #     webhook_token: ${{ secrets.WEBHOOK_TOKEN_CASUAL }}
-      #     avatar_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-      #     color: "#F1C40F"
-      #     username: "Novel Check Bot"
-      #     message: "Heroku branch is up to date."
-
       - name: Deploy to heroku
         run: git push
         working-directory: ${{env.heroku-directory}}
