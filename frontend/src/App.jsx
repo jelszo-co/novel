@@ -16,11 +16,15 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Novel from './pages/Novel';
 import Err from './pages/404';
+import { auth } from './firebase';
 
 const App = () => {
   const { t } = useTranslation();
   useEffect(() => {
     store.dispatch(getNovels(t('err_novel_list')));
+    auth().onAuthStateChanged(user => {
+      console.log(user);
+    });
   }, [t]);
   return (
     <Provider store={store}>

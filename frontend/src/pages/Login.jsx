@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { auth } from '../firebase';
 
 import Title from './components/Title';
 import Menu from './components/Menu';
@@ -82,7 +83,11 @@ class Login extends Component {
         alertUser('regPass');
       }
       if (!err) {
-        // Handle firebase here
+        auth()
+          .createUserWithEmailAndPassword(regEmail, regPass)
+          .catch(err => {
+            console.error(err);
+          });
       }
     };
     const handleLogin = e => {
@@ -97,7 +102,11 @@ class Login extends Component {
         alertUser('loginPass');
       }
       if (!err) {
-        // Handle firebase here
+        auth()
+          .signInWithEmailAndPassword(loginEmail, loginPass)
+          .catch(err => {
+            console.error(err);
+          });
       }
     };
 
