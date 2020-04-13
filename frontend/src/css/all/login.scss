@@ -44,6 +44,7 @@
 
       .form-group {
         display: flex;
+        position: relative;
         flex-direction: column;
         transition: 0.2s all ease-in-out;
         input {
@@ -54,7 +55,9 @@
           align-self: stretch;
           transition: 0.1s all ease-in-out;
         }
-        p.forgot-back {
+        button.forgot-back {
+          padding: 0;
+          margin: 0;
           position: absolute;
           top: 0;
           left: 0;
@@ -63,6 +66,9 @@
           cursor: pointer;
           transition: 0.1s all ease-in-out;
           opacity: 0;
+          background: none;
+          border: none;
+          font-family: 'Markazi text';
         }
 
         .form-group-forgot-pass {
@@ -74,12 +80,16 @@
             margin: 0;
             width: 100%;
           }
-          p.forgot-link {
+          button.forgot-link {
             margin: 0;
+            padding: 0;
             margin-top: 3pt;
-            text-align: right;
+            float: right;
             text-decoration: underline;
             font-size: 1.2rem;
+            font-family: 'Markazi text';
+            background: none;
+            border: none;
             cursor: pointer;
           }
           p.forgot-instructions {
@@ -91,7 +101,6 @@
             margin-left: 2%;
           }
         }
-        position: relative;
       }
       #reg-password {
         margin-bottom: 0;
