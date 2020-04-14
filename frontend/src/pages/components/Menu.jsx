@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import '../../css/components/menu.scss';
@@ -19,9 +20,8 @@ const useOutsideAlerter = (ref, changeMenu) => {
   }, [ref, changeMenu]);
 };
 
-const Menu = () => {
+const Menu = ({ user: { role } }) => {
   const { t, i18n } = useTranslation();
-  const [role] = useState('anonymous');
   const [showMenu, changeMenu] = useState(false);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, changeMenu);
@@ -87,4 +87,8 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Menu);

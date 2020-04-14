@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+
 const config = {
   apiKey: 'AIzaSyBfMuqAzLFa9LEl3qeyxCCqcA1dLuRE37M',
   authDomain: 'novel-ee9fb.firebaseapp.com',
@@ -9,5 +10,11 @@ const config = {
   messagingSenderId: '785127246699',
   appId: '1:785127246699:web:e5c7bfb8cfb0ec52c45a2e',
 };
+
 firebase.initializeApp(config);
+
+auth().onAuthStateChanged(user => {
+  if (user) {
+  }
+});
 export const auth = firebase.auth;

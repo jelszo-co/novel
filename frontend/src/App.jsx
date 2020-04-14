@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { getNovels } from './actions/novels';
-import { useTranslation } from 'react-i18next';
 
 import './css/app.scss';
 
@@ -19,13 +18,9 @@ import Err from './pages/404';
 import { auth } from './firebase';
 
 const App = () => {
-  const { t } = useTranslation();
   useEffect(() => {
-    store.dispatch(getNovels(t('err_novel_list')));
-    auth().onAuthStateChanged(user => {
-      console.log(user);
-    });
-  }, [t]);
+    store.dispatch(getNovels());
+  }, []);
   return (
     <Provider store={store}>
       <Router data-test='router'>
