@@ -20,6 +20,11 @@ import { auth } from './firebase';
 const App = () => {
   useEffect(() => {
     store.dispatch(getNovels());
+
+    auth().onAuthStateChanged(user => {
+      if (user) {
+      }
+    });
   }, []);
   return (
     <Provider store={store}>

@@ -13,8 +13,4 @@ const config = {
 
 firebase.initializeApp(config);
 
-auth().onAuthStateChanged(user => {
-  if (user) {
-  }
-});
 export const auth = firebase.auth;
