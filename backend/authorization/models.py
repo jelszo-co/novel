@@ -6,9 +6,10 @@ from novel.models import Novel
 class User(models.Model):
     uid = models.CharField(max_length=32, unique=True)
     isAdmin = models.BooleanField(default=False)
-    isAnonymous = models.BooleanField(default=True)
+    isAnonymous = models.BooleanField(default=False)
     isAuthenticated = models.BooleanField(default=True)
     favorites = models.ManyToManyField(Novel, blank=True)
+    name = models.CharField(max_length=32, default='Unknown')
 
     def __str__(self):  # pragma: no cover
         if self.uid == 'unauthenticated':

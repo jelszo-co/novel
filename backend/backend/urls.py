@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urls = [
-    path('novel/', include('novel.urls'))
+    path('novel/', include('novel.urls')),
+    path('user/', include('authorization.urls'))
 ]
 
 urlpatterns = [
