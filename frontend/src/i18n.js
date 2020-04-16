@@ -11,6 +11,7 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
+  initImmediate: false,
   lng: localStorage.getItem('lng') || undefined,
   languages: ['hu', 'en'],
   load: 'currentOnly',
