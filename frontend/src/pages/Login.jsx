@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { withTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import { authUser } from '../actions/user';
+import { auth } from '../firebase';
 
 import Title from './components/Title';
 import Menu from './components/Menu';
@@ -13,7 +13,8 @@ import { ReactComponent as Facebook } from '../assets/facebook.svg';
 
 import '../css/all/login.scss';
 
-const Login = ({ user, authUser, t }) => {
+const Login = ({ user }) => {
+  const { t } = useTranslation();
   const [registerData, setRegisterData] = useState({
     fullName: '',
     regEmail: '',
@@ -51,6 +52,7 @@ const Login = ({ user, authUser, t }) => {
 
   const alertColor = '#ab1717';
   const emailPatt = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/g;
+
   const alertUser = (field, expires = true) => {
     const sc = `input[name=${field}]`;
     document.querySelector(sc).style.borderColor = alertColor;
@@ -94,7 +96,11 @@ const Login = ({ user, authUser, t }) => {
       alertUser('loginPass');
     }
     if (!err) {
-      authUser(loginEmail, loginPass);
+      try {
+        auth().signInWithEmailAndPassword(loginEmail, loginPass);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -118,7 +124,11 @@ const Login = ({ user, authUser, t }) => {
 
   const grey = 'rgba(255, 255, 255, 0.7)';
 
-  return user.role === 'stranger' ? (
+  return user.role === 'admin' ? (
+    <Redirect to='/admin' />
+  ) : user.role === 'user' ? (
+    <Redirect to='/profile' />
+  ) : (
     <div id='login'>
       <Title>{t('login_title')}</Title>
       <Menu />
@@ -280,8 +290,6 @@ const Login = ({ user, authUser, t }) => {
         </form>
       </div>
     </div>
-  ) : (
-    <Redirect to='/account' />
   );
 };
 
@@ -289,4 +297,4 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { authUser })(withTranslation()(Login));
+export default connect(mapStateToProps)(Login);

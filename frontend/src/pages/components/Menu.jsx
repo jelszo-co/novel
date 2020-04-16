@@ -31,7 +31,7 @@ const Menu = ({ user: { role } }) => {
       case 'anonymous':
         return <Link to='/login'>{t('menu_login')}</Link>;
       case 'user':
-        return <Link to='/account'>{t('menu_user')}</Link>;
+        return <Link to='/profile'>{t('menu_user')}</Link>;
       case 'admin':
         return <Link to='/admin'>{t('menu_admin')}</Link>;
       default:

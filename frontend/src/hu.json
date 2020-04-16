@@ -46,6 +46,14 @@
     "comments_header": "Kommentek",
     "comment_placeholder": "Komment írása...",
 
+    "profile_title": "Fiókom",
+    "profile_last_comments": "Legutóbbi kommentjeim",
+    "profile_fav_novels": "Kedvenc novelláim",
+    "profile_change_general": "Módosítás",
+    "profile_change_password": "Jelszó módosítása",
+    "profile_delete_account": "Fiók törlése",
+    "profile_logout": "Kijelentkezés",
+
     "err_novel_list": "Hiba a novellák lekérdezésében."
   }
 }

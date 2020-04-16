@@ -1,0 +1,77 @@
+@import '../variables';
+#profile {
+  .content-wrapper {
+    position: absolute;
+    top: 57.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .col-side {
+      flex: 1 1 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .col-item-left {
+      border-left: 2pt solid $white;
+      padding: 0 6pt;
+
+      * {
+        margin: 5px 0;
+      }
+
+      .name {
+        font-family: 'Forum';
+        font-size: 1.5rem;
+      }
+
+      .email {
+        font-size: 1.3rem;
+      }
+      .change-upleft {
+        text-transform: uppercase;
+        font-size: 1.1rem;
+      }
+
+      button:nth-child(2) {
+        margin-top: 15px;
+      }
+    }
+
+    .col-item-right {
+      text-align: right;
+      button {
+        border-right: 2pt solid $white;
+        padding: 5pt 6pt;
+        float: right;
+        margin: 0;
+      }
+    }
+
+    .col-center {
+      flex: 4 1 0px;
+      h3 {
+        text-align: center;
+      }
+    }
+
+    button {
+      margin: 0;
+      padding: 0;
+      display: block;
+      background: none;
+      border: none;
+      font-family: 'Markazi Text';
+      font-size: 1.5rem;
+      line-height: 1.1rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

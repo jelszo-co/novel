@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import cookie from 'react-cookies';
-import axios from 'axios';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -16,7 +15,9 @@ import List from './pages/List';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Novel from './pages/Novel';
+import Profile from './pages/user/Profile';
 import Err from './pages/404';
+
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
 import { loadUser } from './actions/user';
@@ -44,6 +45,8 @@ const App = () => {
           <Route exact path='/contact' component={Contact} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/novels/:title' component={Novel} />
+
+          <Route exact path='/profile' component={Profile} />
           <Route component={Err} />
         </Switch>
       </Router>
