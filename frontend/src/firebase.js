@@ -1,8 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+console.log(process.env);
+
 const config = {
-  apiKey: 'AIzaSyBfMuqAzLFa9LEl3qeyxCCqcA1dLuRE37M',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: 'novel-ee9fb.firebaseapp.com',
   databaseURL: 'https://novel-ee9fb.firebaseio.com',
   projectId: 'novel-ee9fb',
