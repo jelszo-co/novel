@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 const Novel = ({ match }) => {
   const { t } = useTranslation();
   const [novel, setNovel] = useState({});
-  const [comments, setComments] = useState({});
+  //const [comments, setComments] = useState({});
   const [redirect, changeRedirect] = useState(false);
   const limit = 300;
   const [char, setChar] = useState(300);
@@ -23,7 +23,6 @@ const Novel = ({ match }) => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`)
       .then(res => {
-        console.log(res.data.content);
         setNovel(res.data);
       })
       .catch(err => {
@@ -31,12 +30,12 @@ const Novel = ({ match }) => {
           changeRedirect(true);
         }
       });
-    axios
-      .get(`${process.env.REACT_APP_SRV_ADDR}/comment/${match.params.title}`)
-      .then(res => {
-        setComments(res.data);
-      })
-      .catch(err => console.error(err.response));
+    // axios
+    //   .get(`${process.env.REACT_APP_SRV_ADDR}/comment/${match.params.title}`)
+    //   .then(res => {
+    //     setComments(res.data);
+    //   })
+    //   .catch(err => console.error(err.response));
   }, [match]);
 
   const handleComment = e => {

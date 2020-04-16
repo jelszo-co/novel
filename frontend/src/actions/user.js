@@ -11,3 +11,7 @@ export const authUser = (email, pass) => async dispatch => {
   const payload = { role: 'user', user: {} };
   dispatch({ type: AUTH_SUCCESS, payload });
 };
+
+export const loadUser = (firebaseUser, backendUser) => async dispatch => {
+  //console.log(firebaseUser, backendUser);
+};

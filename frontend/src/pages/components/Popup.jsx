@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { TweenMax } from 'gsap';
+import gsap, { TweenMax } from 'gsap';
 
 import '../../css/all/popup.scss';
 
@@ -10,6 +10,10 @@ import { ReactComponent as Tick } from '../../assets/tick.svg';
 const Popup = ({ popup }) => {
   const cont = useRef();
   const line = useRef();
+
+  gsap.config({
+    nullTargetWarn: false,
+  });
 
   useEffect(() => {
     TweenMax.fromTo(

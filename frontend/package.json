@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.2.0",
   "private": true,
-  "homepage": "/static/",
   "dependencies": {
     "@sentry/browser": "^5.15.4",
     "@sentry/cli": "^1.52.1",

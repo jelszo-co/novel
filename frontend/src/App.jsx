@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import cookie from 'react-cookies';
+import axios from 'axios';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -16,13 +18,20 @@ import Login from './pages/Login';
 import Novel from './pages/Novel';
 import Err from './pages/404';
 import { auth } from './firebase';
+import { AUTH_FAIL } from './actions/types';
+import { loadUser } from './actions/user';
 
 const App = () => {
   useEffect(() => {
     store.dispatch(getNovels());
-
-    auth().onAuthStateChanged(user => {
+    auth().onAuthStateChanged(async user => {
       if (user) {
+        const token = await user.getIdToken(true);
+        cookie.save('usertoken', token, { path: '/' });
+        const res = await axios.get(process.env.REACT_APP_SRV_ADDR + '/user/');
+        store.dispatch(loadUser(user, res.data));
+      } else {
+        store.dispatch({ type: AUTH_FAIL });
       }
     });
   }, []);
