@@ -13,5 +13,5 @@ export const authUser = (email, pass) => async dispatch => {
 };
 
 export const loadUser = (firebaseUser, backendUser) => async dispatch => {
-  //console.log(firebaseUser, backendUser);
+  console.log(firebaseUser, backendUser);
 };
