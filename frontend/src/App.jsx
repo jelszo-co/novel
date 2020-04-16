@@ -28,8 +28,7 @@ const App = () => {
       if (user) {
         const token = await user.getIdToken(true);
         cookie.save('usertoken', token, { path: '/' });
-        const res = await axios.get(process.env.REACT_APP_SRV_ADDR + '/user/');
-        store.dispatch(loadUser(user, res.data));
+        store.dispatch(loadUser(user));
       } else {
         store.dispatch({ type: AUTH_FAIL });
       }
