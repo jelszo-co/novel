@@ -15,13 +15,36 @@
       font-weight: 200;
       letter-spacing: 1px;
     }
+    .favorite {
+      display: inline;
+      margin-left: 20px;
+      cursor: pointer;
+    }
     svg {
       height: 2.6rem;
       width: 2.6rem;
       fill: $white;
       vertical-align: middle;
       margin-bottom: 6px;
-      margin-left: 20px;
+    }
+    .fav-popup {
+      display: inline;
+      font-family: 'Markazi text';
+      font-size: 1.5rem;
+      vertical-align: middle;
+      transition: 0.2s all ease-in-out;
+      span {
+        display: inline-block;
+        width: 20px;
+        height: 1pt;
+        background: $white;
+        vertical-align: middle;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+      a {
+        margin-left: 10px;
+      }
     }
   }
   .novel-back {

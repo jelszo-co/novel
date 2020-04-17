@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -11,8 +12,9 @@ import { ReactComponent as Send } from '../assets/paperplane.svg';
 import '../css/all/novel.scss';
 import { useTranslation } from 'react-i18next';
 
-const Novel = ({ match }) => {
+const Novel = ({ match, user: { role } }) => {
   const { t } = useTranslation();
+  const [favPopup, setFavPopup] = useState(false);
   const [novel, setNovel] = useState({});
   //const [comments, setComments] = useState({});
   const [redirect, changeRedirect] = useState(false);
@@ -42,6 +44,12 @@ const Novel = ({ match }) => {
     e.preventDefault();
   };
 
+  const handleFavorite = () => {
+    if (role !== ('user' || 'admin')) {
+      setFavPopup(!favPopup);
+    }
+  };
+
   const { title, content, uploadedAt, favorite } = novel;
   return (
     Object.keys(novel).length > 0 &&
@@ -55,7 +63,14 @@ const Novel = ({ match }) => {
         <div className='novel-header'>
           <h2 className='novel-title'>
             {title}
-            {favorite ? <StarFull /> : <StarEmpty />}
+            <div className='favorite' onClick={() => handleFavorite()}>
+              {favorite ? <StarFull /> : <StarEmpty />}
+            </div>
+            <div className='fav-popup' style={{ opacity: favPopup ? 1 : 0 }}>
+              <span />
+              {t('fav_popup')}
+              <Link to='/login'>{t('form_login_title')}</Link>
+            </div>
           </h2>
           <Moment
             format='YYYY. MMMM DD.'
@@ -93,4 +108,8 @@ const Novel = ({ match }) => {
   );
 };
 
-export default Novel;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Novel);
