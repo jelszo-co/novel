@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import gsap, { TweenMax } from 'gsap';
 
-import '../../css/all/popup.scss';
+import '../../css/components/popup.scss';
 
 import { ReactComponent as Cross } from '../../assets/cross.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';

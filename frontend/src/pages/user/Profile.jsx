@@ -50,6 +50,7 @@ const Profile = ({
             <button
               onClick={() => {
                 auth().signOut();
+                setPopup('Sikeres kijelentkezés.');
               }}
             >
               {t('profile_logout')}

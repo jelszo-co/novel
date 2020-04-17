@@ -9,7 +9,8 @@
 
   .popup-line {
     display: block;
-    height: 2.5pt;
+    height: 2pt;
+    width: 0;
     background: $white;
   }
   svg {
@@ -23,7 +24,8 @@
     stroke-width: 32px;
     vertical-align: middle;
     margin-bottom: 6px;
-    line {
+    line,
+    polyline {
       fill: none;
       stroke: $white;
       stroke-linecap: round;

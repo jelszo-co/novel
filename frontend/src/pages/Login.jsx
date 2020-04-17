@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { auth } from '../firebase';
+import { setPopup } from '../actions/popup';
 
 import Title from './components/Title';
 import Menu from './components/Menu';
@@ -13,7 +14,7 @@ import { ReactComponent as Facebook } from '../assets/facebook.svg';
 
 import '../css/all/login.scss';
 
-const Login = ({ user }) => {
+const Login = ({ user, setPopup }) => {
   const { t } = useTranslation();
   const [registerData, setRegisterData] = useState({
     fullName: '',
@@ -84,7 +85,7 @@ const Login = ({ user }) => {
     }
   };
 
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault();
     let err = false;
     if (!loginEmail.match(emailPatt)) {
@@ -97,7 +98,8 @@ const Login = ({ user }) => {
     }
     if (!err) {
       try {
-        auth().signInWithEmailAndPassword(loginEmail, loginPass);
+        await auth().signInWithEmailAndPassword(loginEmail, loginPass);
+        setPopup('Sikeres bejelentkezés.');
       } catch (err) {
         console.log(err);
       }
@@ -297,4 +299,4 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, { setPopup })(Login);

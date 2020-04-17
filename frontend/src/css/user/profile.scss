@@ -52,12 +52,19 @@
         float: right;
         margin: 0;
       }
+
+      .fav-title {
+        font-family: 'Forum';
+        font-size: 1.5rem;
+      }
     }
 
     .col-center {
       flex: 4 1 0px;
       h3 {
         text-align: center;
+        font-size: 2.1rem;
+        transform: translateY(-25%);
       }
     }
 
