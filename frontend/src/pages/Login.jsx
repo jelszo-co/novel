@@ -15,39 +15,41 @@ import { ReactComponent as Facebook } from '../assets/facebook.svg';
 import '../css/all/login.scss';
 
 const Login = ({ user, setPopup }) => {
+  // STATE
   const { t } = useTranslation();
   const [registerData, setRegisterData] = useState({
     fullName: '',
     regEmail: '',
     regPass: '',
   });
-  const { fullName, regEmail, regPass } = registerData;
 
   const [loginData, setLoginData] = useState({
     loginEmail: '',
     loginPass: '',
   });
 
-  const { loginEmail, loginPass } = loginData;
-
   const [valid, setValidState] = useState({
     length: false,
     case: false,
     num: false,
   });
-
-  const [didForgotPass, changeForgotPass] = useState(false);
   const [showValidator, changeValidator] = useState(0);
 
-  const changeResetMode = () => {
-    document.querySelector('.form-group-forgot-pass').style.opacity = 0;
-    document.querySelector('#login-form input[type=submit]').style.opacity = 0;
+  const [resetState, setResetState] = useState('login');
+  const [loginResponse, setLoginResponse] = useState('');
+
+  const { fullName, regEmail, regPass } = registerData;
+  const { loginEmail, loginPass } = loginData;
+  // FUNCTIONS
+  const changeResetMode = state => {
+    document
+      .querySelectorAll('.form-group-login-animated')
+      .forEach(group => (group.style.opacity = 0));
     setTimeout(() => {
-      changeForgotPass(!didForgotPass);
-      document.querySelector('.form-group-forgot-pass').style.opacity = 1;
-      document.querySelector(
-        '#login-form input[type=submit]',
-      ).style.opacity = 1;
+      setResetState(state);
+      document
+        .querySelectorAll('.form-group-login-animated')
+        .forEach(group => (group.style.opacity = 1));
     }, 200);
   };
 
@@ -65,6 +67,18 @@ const Login = ({ user, setPopup }) => {
       }, 800);
     }
   };
+
+  const alertLogin = msg => {
+    setLoginResponse(msg);
+    document.querySelector('.login-response').style.opacity = 1;
+    setTimeout(() => {
+      document.querySelector('.login-response').style.opacity = 0;
+      setTimeout(() => {
+        setLoginResponse('');
+      }, 200);
+    }, 2500);
+  };
+
   const handleRegister = e => {
     e.preventDefault();
     let err = false;
@@ -101,8 +115,28 @@ const Login = ({ user, setPopup }) => {
         await auth().signInWithEmailAndPassword(loginEmail, loginPass);
         setPopup('Sikeres bejelentkezés.');
       } catch (err) {
-        console.log(err);
+        alertUser('loginEmail');
+        alertUser('loginPass');
+        alertLogin('Hibás felhasználónév vagy jelszó!');
       }
+    }
+  };
+
+  const handleForgot = async e => {
+    e.preventDefault();
+    if (loginEmail.match(emailPatt)) {
+      try {
+        await auth().sendPasswordResetEmail(loginEmail);
+        changeResetMode('success');
+      } catch (err) {
+        if (err.code === 'auth/user-not-found') {
+          alertUser('loginEmail');
+          alertLogin('Nem található ilyen e-mail cím.');
+        }
+        console.error(err);
+      }
+    } else {
+      alertUser('loginEmail');
     }
   };
 
@@ -126,6 +160,7 @@ const Login = ({ user, setPopup }) => {
 
   const grey = 'rgba(255, 255, 255, 0.7)';
 
+  // RETURN
   return user.role === 'admin' ? (
     <Redirect to='/admin' />
   ) : user.role === 'user' ? (
@@ -232,9 +267,81 @@ const Login = ({ user, setPopup }) => {
           <input type='submit' value={t('form_register_submit')} />
         </form>
 
-        <form id='login-form' onSubmit={e => handleLogin(e)} noValidate>
+        <form
+          id='login-form'
+          onSubmit={e =>
+            resetState === 'login' ? handleLogin(e) : handleForgot(e)
+          }
+          noValidate
+        >
           <h3 className='form-title'>{t('form_login_title')}</h3>
-          <div className='form-group'>
+
+          {resetState === 'login' && (
+            <div className='form-group-login form-group-login-animated'>
+              <input
+                required
+                name='loginEmail'
+                type='email'
+                autoComplete='email'
+                autoCorrect='on'
+                placeholder={t('form_email')}
+                value={loginEmail}
+                onChange={e => handleLoginChange(e)}
+              />
+              <input
+                required
+                name='loginPass'
+                type='password'
+                autoComplete='current-password'
+                autoCorrect='off'
+                placeholder={t('form_password')}
+                value={loginPass}
+                onChange={e => handleLoginChange(e)}
+              />
+              <button
+                type='button'
+                className='forgot-button'
+                onClick={() => changeResetMode('reset')}
+                onKeyDown={() => changeResetMode('reset')}
+              >
+                {t('forgot_button')}
+              </button>
+              <p className='login-response'>&nbsp;{loginResponse}</p>
+            </div>
+          )}
+
+          {resetState === 'reset' && (
+            <div className='form-group-login form-group-login-animated'>
+              <button
+                type='button'
+                className='forgot-back'
+                onClick={() => changeResetMode('login')}
+                onKeyDown={() => changeResetMode('login')}
+              >
+                {t('back')}
+              </button>
+              <input
+                required
+                name='loginEmail'
+                type='email'
+                autoComplete='email'
+                autoCorrect='on'
+                placeholder={t('form_email')}
+                value={loginEmail}
+                onChange={e => handleLoginChange(e)}
+              />
+              <p className='login-response'>&nbsp;{loginResponse}</p>
+              <p className='forgot-instructions'>{t('forgot_instructions')}</p>
+            </div>
+          )}
+
+          {resetState === 'success' && (
+            <div className='form-group-login form-group-login-animated'>
+              <p className='forgot-success'>{t('success')}</p>
+            </div>
+          )}
+
+          {/* <div className='form-group' style={{ display: 'none' }}>
             <button
               type='button'
               className='forgot-back'
@@ -277,16 +384,25 @@ const Login = ({ user, setPopup }) => {
                   </button>
                 </>
               ) : (
-                <p className='forgot-instructions'>
-                  {t('forgot_instructions')}
-                </p>
+                <>
+                  <p className='forgot-response'>Siker</p>
+                  <p className='forgot-instructions'>
+                    {t('forgot_instructions')}
+                  </p>
+                </>
               )}
             </div>
-          </div>
+          </div> */}
+
           <input
             type='submit'
+            className='form-group-login-animated'
             value={
-              didForgotPass ? t('form_login_reset') : t('form_login_submit')
+              resetState === 'login'
+                ? t('form_login_submit')
+                : resetState === 'reset'
+                ? t('form_login_reset')
+                : ''
             }
           />
         </form>
