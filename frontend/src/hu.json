@@ -51,10 +51,14 @@
     "profile_title": "Fiókom",
     "profile_last_comments": "Legutóbbi kommentjeim",
     "profile_fav_novels": "Kedvenc novelláim",
+    "profile_email_confirm": "Megerősítés",
     "profile_change_general": "Módosítás",
     "profile_change_password": "Jelszó módosítása",
     "profile_delete_account": "Fiók törlése",
     "profile_logout": "Kijelentkezés",
+    "profile_delete_confirm_msg": "Biztosan törlöd a fiókod?",
+    "profile_delete_confirm_back": "Mégse",
+    "profile_delete_confirm_ok": "Törlés",
 
     "err_novel_list": "Hiba a novellák lekérdezésében."
   }
