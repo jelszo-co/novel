@@ -147,7 +147,7 @@ const Login = ({ user, setPopup }) => {
     setRegisterData({ ...registerData, [name]: value });
     if (name === 'regPass') {
       setValidState({
-        length: value.length >= 8,
+        length: value.length >= 6,
         case: value.match(pattLet),
         num: value.match(pattNum),
       });
