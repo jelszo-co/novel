@@ -11,6 +11,7 @@ import { ReactComponent as Send } from '../assets/paperplane.svg';
 
 import '../css/all/novel.scss';
 import { useTranslation } from 'react-i18next';
+import { setPopup } from '../actions/popup';
 
 const Novel = ({ match, user: { role } }) => {
   const { t } = useTranslation();
@@ -40,17 +41,28 @@ const Novel = ({ match, user: { role } }) => {
     //   .catch(err => console.error(err.response));
   }, [match]);
 
+  const { title, content, uploadedAt, favorite } = novel;
+
   const handleComment = e => {
     e.preventDefault();
   };
 
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     if (role !== ('user' || 'admin')) {
       setFavPopup(!favPopup);
+    } else {
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/favorite`,
+        );
+        favorite = res.data;
+      } catch (err) {
+        console.error(err);
+        setPopup('Hiba!', 'err');
+      }
     }
   };
 
-  const { title, content, uploadedAt, favorite } = novel;
   return (
     Object.keys(novel).length > 0 &&
     (redirect ? (
