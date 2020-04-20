@@ -55,7 +55,7 @@ const Novel = ({ match, user: { role } }) => {
         const res = await axios.post(
           `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/favorite`,
         );
-        setNovel({ ...novel, favorite: res.data });
+        setNovel({ ...novel, favorite: res.data.favorite });
       } catch (err) {
         console.error(err);
         setPopup('Hiba!', 'err');
