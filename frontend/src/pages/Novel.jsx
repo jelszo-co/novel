@@ -41,7 +41,7 @@ const Novel = ({ match, user: { role } }) => {
     //   .catch(err => console.error(err.response));
   }, [match]);
 
-  const { title, content, uploadedAt, favorite } = novel;
+  let { title, content, uploadedAt, favorite } = novel;
 
   const handleComment = e => {
     e.preventDefault();
