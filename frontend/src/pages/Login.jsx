@@ -11,6 +11,8 @@ import Menu from './components/Menu';
 
 import { ReactComponent as Google } from '../assets/google.svg';
 import { ReactComponent as Facebook } from '../assets/facebook.svg';
+import { ReactComponent as Eye } from '../assets/pass_eye.svg';
+import { ReactComponent as EyeCross } from '../assets/pass_eye_cross.svg';
 
 import '../css/all/login.scss';
 
@@ -34,12 +36,14 @@ const Login = ({ user, setPopup }) => {
     num: false,
   });
   const [showValidator, changeValidator] = useState(0);
+  const [showPass, setShowPass] = useState(false);
 
   const [resetState, setResetState] = useState('login');
   const [loginResponse, setLoginResponse] = useState('');
 
   const { fullName, regEmail, regPass } = registerData;
   const { loginEmail, loginPass } = loginData;
+
   // FUNCTIONS
   const changeResetMode = state => {
     document
@@ -209,7 +213,7 @@ const Login = ({ user, setPopup }) => {
               required
               name='regPass'
               id='reg-password'
-              type='password'
+              type={showPass ? 'text' : 'password'}
               autoComplete='new-password'
               autoCorrect='off'
               placeholder={t('form_password')}
@@ -218,6 +222,22 @@ const Login = ({ user, setPopup }) => {
               onFocus={() => changeValidator(1)}
               onBlur={() => changeValidator(0)}
             />
+            <div className='show-pass'>
+              <button
+                type='button'
+                onClick={() => setShowPass(false)}
+                style={{ display: showPass ? 'block' : 'none' }}
+              >
+                <Eye className='show-pass-eye' />
+              </button>
+              <button
+                type='button'
+                onClick={() => setShowPass(true)}
+                style={{ display: showPass ? 'none' : 'block' }}
+              >
+                <EyeCross />
+              </button>
+            </div>
             <ul className='pass-validation' style={{ opacity: showValidator }}>
               <li>
                 <p
@@ -340,59 +360,6 @@ const Login = ({ user, setPopup }) => {
               <p className='forgot-success'>{t('success')}</p>
             </div>
           )}
-
-          {/* <div className='form-group' style={{ display: 'none' }}>
-            <button
-              type='button'
-              className='forgot-back'
-              onClick={() => changeResetMode()}
-              onKeyDown={() => changeResetMode()}
-              style={{ opacity: didForgotPass ? 1 : 0 }}
-            >
-              {t('back')}
-            </button>
-            <input
-              required
-              name='loginEmail'
-              type='email'
-              autoComplete='email'
-              autoCorrect='on'
-              placeholder={t('form_email')}
-              value={loginEmail}
-              onChange={e => handleLoginChange(e)}
-            />
-            <div className='form-group-forgot-pass'>
-              {!didForgotPass ? (
-                <>
-                  <input
-                    required
-                    name='loginPass'
-                    type='password'
-                    autoComplete='current-password'
-                    autoCorrect='off'
-                    placeholder={t('form_password')}
-                    value={loginPass}
-                    onChange={e => handleLoginChange(e)}
-                  />
-                  <button
-                    type='button'
-                    className='forgot-link'
-                    onClick={() => changeResetMode()}
-                    onKeyDown={() => changeResetMode()}
-                  >
-                    {t('forgot_pass')}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <p className='forgot-response'>Siker</p>
-                  <p className='forgot-instructions'>
-                    {t('forgot_instructions')}
-                  </p>
-                </>
-              )}
-            </div>
-          </div> */}
 
           <input
             type='submit'
