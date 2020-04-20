@@ -90,10 +90,10 @@ class NovelFavoriteToggle(View):
         favs = request.fb_user.favorites
         if favs.filter(pk=novel.pk).exists():
             favs.remove(novel)
-            return JsonResponse({'liked': False})
+            return JsonResponse({'favorite': False})
         else:
             favs.add(novel)
-            return JsonResponse({'liked': True})
+            return JsonResponse({'favorite': True})
 
     @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('not request.fb_user.isAdmin', 'Log in to see this value',
