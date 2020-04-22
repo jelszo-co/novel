@@ -16,6 +16,7 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Novel from './pages/Novel';
 import Profile from './pages/user/Profile';
+import Admin from './pages/admin/Admin';
 import Err from './pages/404';
 
 import { auth } from './firebase';
@@ -48,6 +49,8 @@ const App = () => {
           <Route exact path='/novels/:title' component={Novel} />
 
           <Route exact path='/profile' component={Profile} />
+
+          <Route exact path='/admin' component={Admin} />
           <Route component={Err} />
         </Switch>
       </Router>
