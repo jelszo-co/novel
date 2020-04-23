@@ -1,0 +1,6 @@
+Procfile
+venv/
+staticfiles/
+__pycache__/
+.idea/
+*.pyc
