@@ -28,7 +28,6 @@ const App = () => {
     store.dispatch(getNovels());
     auth().onAuthStateChanged(async user => {
       if (user) {
-        console.log(user);
         const token = await user.getIdToken(true);
         cookie.save('usertoken', token, { path: '/' });
         store.dispatch(loadUser(user));

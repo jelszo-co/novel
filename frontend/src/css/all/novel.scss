@@ -8,6 +8,14 @@
       position: relative;
       font-size: 4rem;
     }
+    input {
+      width: 50vw;
+      background: none;
+      border: none;
+      font-family: 'Forum';
+      font-size: 4rem;
+      border-bottom: 3pt solid $white;
+    }
     .novel-date {
       display: block;
       margin-top: 10px;
@@ -96,16 +104,42 @@
     color: $white;
   }
   .novel-content {
-    margin-top: 20%;
+    padding: 40px;
+    margin-top: calc(20% - 40px);
     text-align: center;
     width: 60%;
-    margin-left: 20%;
+    margin-left: calc(20% - 40px);
     font-size: 1.7rem;
     letter-spacing: 0.1px;
     line-height: 2rem;
 
-    p {
+    br {
       margin-bottom: 20px;
+    }
+  }
+
+  .content-editable {
+    border: 4pt dashed $white;
+    background: none;
+    font-family: 'Markazi text';
+    resize: none;
+    overflow: auto;
+  }
+
+  .edit-actions {
+    float: right;
+    text-align: right;
+    font-size: 1.6rem;
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+    margin-right: calc(20% - 40px - 8pt);
+
+    button {
+      margin: 0;
+      padding: 0;
+      font-size: inherit;
+      text-decoration: underline;
     }
   }
 

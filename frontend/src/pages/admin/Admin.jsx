@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,9 @@ const Admin = ({ user: { role } }) => {
       </div>
       <div className='upload'>
         <p className='panel-title'>{t('admin_upload_title')}</p>
-        <Uploader />
+        <div className='uploader'>
+          <Uploader />
+        </div>
       </div>
       <div className='panel panel-right'>
         <p className='panel-title'>{t('admin_banned_title')}</p>
@@ -45,11 +47,29 @@ const Admin = ({ user: { role } }) => {
 
 const Uploader = () => {
   const { t } = useTranslation();
-  return (
-    <div className='uploader'>
-      <button>{t('upload_begin')}</button>
-    </div>
-  );
+  const [uploadState, setUploadState] = useState(0);
+  const nextState = state => {
+    const nodes = document.querySelectorAll('.uploader-node');
+    console.log(nodes);
+    nodes.forEach(node => (node.style.opacity = 0));
+    setTimeout(() => {
+      nodes.forEach(node => (node.style.display = 'none'));
+      setUploadState(state);
+      nodes.forEach(node => (node.style.display = 'block'));
+      nodes.forEach(node => (node.style.opacity = 1));
+    }, 200);
+  };
+
+  switch (uploadState) {
+    case 0:
+      return (
+        <button className='uploader-node begin' onClick={() => nextState(1)}>
+          {t('upload_begin')}
+        </button>
+      );
+    default:
+      return '';
+  }
 };
 
 const mapStateToProps = state => ({

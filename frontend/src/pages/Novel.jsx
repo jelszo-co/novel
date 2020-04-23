@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
+import TextareaAutosize from 'react-textarea-autosize';
 import 'moment/locale/hu';
 
 import { ReactComponent as StarFull } from '../assets/star_full.svg';
@@ -25,12 +26,14 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
   const limit = 300;
   const [char, setChar] = useState(300);
   const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState({});
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`)
       .then(res => {
         setNovel(res.data);
+        setEditData({ title: res.data.title, content: res.data.content });
       })
       .catch(err => {
         if (err.response.status === 404) {
@@ -82,6 +85,20 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
     }
   };
 
+  const saveEdit = async () => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`,
+        editData,
+      );
+      setEditMode(false);
+      setPopup('Sikeres szerkesztés.');
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a mentés során!', 'err');
+    }
+  };
+
   return (
     Object.keys(novel).length > 0 &&
     (redirect ? (
@@ -93,11 +110,21 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
         </Link>
         <div className='novel-header'>
           <h2 className='novel-title'>
-            {title}
+            {editMode ? (
+              <input
+                type='text'
+                value={editData.title}
+                onChange={e =>
+                  setEditData({ ...editData, title: e.target.value })
+                }
+              ></input>
+            ) : (
+              title
+            )}
             {role === 'admin' ? (
               <>
                 <div className='admin-actions'>
-                  <button onClick={() => setEditMode(!editMode)}>
+                  <button onClick={() => setEditMode(true)}>
                     <Pencil />
                   </button>
                   <button onClick={() => setDelPopup(!delPopup)}>
@@ -142,11 +169,39 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
             {uploadedAt}
           </Moment>
         </div>
-        <div className='novel-content'>
-          {content.split('\r\n').map((item, i) => (
-            <p key={i}>{item}</p>
-          ))}
-        </div>
+        {editMode ? (
+          <>
+            <TextareaAutosize
+              className='novel-content content-editable'
+              value={editData.content}
+              onChange={e => {
+                setEditData({ ...editData, content: e.target.value });
+              }}
+            />
+            <p className='edit-actions'>
+              <button onClick={() => saveEdit()}>{t('save')}</button> {t('or')}{' '}
+              <button
+                onClick={() => {
+                  setEditMode(false);
+                  setEditData({ title, content });
+                }}
+              >
+                {t('discard')}
+              </button>
+            </p>
+          </>
+        ) : (
+          <div className={`novel-content ${editMode && 'content-editable'}`}>
+            {content.split('\r\n').map((item, i) => (
+              <Fragment key={i}>
+                {item}
+                <br />
+              </Fragment>
+            ))}
+          </div>
+        )}
+
+        {/* Comments */}
         <h2 className='comments-header'>{t('comments_header')}</h2>
         <div className='comments'>
           <form className='write' onSubmit={e => handleComment(e)}>

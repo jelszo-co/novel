@@ -47,13 +47,6 @@ $indent: 4%;
     top: $top;
     transform: translateX(-50%);
     height: 60%;
-
-    .uploader {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
   }
 
   .account-management {
@@ -61,5 +54,17 @@ $indent: 4%;
     bottom: 2%;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  .uploader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .begin {
+      font-size: 1.8rem;
+      font-family: 'Forum';
+      border-bottom: 2pt solid $white;
+    }
   }
 }
