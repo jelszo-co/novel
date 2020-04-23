@@ -45,6 +45,7 @@ jobs:
     - yarn install
     before_script:
     - yarn build
+    - cd ..
     script:
     - docker build -t registry.heroku.com/jelszo-novel-dev/web .
     - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
