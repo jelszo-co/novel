@@ -18,10 +18,10 @@ jobs:
     python: 3.7.6
     cache: pip
     stage: test
-    before_install: 
-        - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv
-          -in firebase.json.enc -out backend/firebase.json -d
-        - cd backend
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv
+      -in firebase.json.enc -out backend/firebase.json -d
+    - cd backend
     install: pip install -r requirements.txt
     script: coverage run --omit "*/venv/*,manage.py"  manage.py test && coverage xml
     after_script:
@@ -30,4 +30,22 @@ jobs:
       | .[0].browser_download_url')"
     - chmod +x codacy-coverage-reporter
     - "./codacy-coverage-reporter report -r backend/coverage.xml"
+  - stage: deploy
+    language: node_js
+    node_js: 12
+    cache: yarn
+    services:
+    - docker
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv
+      -in firebase.json.enc -out backend/firebase.json -d
+    - cd frontend
+    install:
+    - yarn install
+    before_script:
+    - yarn build
+    script:
+    - docker build -t registry.heroku.com/jelszo-novel-dev/web
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+    - docker push registry.heroku.com/jelszo-novel-dev/web
 
