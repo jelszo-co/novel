@@ -1,5 +1,5 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 
 
-def frontend_view(request, *args, **kwargs):  # pragma: no cover
-    return render(request, 'index.html')
+def pagenotfound_view(request, *args, **kwargs):  # pragma: no cover
+    return HttpResponse(status=404)
