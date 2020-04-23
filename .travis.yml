@@ -31,6 +31,7 @@ jobs:
     - chmod +x codacy-coverage-reporter
     - "./codacy-coverage-reporter report -r backend/coverage.xml"
   - stage: deploy
+    if: branch = dev and type = push
     language: node_js
     node_js: 12
     cache: yarn
@@ -45,7 +46,7 @@ jobs:
     before_script:
     - yarn build
     script:
-    - docker build -t registry.heroku.com/jelszo-novel-dev/web
+    - docker build -t registry.heroku.com/jelszo-novel-dev/web .
     - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
     - docker push registry.heroku.com/jelszo-novel-dev/web
 
