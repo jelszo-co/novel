@@ -78,10 +78,10 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
             <p className='profile-popup delete-confirm border-left'>
               {t('profile_delete_confirm_msg')}{' '}
               <button onClick={() => showPopup('delete-confirm')}>
-                {t('profile_delete_confirm_back')}
+                {t('cancel')}
               </button>
               <button onClick={() => deleteUser()} className='dangerous'>
-                {t('profile_delete_confirm_ok')}
+                {t('delete')}
               </button>
             </p>
             <div className='border-left'>

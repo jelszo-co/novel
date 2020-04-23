@@ -3,6 +3,8 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import { auth } from '../../firebase';
+
 import Title from '../components/Title';
 import Menu from '../components/Menu';
 
@@ -33,6 +35,7 @@ const Admin = ({ user: { role } }) => {
       <div className='account-management'>
         <button>{t('admin_account_email')}</button>
         <button>{t('admin_account_pass')}</button>
+        <button onClick={() => auth().signOut()}>{t('profile_logout')}</button>
       </div>
     </div>
   ) : (

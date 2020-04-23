@@ -46,10 +46,50 @@
         margin-left: 10px;
       }
     }
+    .admin-actions {
+      display: inline;
+      margin-left: 20px;
+      button {
+        display: inline;
+        vertical-align: middle;
+        margin: 0 5px;
+        padding: 0;
+        svg {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+    .admin-delete-confirm {
+      display: inline;
+      font-family: 'Markazi text';
+      font-size: 1.5rem;
+      vertical-align: middle;
+      transition: 0.2s all ease-in-out;
+      span {
+        display: inline-block;
+        width: 17px;
+        height: 1pt;
+        background: $white;
+        vertical-align: middle;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      button {
+        margin: 0;
+        padding: 0;
+        margin-left: 10px;
+        font-size: 1.3rem;
+        text-decoration: underline;
+      }
+      button.delete {
+        color: $alert;
+      }
+    }
   }
   .novel-back {
     position: absolute;
-    top: 1%;
+    top: 2%;
     right: 2%;
     font-size: 1.8rem;
     text-decoration: none;

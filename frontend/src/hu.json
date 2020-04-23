@@ -1,5 +1,8 @@
 {
   "translation": {
+    "cancel": "Mégse",
+    "delete": "Törlés",
+    "back": "Vissza",
     "locale_name": "hu",
     "err_body": "Nálunk ilyen oldal nem létezik.",
     "landing_welcome": "Üdvözöllek.",
@@ -42,9 +45,9 @@
     "forgot_button": "Elfelejtett jelszó?",
     "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
     "success": "Siker!",
-    "back": "Vissza",
 
     "fav_popup": "A kedvencekhez adáshoz kérlek jelentkezz be.",
+    "del_popup": "Biztosan törlöd?",
     "comments_header": "Kommentek",
     "comment_placeholder": "Komment írása...",
 
@@ -57,8 +60,6 @@
     "profile_delete_account": "Fiók törlése",
     "profile_logout": "Kijelentkezés",
     "profile_delete_confirm_msg": "Biztosan törlöd a fiókod?",
-    "profile_delete_confirm_back": "Mégse",
-    "profile_delete_confirm_ok": "Törlés",
 
     "admin_comments_title": "Legfrissebb kommentek",
     "admin_comments_link": "Ugrás a novellákhoz",
