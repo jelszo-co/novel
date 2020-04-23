@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 import { auth } from '../firebase';
 import { setPopup } from '../actions/popup';
@@ -83,7 +84,7 @@ const Login = ({ user, setPopup }) => {
     }, 2500);
   };
 
-  const handleRegister = e => {
+  const handleRegister = async e => {
     e.preventDefault();
     let err = false;
     if (fullName.length === 0) {
@@ -99,7 +100,13 @@ const Login = ({ user, setPopup }) => {
       alertUser('regPass');
     }
     if (!err) {
-      //register user
+      try {
+        await auth().createUserWithEmailAndPassword(regEmail, regPass);
+        await axios.post('/user/name', fullName);
+      } catch (err) {
+        console.error(err);
+        setPopup('Hiba a regisztráció során.', 'err');
+      }
     }
   };
 

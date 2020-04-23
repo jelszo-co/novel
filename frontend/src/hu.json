@@ -60,6 +60,15 @@
     "profile_delete_confirm_back": "Mégse",
     "profile_delete_confirm_ok": "Törlés",
 
+    "admin_comments_title": "Legfrissebb kommentek",
+    "admin_comments_link": "Ugrás a novellákhoz",
+    "admin_banned_title": "Tiltott felhasználók",
+    "admin_banned_link": "Összes tiltott felhasználó",
+    "admin_upload_title": "Új novella feltöltése",
+    "upload_begin": "Feltöltés",
+    "admin_account_email": "E-mail módosítása",
+    "admin_account_pass": "Jelszó módosítása",
+
     "err_novel_list": "Hiba a novellák lekérdezésében."
   }
 }

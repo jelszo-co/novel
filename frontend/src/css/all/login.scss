@@ -61,7 +61,6 @@
       #reg-password {
         margin-bottom: 0;
       }
-
       .show-pass {
         button {
           position: absolute;
@@ -75,8 +74,8 @@
           outline: none;
           fill: $white;
           svg {
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
           }
           svg.show-pass-eye {
             fill: none;

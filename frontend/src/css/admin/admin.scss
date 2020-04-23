@@ -1,0 +1,65 @@
+@import '../variables';
+$top: 22.5%;
+$indent: 4%;
+
+#admin {
+  .panel {
+    height: 70%;
+    a {
+      position: absolute;
+      bottom: 0;
+      font-family: 'Forum';
+      font-size: 1.4rem;
+      text-decoration: none;
+      border-bottom: 3px solid $white;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+  }
+  .panel-title {
+    font-family: 'Forum';
+    font-size: 1.4rem;
+  }
+
+  .panel-left {
+    position: absolute;
+    left: $indent;
+    top: $top;
+    a {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .panel-right {
+    text-align: right;
+    position: absolute;
+    right: $indent;
+    top: $top;
+    a {
+      right: 50%;
+      transform: translateX(50%);
+    }
+  }
+
+  .upload {
+    position: absolute;
+    left: 50%;
+    top: $top;
+    transform: translateX(-50%);
+    height: 60%;
+
+    .uploader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .account-management {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
