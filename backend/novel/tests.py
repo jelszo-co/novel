@@ -25,9 +25,9 @@ class GetNovelTestCase(TestCase):
         self.client = Client()
 
     def test_get_all_novel(self):
-        response = self.client.post('/api/novel/')
+        response = self.client.post('/api/v1/novel/')
         self.assertEqual(405, response.status_code)
-        response = self.client.get('/api/novel/')
+        response = self.client.get('/api/v1/novel/')
         self.assertEqual(200, response.status_code)
         decoded = json.loads(response.content)
         self.assertEqual(set(decoded.keys()), {'HU', 'EN'})
@@ -36,15 +36,15 @@ class GetNovelTestCase(TestCase):
         self.assertEqual(set(decoded['HU'][0]['2020'][0].keys()), {'title', 'uploadedAt', 'lore', 'path'})
 
     def test_get_novel_by_path(self):
-        response = self.client.get('/api/novel/asd/')
+        response = self.client.get('/api/v1/novel/asd/')
         self.assertEqual(response.status_code, 404)
-        response = self.client.get('/api/novel/az-ordoguzo/')
+        response = self.client.get('/api/v1/novel/az-ordoguzo/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(set(json.loads(response.content).keys()),
                          {'uploadedAt', 'lore', 'title', 'favorite', 'content', 'lang'})
 
     def test_edit_novel(self):
-        request = self.factory.put('/api/novel/utolso-percek/')
+        request = self.factory.put('/api/v1/novel/utolso-percek/')
         request.fb_user = self.stranger
         response = NovelTools.as_view()(request, **{'path': 'utolso-percek'})
         self.assertEqual(response.status_code, 401)
