@@ -47,7 +47,6 @@ jobs:
     - yarn build
     - cd ..
     script:
-    - docker build -t registry.heroku.com/jelszo-novel-dev/web .
-    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-    - docker push registry.heroku.com/jelszo-novel-dev/web
+    - heroku container:push web -a $HEROKU_NAME
+    - heroku container:release web -a $HEROKU_NAME
 
