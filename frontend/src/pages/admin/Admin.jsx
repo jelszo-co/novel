@@ -57,7 +57,7 @@ const Uploader = () => {
       setUploadState(state);
       nodes.forEach(node => (node.style.display = 'block'));
       nodes.forEach(node => (node.style.opacity = 1));
-    }, 200);
+    }, 300);
   };
 
   switch (uploadState) {
@@ -67,6 +67,7 @@ const Uploader = () => {
           {t('upload_begin')}
         </button>
       );
+
     default:
       return '';
   }

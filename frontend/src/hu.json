@@ -73,6 +73,7 @@
     "admin_account_email": "E-mail módosítása",
     "admin_account_pass": "Jelszó módosítása",
 
-    "err_novel_list": "Hiba a novellák lekérdezésében."
+    "err_novel_list": "Hiba a novellák lekérdezése közben.",
+    "err_user_get": "Hiba a felhasználó lekérdezése közben."
   }
 }

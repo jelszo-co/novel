@@ -7,6 +7,15 @@
   font-family: 'Forum';
   font-size: 1.3rem;
 
+  .popup-card {
+    margin-bottom: 10px;
+    position: relative;
+    white-space: nowrap;
+    p {
+      display: inline-block;
+    }
+  }
+
   .popup-line {
     display: block;
     height: 2pt;
