@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import Title from './components/Title';
 import Menu from './components/Menu';
 
@@ -101,6 +103,18 @@ const List = ({ novels: { loading, list } }) => {
       </div>
     )
   );
+};
+
+List.defaultProps = {
+  EN: [],
+  HU: [],
+};
+
+List.propTypes = {
+  novels: PropTypes.object.isRequired,
+  list: PropTypes.object.isRequired,
+  EN: PropTypes.array,
+  HU: PropTypes.array,
 };
 
 const mapStateToProps = state => ({

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import { auth } from '../../firebase';
 
@@ -35,9 +36,11 @@ const Admin = ({ user: { role } }) => {
         </Link>
       </div>
       <div className='account-management'>
-        <button>{t('admin_account_email')}</button>
-        <button>{t('admin_account_pass')}</button>
-        <button onClick={() => auth().signOut()}>{t('profile_logout')}</button>
+        <button type='button'>{t('admin_account_email')}</button>
+        <button type='button'>{t('admin_account_pass')}</button>
+        <button type='button' onClick={() => auth().signOut()}>
+          {t('profile_logout')}
+        </button>
       </div>
     </div>
   ) : (
@@ -63,7 +66,11 @@ const Uploader = () => {
   switch (uploadState) {
     case 0:
       return (
-        <button className='uploader-node begin' onClick={() => nextState(1)}>
+        <button
+          type='button'
+          className='uploader-node begin'
+          onClick={() => nextState(1)}
+        >
           {t('upload_begin')}
         </button>
       );
@@ -71,6 +78,11 @@ const Uploader = () => {
     default:
       return '';
   }
+};
+
+Admin.propTypes = {
+  user: PropTypes.object.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

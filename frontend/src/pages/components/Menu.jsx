@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import '../../css/components/menu.scss';
 
@@ -85,6 +86,11 @@ const Menu = ({ user: { role } }) => {
       {t('menu_invoke')}
     </button>
   );
+};
+
+Menu.propTypes = {
+  user: PropTypes.object.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

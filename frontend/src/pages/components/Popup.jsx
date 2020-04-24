@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import gsap, { TweenMax } from 'gsap';
+import PropTypes from 'prop-types';
 
 import '../../css/components/popup.scss';
 
@@ -47,8 +48,12 @@ const Popup = ({ popup }) => {
   );
 };
 
+Popup.propTypes = {
+  popup: PropTypes.array.isRequired,
+};
+
 const mapStateToProps = state => ({
   popup: state.popup,
 });
 
-export default connect(mapStateToProps, null)(Popup);
+export default connect(mapStateToProps)(Popup);

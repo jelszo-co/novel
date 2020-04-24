@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import Title from '../components/Title';
 import Menu from '../components/Menu';
-import { useTranslation } from 'react-i18next';
 
 import { setPopup } from '../../actions/popup';
 import { auth } from '../../firebase';
@@ -37,7 +38,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   };
 
   const showPopup = node => {
-    const nodeEl = document.querySelector('.' + node);
+    const nodeEl = document.querySelector(`.${node}`);
     const popup = document.querySelectorAll('.profile-popup');
     if (node === activeNode) {
       nodeEl.style.opacity = 0;
@@ -65,28 +66,36 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
             <p className='email'>
               {email}{' '}
               {!emailVerified && (
-                <button className='email-confirm' onClick={() => sendEmail()}>
+                <button
+                  type='button'
+                  className='email-confirm'
+                  onClick={() => sendEmail()}
+                >
                   {t('profile_email_confirm')}
                 </button>
               )}
             </p>
-            <button className='change-upleft'>
+            <button type='button' className='change-upleft'>
               {t('profile_change_general')}
             </button>
           </div>
           <div className='col-item col-item-left'>
             <p className='profile-popup delete-confirm border-left'>
               {t('profile_delete_confirm_msg')}{' '}
-              <button onClick={() => showPopup('delete-confirm')}>
+              <button type='button' onClick={() => showPopup('delete-confirm')}>
                 {t('cancel')}
               </button>
-              <button onClick={() => deleteUser()} className='dangerous'>
+              <button
+                type='button'
+                onClick={() => deleteUser()}
+                className='dangerous'
+              >
                 {t('delete')}
               </button>
             </p>
             <div className='border-left'>
-              <button>{t('profile_change_password')}</button>
-              <button onClick={() => showPopup('delete-confirm')}>
+              <button type='button'>{t('profile_change_password')}</button>
+              <button type='button' onClick={() => showPopup('delete-confirm')}>
                 {t('profile_delete_account')}
               </button>
             </div>
@@ -98,10 +107,11 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
         <div className='col-side'>
           <div className='col-item col-item-right'>
             <p className='fav-title'>{t('profile_fav_novels')}</p>
-            <div className='fav-novels'></div>
+            <div className='fav-novels' />
           </div>
           <div className='col-item col-item-right'>
             <button
+              type='button'
               onClick={() => {
                 auth().signOut();
                 setPopup('Sikeres kijelentkezés.');
@@ -116,6 +126,14 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   ) : (
     <Redirect to='/login' />
   );
+};
+
+Profile.propTypes = {
+  user: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
+  fUser: PropTypes.object.isRequired,
+  setPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

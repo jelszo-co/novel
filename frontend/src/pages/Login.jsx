@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import { auth } from '../firebase';
@@ -172,11 +173,9 @@ const Login = ({ user, setPopup }) => {
   const grey = 'rgba(255, 255, 255, 0.7)';
 
   // RETURN
-  return user.role === 'admin' ? (
-    <Redirect to='/admin' />
-  ) : user.role === 'user' ? (
-    <Redirect to='/profile' />
-  ) : (
+  if (user.role === 'admin') return <Redirect to='/admin' />;
+  if (user.role === 'user') return <Redirect to='/profile' />;
+  return (
     <div id='login'>
       <Title>{t('login_title')}</Title>
       <Menu />
@@ -371,18 +370,22 @@ const Login = ({ user, setPopup }) => {
           <input
             type='submit'
             className='form-group-login-animated'
-            value={
-              resetState === 'login'
-                ? t('form_login_submit')
-                : resetState === 'reset'
-                ? t('form_login_reset')
-                : ''
-            }
+            value={() => {
+              if (resetState === 'login') return t('form_login_submit');
+              if (resetState === 'reset') return t('form_login_reset');
+              return '';
+            }}
           />
         </form>
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  setPopup: PropTypes.func.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

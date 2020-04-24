@@ -1,4 +1,5 @@
 import { GOT_NOVELS } from '../actions/types';
+
 const initialState = {
   list: {},
   loading: true,

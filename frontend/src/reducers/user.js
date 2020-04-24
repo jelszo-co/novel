@@ -1,4 +1,5 @@
 import { AUTH_SUCCESS, AUTH_FAIL } from '../actions/types';
+
 const initialState = {
   role: 'stranger',
   name: null,

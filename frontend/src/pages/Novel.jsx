@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { Link, Redirect, withRouter } from 'react-router-dom';
-import Moment from 'react-moment';
 import TextareaAutosize from 'react-textarea-autosize';
+import axios from 'axios';
+import Moment from 'react-moment';
 import 'moment/locale/hu';
 
 import { ReactComponent as StarFull } from '../assets/star_full.svg';
@@ -13,7 +14,6 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import '../css/all/novel.scss';
-import { useTranslation } from 'react-i18next';
 import { setPopup } from '../actions/popup';
 
 const Novel = ({ match, user: { role }, history, setPopup }) => {
@@ -21,7 +21,7 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
   const [favPopup, setFavPopup] = useState(false);
   const [delPopup, setDelPopup] = useState(false);
   const [novel, setNovel] = useState({});
-  //const [comments, setComments] = useState({});
+  //  const [comments, setComments] = useState({});
   const [redirect, changeRedirect] = useState(false);
   const limit = 300;
   const [char, setChar] = useState(300);
@@ -48,7 +48,7 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
     //   .catch(err => console.error(err.response));
   }, [match]);
 
-  let { title, content, uploadedAt, favorite } = novel;
+  const { title, content, uploadedAt, favorite } = novel;
 
   const handleComment = e => {
     e.preventDefault();
@@ -117,17 +117,17 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
                 onChange={e =>
                   setEditData({ ...editData, title: e.target.value })
                 }
-              ></input>
+              />
             ) : (
               title
             )}
             {role === 'admin' ? (
               <>
                 <div className='admin-actions'>
-                  <button onClick={() => setEditMode(true)}>
+                  <button type='button' onClick={() => setEditMode(true)}>
                     <Pencil />
                   </button>
-                  <button onClick={() => setDelPopup(!delPopup)}>
+                  <button type='button' onClick={() => setDelPopup(!delPopup)}>
                     <Trash />
                   </button>
                 </div>
@@ -137,17 +137,27 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
                 >
                   <span />
                   {t('del_popup')}
-                  <button onClick={() => setDelPopup(false)}>
+                  <button type='button' onClick={() => setDelPopup(false)}>
                     {t('cancel')}
                   </button>
-                  <button className='delete' onClick={() => handleDelete()}>
+                  <button
+                    type='button'
+                    className='delete'
+                    onClick={() => handleDelete()}
+                  >
                     {t('delete')}
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <div className='favorite' onClick={() => handleFavorite()}>
+                <div
+                  tabIndex='0'
+                  role='button'
+                  className='favorite'
+                  onClick={() => handleFavorite()}
+                  onKeyDown={() => handleFavorite()}
+                >
                   {favorite ? <StarFull /> : <StarEmpty />}
                 </div>
                 <div
@@ -179,8 +189,12 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
               }}
             />
             <p className='edit-actions'>
-              <button onClick={() => saveEdit()}>{t('save')}</button> {t('or')}{' '}
+              <button type='button' onClick={() => saveEdit()}>
+                {t('save')}
+              </button>{' '}
+              {t('or')}{' '}
               <button
+                type='button'
                 onClick={() => {
                   setEditMode(false);
                   setEditData({ title, content });
