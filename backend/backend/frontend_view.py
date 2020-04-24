@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 def pagenotfound_view(request, *args, **kwargs):  # pragma: no cover
-    return HttpResponse(status=404)
+    return JsonResponse({"error":"Not existing endpoint"},status=404)
