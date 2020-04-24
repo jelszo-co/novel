@@ -49,5 +49,6 @@ jobs:
     script:
     - heroku container:login
     - heroku container:push web -a $HEROKU_NAME
+    after_script:
     - heroku container:release web -a $HEROKU_NAME
 
