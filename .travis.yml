@@ -31,7 +31,7 @@ jobs:
     - chmod +x codacy-coverage-reporter
     - "./codacy-coverage-reporter report -r coverage.xml"
   - stage: deploy
-    if: branch = dev and type = push
+    if: (branch = dev or branch = master) and type = push
     language: node_js
     node_js: 12
     cache: yarn
@@ -43,10 +43,10 @@ jobs:
     - cd frontend
     install:
     - yarn install
-    before_script:
+    - heroku update
+    script:
     - yarn build
     - cd ..
-    script:
     - heroku container:login
     - heroku container:push web -a $HEROKU_NAME
     after_script:
