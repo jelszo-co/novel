@@ -67,8 +67,11 @@ RUN chown -R novel:www-data /www
 RUN chown -R novel:www-data /var/cache/nginx
 RUN chown -R novel:www-data /var/log/nginx
 RUN chown -R novel:www-data /etc/nginx/conf.d
+RUN touch /var/run/nginx.pid && chmod 777 /var/run/nginx.pid
 
-# USER novel
+RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx
+
+USER novel
 
 # run entrypoint.sh
 ENTRYPOINT ["/home/novel/web/entrypoint.sh"]
