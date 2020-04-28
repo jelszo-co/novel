@@ -1,4 +1,5 @@
 os: linux
+dist: bionic
 jobs:
   include:
   - language: node_js
@@ -40,6 +41,8 @@ jobs:
     cache: yarn
     before_install:
     - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv -in firebase.json.enc -out backend/firebase.json -d
+    - openssl aes-256-cbc -K $encrypted_b1b899995f0a_key -iv $encrypted_b1b899995f0a_iv -in heroku.key.enc -out heroku.key -d
+    - cp heroku.key ~/.ssh/
     - cd frontend
     install:
     - yarn install
@@ -50,7 +53,7 @@ jobs:
     - cp ./build/* ../backend/frontend/ -r
     - cd ../backend
     - git init
-    - heroku git:remote -a $HEROKU_NAME
+    - heroku git:remote -a $HEROKU_NAME --ssh-git
     - git add .
     - git commit -am "deploy"
     - git push heroku master
