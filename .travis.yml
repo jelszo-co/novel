@@ -1,0 +1,57 @@
+os: linux
+jobs:
+  include:
+  - language: node_js
+    node_js: 12
+    name: Frontend test
+    cache: yarn
+    stage: test
+    before_install: cd frontend
+    install: yarn install
+    script: yarn test
+    after_script:
+    - curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest
+      | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux")))
+      | .[0].browser_download_url')"
+    - chmod +x codacy-coverage-reporter
+    - "./codacy-coverage-reporter report -r coverage/clover.xml"
+  - language: python
+    python: 3.7.6
+    name: Backend test
+    cache: pip
+    stage: test
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv
+      -in firebase.json.enc -out backend/firebase.json -d
+    - cd backend
+    install: pip install -r requirements.txt
+    script: coverage run --omit "*/venv/*,manage.py"  manage.py test && coverage xml
+    after_script:
+    - curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest
+      | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux")))
+      | .[0].browser_download_url')"
+    - chmod +x codacy-coverage-reporter
+    - "./codacy-coverage-reporter report -r coverage.xml"
+  - stage: deploy
+    name: Deploy to heroku
+    if: (branch = dev or branch = master) and type = push
+    language: node_js
+    node_js: 12
+    cache: yarn
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv -in firebase.json.enc -out backend/firebase.json -d
+    - cd frontend
+    install:
+    - yarn install
+    - heroku update
+    script:
+    - yarn build
+    - mkdir ../backend/frontend
+    - cp ./build/* ../backend/frontend/ -r
+    - cd ../backend
+    - git init
+    - heroku git:remote -a $HEROKU_NAME
+    - git add .
+    - git commit -am "deploy"
+    - git push heroku master
+
