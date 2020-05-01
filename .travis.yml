@@ -46,7 +46,6 @@ jobs:
     - cd frontend
     install:
     - yarn install
-    - heroku update
     - yarn build
     script:
     - mkdir ../backend/frontend
