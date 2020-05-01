@@ -52,7 +52,7 @@ jobs:
     - cp ./build/* ../backend/frontend/ -r
     - cd ../backend
     - git init
-    - git remote add heroku https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/$HEROKU_NAME
+    - git remote add heroku https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/$HEROKU_NAME.git
     - git add .
     - git commit -am "deploy"
     - git push heroku master
