@@ -20,6 +20,10 @@ jobs:
     - cd ..
     - chmod +x send_discord
     - ./send_discord --success --message "Frontend test passed"
+    after_failure:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --message "Frontend test failed"
   - language: python
     python: 3.7.6
     name: Backend test
@@ -37,6 +41,14 @@ jobs:
       | .[0].browser_download_url')"
     - chmod +x codacy-coverage-reporter
     - "./codacy-coverage-reporter report -r coverage.xml"
+    after_success:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --success --message "Backend test passed"
+    after_failure:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --message "Backend test failed"
   - stage: deploy
     name: Deploy to heroku
     if: (branch = dev or branch = master) and type = push
@@ -61,4 +73,12 @@ jobs:
     after_script:
     - git commit -am "deploy"
     - git push
+    after_success:
+    - cd ../novel
+    - chmod +x send_discord
+    - ./send_discord --success --message "Deploy successful"
+    after_failure:
+    - cd ../novel
+    - chmod +x send_discord
+    - ./send_discord --message "Deploy failed"
 
