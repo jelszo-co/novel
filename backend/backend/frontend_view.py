@@ -1,4 +1,5 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
+from django.shortcuts import render
 
 
 def frontend_view(request, *args, **kwargs):  # pragma: no cover
@@ -6,4 +7,4 @@ def frontend_view(request, *args, **kwargs):  # pragma: no cover
     if len(path) >= 2 and path[1] == "api":
         return JsonResponse({"error": "Endpoint not found"}, status=404)
     else:
-        return HttpResponse()  # render(request, 'index.html')
+        return render(request, 'index.html')
