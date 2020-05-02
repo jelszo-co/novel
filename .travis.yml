@@ -52,7 +52,7 @@ jobs:
     - cp ./build/* ../backend/frontend/ -r
     - cd ../..
     - git clone https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/$HEROKU_NAME.git heroku
-    - cp novel/backend/* heroku/
+    - cp novel/backend/* heroku/ -r
     - cd heroku/
     - git add .
     - git commit -am "deploy"
