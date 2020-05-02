@@ -16,6 +16,10 @@ jobs:
       | .[0].browser_download_url')"
     - chmod +x codacy-coverage-reporter
     - "./codacy-coverage-reporter report -r coverage/clover.xml"
+    after_success:
+    - cd ..
+    - chmod +x send.sh
+    - ./send.sh success "Frontend test passed" $WEBHOOK_URL
   - language: python
     python: 3.7.6
     name: Backend test
@@ -55,6 +59,7 @@ jobs:
     - cp novel/backend/* heroku/ -r
     - cd heroku/
     - git add .
+    after_script:
     - git commit -am "deploy"
     - git push
 
