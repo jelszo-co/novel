@@ -50,10 +50,11 @@ jobs:
     script:
     - mkdir ../backend/frontend
     - cp ./build/* ../backend/frontend/ -r
-    - cd ../backend
-    - git init
-    - git remote add heroku https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/$HEROKU_NAME.git
+    - cd ../..
+    - git clone https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/$HEROKU_NAME.git heroku
+    - cp novel/backend/* heroku/
+    - cd heroku/
     - git add .
     - git commit -am "deploy"
-    - git push heroku master
+    - git push
 
