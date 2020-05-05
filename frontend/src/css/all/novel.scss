@@ -1,4 +1,5 @@
 @import '../variables';
+
 #novel {
   .novel-header {
     position: absolute;
@@ -7,6 +8,13 @@
     .novel-title {
       position: relative;
       font-size: 4rem;
+
+      input {
+        font-family: 'Forum';
+        font-size: 4rem;
+        border-bottom: 4pt solid $white;
+        width: 40vw;
+      }
     }
     .novel-date {
       display: block;
@@ -106,6 +114,37 @@
 
     p {
       margin-bottom: 20px;
+    }
+
+    textarea {
+      background: none;
+      border: 3pt dashed $white;
+      font-family: 'Markazi text';
+      text-align: center;
+      font-size: inherit;
+      width: 100%;
+      margin-left: -5%;
+      padding: 5%;
+      resize: none;
+    }
+
+    .edit-actions {
+      float: right;
+      margin: 0;
+      padding: 0;
+      margin-right: calc(-5% - 6pt);
+
+      button {
+        font-family: inherit;
+        font-size: inherit;
+        text-decoration: underline;
+        margin: 0 5px;
+        padding: 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
     }
   }
 

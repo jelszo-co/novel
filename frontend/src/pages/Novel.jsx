@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { Link, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import TextareaAutoSize from 'react-textarea-autosize';
+import axios from 'axios';
 import Moment from 'react-moment';
 import 'moment/locale/hu';
 
@@ -11,9 +13,9 @@ import { ReactComponent as Send } from '../assets/paperplane.svg';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
-import '../css/all/novel.scss';
-import { useTranslation } from 'react-i18next';
 import { setPopup } from '../actions/popup';
+
+import '../css/all/novel.scss';
 
 const Novel = ({ match, user: { role }, history, setPopup }) => {
   const { t } = useTranslation();
@@ -25,12 +27,23 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
   const limit = 300;
   const [char, setChar] = useState(300);
   const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState({});
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`)
-      .then(res => {
-        setNovel(res.data);
+      .then(({ data }) => {
+        setNovel(data);
+        setEditData({
+          title: data.title,
+          content: data.content
+            .split('\r\n')
+            .map((item, i) =>
+              data.content.split('\r\n').length === i + 1
+                ? item
+                : `${item}\r\n\r\n`,
+            ),
+        });
       })
       .catch(err => {
         if (err.response.status === 404) {
@@ -82,6 +95,45 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
     }
   };
 
+  const handleSave = async () => {
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`,
+        editData,
+      );
+      setNovel(res.data);
+      setEditData({
+        title: res.data.title,
+        content: res.data.content
+          .split('\r\n')
+          .map((item, i) =>
+            res.data.content.split('\r\n').length === i + 1
+              ? item
+              : `${item}\r\n\r\n`,
+          ),
+      });
+      setEditMode(false);
+      setPopup('Sikeres mentés!');
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a novella mentése közben.', 'err');
+    }
+  };
+
+  const handleDiscard = () => {
+    setEditData({
+      title: novel.title,
+      content: novel.content
+        .split('\r\n')
+        .map((item, i) =>
+          novel.content.split('\r\n').length === i + 1
+            ? item
+            : `${item}\r\n\r\n`,
+        ),
+    });
+    setEditMode(false);
+  };
+
   return (
     Object.keys(novel).length > 0 &&
     (redirect ? (
@@ -93,13 +145,25 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
         </Link>
         <div className='novel-header'>
           <h2 className='novel-title'>
-            {title}
+            {editMode ? (
+              <input
+                type='text'
+                value={editData.title}
+                onChange={({ target: { value } }) =>
+                  setEditData({ ...editData, title: value })
+                }
+              />
+            ) : (
+              title
+            )}
             {role === 'admin' ? (
               <>
                 <div className='admin-actions'>
-                  <button onClick={() => setEditMode(!editMode)}>
-                    <Pencil />
-                  </button>
+                  {!editMode && (
+                    <button onClick={() => setEditMode(!editMode)}>
+                      <Pencil />
+                    </button>
+                  )}
                   <button onClick={() => setDelPopup(!delPopup)}>
                     <Trash />
                   </button>
@@ -143,10 +207,48 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
           </Moment>
         </div>
         <div className='novel-content'>
-          {content.split('\r\n').map((item, i) => (
-            <p key={i}>{item}</p>
-          ))}
+          {editMode ? (
+            <>
+              <p className='edit-actions'>
+                <button type='button' onClick={() => handleSave()}>
+                  {t('save')}
+                </button>
+                {t('or')}
+                <button type='button' onClick={() => handleDiscard()}>
+                  {t('discard')}
+                </button>
+              </p>
+              <TextareaAutoSize
+                spellCheck={false}
+                value={editData.content.join('')}
+                onChange={({ target: { value } }) =>
+                  setEditData({
+                    ...editData,
+                    content: value
+                      .split('\r\n')
+                      .map((item, i) =>
+                        value.split('\r\n').length === i + 1
+                          ? item
+                          : `${item}\r\n\r\n`,
+                      ),
+                  })
+                }
+              />
+              <p className='edit-actions'>
+                <button type='button' onClick={() => handleSave()}>
+                  {t('save')}
+                </button>
+                {t('or')}
+                <button type='button' onClick={() => handleDiscard()}>
+                  {t('discard')}
+                </button>
+              </p>
+            </>
+          ) : (
+            content.split('\r\n').map((item, i) => <p key={i}>{item}</p>)
+          )}
         </div>
+
         <h2 className='comments-header'>{t('comments_header')}</h2>
         <div className='comments'>
           <form className='write' onSubmit={e => handleComment(e)}>
