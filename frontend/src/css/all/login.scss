@@ -15,11 +15,13 @@
       padding: 0;
       cursor: pointer;
       transition: 0.1s all linear;
+
       &:hover {
         transform: scale(1.1);
       }
     }
   }
+
   #form-cont {
     position: absolute;
     top: 30%;
@@ -29,16 +31,36 @@
     flex-direction: row;
     width: 55%;
     justify-content: space-between;
+
     form {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 50vh;
       width: 35%;
+
       h3 {
         text-align: center;
         font-size: 1.5rem;
-        text-align: center;
+      }
+
+      input {
+        box-sizing: border-box;
+        background: none;
+        background-image: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+        font-family: 'Markazi text', serif;
+        font-size: 1.8rem;
+        line-height: 1.6rem;
+        align-self: center;
+        border-bottom: 2.5pt solid $white;
+        transition: 0.1s all ease-in-out;
+
+        &[type='submit'] {
+          cursor: pointer;
+        }
       }
 
       .form-group {
@@ -46,6 +68,7 @@
         position: relative;
         flex-direction: column;
         transition: 0.2s all ease-in-out;
+
         input {
           border-bottom: 2pt solid $white;
           font-size: 1.3rem;
@@ -53,15 +76,18 @@
           margin: 20px 0;
           align-self: stretch;
           transition: 0.1s all ease-in-out;
+
           &:first-child {
             margin-top: 0;
           }
         }
       }
+
       #reg-password {
         margin-bottom: 0;
         padding-right: 25px;
       }
+
       .show-pass {
         button {
           position: absolute;
@@ -74,16 +100,19 @@
           border: none;
           outline: none;
           fill: $white;
+
           svg {
             width: 22px;
             height: 22px;
           }
+
           svg.show-pass-eye {
             fill: none;
             stroke: $white;
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-width: 32px;
+
             circle {
               stroke-miterlimit: 10;
             }
@@ -99,10 +128,12 @@
         margin: 0;
         padding: 0;
         transition: 0.2s all ease-in-out;
+
         li {
           margin: 0;
           margin-left: 25px;
           padding: 0;
+
           p {
             margin: 0;
             padding: 0;
@@ -110,6 +141,7 @@
             position: relative;
             display: inline-block;
             transition: 0.2s all ease-in-out;
+
             span {
               display: block;
               position: absolute;
@@ -128,6 +160,7 @@
       .form-group-login {
         position: relative;
         transition: 0.2s all ease-in-out;
+
         input {
           border-bottom: 2pt solid $white;
           font-size: 1.3rem;
@@ -137,12 +170,13 @@
           display: inline-block;
           transition: 0.1s all ease-in-out;
         }
+
         button {
           border: none;
           background: none;
           margin: 0;
           padding: 0;
-          font-family: 'Markazi text';
+          font-family: 'Markazi text', serif;
           font-size: 1.2rem;
           text-decoration: underline;
           float: right;
@@ -176,24 +210,6 @@
           text-align: center;
           font-size: 2rem;
           vertical-align: middle;
-        }
-      }
-
-      input {
-        box-sizing: border-box;
-        background: none;
-        background-image: none;
-        border: none;
-        margin: 0;
-        padding: 0;
-        font-family: 'Markazi Text';
-        font-size: 1.8rem;
-        line-height: 1.6rem;
-        align-self: center;
-        border-bottom: 2.5pt solid $white;
-        transition: 0.1s all ease-in-out;
-        &[type='submit'] {
-          cursor: pointer;
         }
       }
     }

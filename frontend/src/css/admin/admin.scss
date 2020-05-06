@@ -8,7 +8,7 @@ $indent: 4%;
     a {
       position: absolute;
       bottom: 0;
-      font-family: 'Forum';
+      font-family: 'Forum', serif;
       font-size: 1.4rem;
       text-decoration: none;
       border-bottom: 3px solid $white;
@@ -17,7 +17,7 @@ $indent: 4%;
     }
   }
   .panel-title {
-    font-family: 'Forum';
+    font-family: 'Forum', serif;
     font-size: 1.4rem;
   }
 
@@ -47,13 +47,6 @@ $indent: 4%;
     top: $top;
     transform: translateX(-50%);
     height: 60%;
-
-    .uploader {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
   }
 
   .account-management {
@@ -62,4 +55,12 @@ $indent: 4%;
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.uploader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.2s all ease-in-out;
 }

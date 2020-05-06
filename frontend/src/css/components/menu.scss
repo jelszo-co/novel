@@ -3,7 +3,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  font-family: 'Forum';
+  font-family: 'Forum', serif;
   font-size: 1.6rem;
   cursor: pointer;
   background: none;
@@ -26,7 +26,7 @@
   li {
     text-align: right;
     font-size: 2rem;
-    font-family: 'Forum';
+    font-family: 'Forum', serif;
     margin: 8pt 0;
     a {
       text-decoration: none;
@@ -34,7 +34,7 @@
     button {
       background: none;
       border: none;
-      font-family: 'Forum';
+      font-family: 'Forum', serif;
       font-size: 1.8rem;
       padding: 0;
       text-transform: uppercase;

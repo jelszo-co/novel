@@ -5,17 +5,19 @@
     position: absolute;
     top: 1%;
     left: 1%;
+
     .novel-title {
       position: relative;
       font-size: 4rem;
 
       input {
-        font-family: 'Forum';
+        font-family: 'Forum', serif;
         font-size: 4rem;
         border-bottom: 4pt solid $white;
         width: 40vw;
       }
     }
+
     .novel-date {
       display: block;
       margin-top: 10px;
@@ -23,11 +25,13 @@
       font-weight: 200;
       letter-spacing: 1px;
     }
+
     .favorite {
       display: inline;
       margin-left: 20px;
       cursor: pointer;
     }
+
     svg {
       height: 2.6rem;
       width: 2.6rem;
@@ -35,12 +39,14 @@
       vertical-align: middle;
       margin-bottom: 6px;
     }
+
     .fav-popup {
       display: inline;
-      font-family: 'Markazi text';
+      font-family: 'Markazi text', serif;
       font-size: 1.5rem;
       vertical-align: middle;
       transition: 0.2s all ease-in-out;
+
       span {
         display: inline-block;
         width: 20px;
@@ -50,6 +56,7 @@
         margin-left: 20px;
         margin-right: 10px;
       }
+
       a {
         margin-left: 10px;
       }
@@ -57,11 +64,13 @@
     .admin-actions {
       display: inline;
       margin-left: 20px;
+
       button {
         display: inline;
         vertical-align: middle;
         margin: 0 5px;
         padding: 0;
+
         svg {
           width: 25px;
           height: 25px;
@@ -70,10 +79,11 @@
     }
     .admin-delete-confirm {
       display: inline;
-      font-family: 'Markazi text';
+      font-family: 'Markazi text', serif;
       font-size: 1.5rem;
       vertical-align: middle;
       transition: 0.2s all ease-in-out;
+
       span {
         display: inline-block;
         width: 17px;
@@ -83,6 +93,7 @@
         margin-left: 10px;
         margin-right: 10px;
       }
+
       button {
         margin: 0;
         padding: 0;
@@ -90,11 +101,13 @@
         font-size: 1.3rem;
         text-decoration: underline;
       }
+
       button.delete {
         color: $alert;
       }
     }
   }
+
   .novel-back {
     position: absolute;
     top: 2%;
@@ -103,6 +116,7 @@
     text-decoration: none;
     color: $white;
   }
+
   .novel-content {
     margin-top: 20%;
     text-align: center;
@@ -119,7 +133,7 @@
     textarea {
       background: none;
       border: 3pt dashed $white;
-      font-family: 'Markazi text';
+      font-family: 'Markazi text', serif;
       text-align: center;
       font-size: inherit;
       width: 100%;
@@ -151,7 +165,7 @@
   .comments-header {
     margin-top: 6%;
     margin-left: 25pt;
-    font-family: 'Forum';
+    font-family: 'Forum', serif;
     font-size: 3.5rem;
   }
 
@@ -168,7 +182,7 @@
         background: none;
         border: none;
         border-bottom: 2.5pt solid $white;
-        font-family: 'Markazi text';
+        font-family: 'Markazi text', serif;
         font-size: 1.8rem;
         line-height: 1rem;
         padding: 0.1rem 70px 0.1rem 0;
@@ -182,6 +196,7 @@
         font-size: 1.6rem;
         opacity: 0.8;
       }
+
       button {
         position: absolute;
         top: 0;
@@ -192,6 +207,7 @@
         margin: 0;
         padding: 0;
         cursor: pointer;
+
         svg {
           width: 45px;
           height: 45px;
