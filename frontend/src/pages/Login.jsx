@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
-import { auth } from '../firebase';
+import { auth, GProvider, FProvider } from '../firebase';
 import { setPopup } from '../actions/popup';
 
 import Title from './components/Title';
@@ -16,6 +16,7 @@ import { ReactComponent as Eye } from '../assets/pass_eye.svg';
 import { ReactComponent as EyeCross } from '../assets/pass_eye_cross.svg';
 
 import '../css/all/login.scss';
+import i18next from 'i18next';
 
 const Login = ({ user, setPopup }) => {
   // STATE
@@ -110,6 +111,28 @@ const Login = ({ user, setPopup }) => {
     }
   };
 
+  const handleGoogle = async () => {
+    try {
+      auth().languageCode = i18next.t('locale_name');
+      const res = await auth().signInWithPopup(GProvider);
+      const token = res.credential.accessToken;
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a bejelentkezés során.', 'err');
+    }
+  };
+
+  const handleFB = async () => {
+    try {
+      auth().languageCode = i18next.t(['locale_name', 'en']);
+      const res = await auth().signInWithPopup(FProvider);
+      const token = res.credential.accessToken;
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a bejelentkezés során.', 'err');
+    }
+  };
+
   const handleLogin = async e => {
     e.preventDefault();
     let err = false;
@@ -183,13 +206,13 @@ const Login = ({ user, setPopup }) => {
       <div id='login-social'>
         <Google
           title={t('login_google_title')}
-          onClick={() => {}}
-          onKeyPress={() => {}}
+          onClick={() => handleGoogle()}
+          onKeyPress={() => handleGoogle()}
         />
         <Facebook
           title={t('login_fb_title')}
-          onClick={() => {}}
-          onKeyPress={() => {}}
+          onClick={() => handleFB()}
+          onKeyPress={() => handleFB()}
         />
       </div>
       <div id='form-cont'>
