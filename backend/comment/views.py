@@ -82,3 +82,17 @@ class ReplyComment(View):
                                novel=request.comment.novel,
                                recipient=User.objects.get(id=body["recipient"]) if "recipient" in body else None)
         return JsonResponse(getCommentsForNovel(request.comment.novel), safe=False)
+
+
+class LikeComment(View):
+    @method_decorator(get_comment_by_id)
+    @method_decorator(permission_needed('not request.fb_user.isAuthenticated',
+                                        'You have to be logged in - even with an anonymous account - to like a comment',
+                                        'You are banned from writing comments'))
+    def post(self, request, *args, **kwargs):
+        if request.comment.liked.filter(id=request.fb_user.id).exists():
+            request.comment.liked.remove(request.fb_user)
+        else:
+            request.comment.liked.add(request.fb_user)
+        request.comment.save()
+        return JsonResponse(getCommentsForNovel(request.comment.novel), safe=False)
