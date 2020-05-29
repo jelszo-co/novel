@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from authorization.decorator import permission_needed
+from authorization.models import User
 from comment.decoratos import get_comment_by_id
 from comment.models import Comment
 from novel.decorator import get_novel_by_path
@@ -78,5 +79,6 @@ class ReplyComment(View):
         if "content" not in body:
             return JsonResponse({"error": "Bad input"}, status=400)
         Comment.objects.create(content=body["content"], sender=request.fb_user, parentComment=request.comment,
-                               novel=request.comment.novel)
+                               novel=request.comment.novel,
+                               recipient=User.objects.get(id=body["recipient"]) if "recipient" in body else None)
         return JsonResponse(getCommentsForNovel(request.comment.novel), safe=False)
