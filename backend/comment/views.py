@@ -11,11 +11,11 @@ from comment.models import Comment
 from novel.decorator import get_novel_by_path
 
 
-def commentJson(c):
+def commentJson(c, user):
     return {
         "id": c.pk,
-        "likes": None,  # TODO
-        "likedByMe": None,  # TODO
+        "likes": len(c.liked.all()),
+        "likedByMe": c.liked.filter(id=user.id).exists(),
         "sender": {
             "id": c.sender.pk,
             "name": c.sender.name
@@ -30,14 +30,14 @@ def commentJson(c):
     }
 
 
-def getCommentsForNovel(novel):
+def getCommentsForNovel(novel, user):
     rootComms = Comment.objects.filter(novel=novel, parentComment=None).order_by("-writtenAt")
     resp = []
     for c in rootComms:
-        resp.append(commentJson(c))
+        resp.append(commentJson(c, user))
         repls = Comment.objects.filter(novel=novel, parentComment=c).order_by("-writtenAt")
         for r in repls:
-            resp[-1]["replies"].append(commentJson(r))
+            resp[-1]["replies"].append(commentJson(r, user))
     return resp
 
 
@@ -56,7 +56,7 @@ class CommentByPath(View):
             return JsonResponse({"error": "Bad input"}, status=400)
         Comment.objects.create(content=body["content"], sender=request.fb_user, parentComment=None,
                                novel=request.novel)
-        return JsonResponse(getCommentsForNovel(request.novel), safe=False)
+        return JsonResponse(getCommentsForNovel(request.novel, request.fb_user), safe=False)
 
 
 class DeleteCommentById(View):
@@ -66,7 +66,7 @@ class DeleteCommentById(View):
                           'You have to be logged in to delete comments', 'You cannot delete this comment'))
     def delete(self, request, *args, **kwargs):
         request.comment.delete()
-        return JsonResponse(getCommentsForNovel(request.comment.novel), safe=False)
+        return JsonResponse(getCommentsForNovel(request.comment.novel, request.fb_user), safe=False)
 
 
 class ReplyComment(View):
@@ -81,7 +81,7 @@ class ReplyComment(View):
         Comment.objects.create(content=body["content"], sender=request.fb_user, parentComment=request.comment,
                                novel=request.comment.novel,
                                recipient=User.objects.get(id=body["recipient"]) if "recipient" in body else None)
-        return JsonResponse(getCommentsForNovel(request.comment.novel), safe=False)
+        return JsonResponse(getCommentsForNovel(request.comment.novel, request.fb_user), safe=False)
 
 
 class LikeComment(View):
@@ -95,4 +95,4 @@ class LikeComment(View):
         else:
             request.comment.liked.add(request.fb_user)
         request.comment.save()
-        return JsonResponse(getCommentsForNovel(request.comment.novel), safe=False)
+        return JsonResponse(getCommentsForNovel(request.comment.novel, request.fb_user), safe=False)
