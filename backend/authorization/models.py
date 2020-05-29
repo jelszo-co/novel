@@ -14,4 +14,4 @@ class User(models.Model):
     def __str__(self):  # pragma: no cover
         if self.uid == 'unauthenticated':
             return '*service account - needed for backend*'
-        return f'{self.uid} - {"anonim" if self.isAnonymous else ""}{"admin" if self.isAdmin else ""}'
+        return f'{self.uid} - {self.name} - {"anonim" if self.isAnonymous else ""}{"admin" if self.isAdmin else ""}'
