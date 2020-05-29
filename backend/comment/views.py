@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from authorization.decorator import permission_needed
+from comment.decoratos import get_comment_by_id
 from comment.models import Comment
 from novel.decorator import get_novel_by_path
 
@@ -52,3 +53,13 @@ class CommentByPath(View):
         comm = Comment.objects.create(content=body["content"], sender=request.fb_user, parentComment=None,
                                       novel=request.novel)
         return JsonResponse(commentJson(comm))
+
+
+class DeleteCommentById(View):
+    @method_decorator(get_comment_by_id)
+    @method_decorator(
+        permission_needed('not (request.fb_user==request.comment.sender or request.fb_user.isAdmin)',
+                          'You have to be logged in to delete comments', 'You cannot delete this comment'))
+    def delete(self, request, *args, **kwargs):
+        request.comment.delete()
+        return JsonResponse({"success": "Successfully deleted"})
