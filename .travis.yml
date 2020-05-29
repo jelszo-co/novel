@@ -70,7 +70,7 @@ jobs:
     - cd heroku/
     - git add .
     after_script:
-    - cd heroku/
+    - cd ../heroku/
     - git commit -am "deploy"
     - git push
     after_success:
