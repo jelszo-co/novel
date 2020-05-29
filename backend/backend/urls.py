@@ -3,7 +3,8 @@ from django.urls import path, include
 
 urls = [
     path('novel/', include('novel.urls')),
-    path('user/', include('authorization.urls'))
+    path('user/', include('authorization.urls')),
+    path('comment/', include('comment.urls'))
 ]
 
 urlpatterns = [
