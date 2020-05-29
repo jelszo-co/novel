@@ -5,6 +5,7 @@ $indent: 4%;
 #admin {
   .panel {
     height: 70%;
+
     a {
       position: absolute;
       bottom: 0;
@@ -16,6 +17,7 @@ $indent: 4%;
       white-space: nowrap;
     }
   }
+
   .panel-title {
     font-family: 'Forum', serif;
     font-size: 1.4rem;
@@ -25,6 +27,7 @@ $indent: 4%;
     position: absolute;
     left: $indent;
     top: $top;
+
     a {
       left: 50%;
       transform: translateX(-50%);
@@ -35,6 +38,7 @@ $indent: 4%;
     position: absolute;
     right: $indent;
     top: $top;
+
     a {
       right: 50%;
       transform: translateX(50%);
