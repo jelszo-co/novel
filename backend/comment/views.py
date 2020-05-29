@@ -63,3 +63,17 @@ class DeleteCommentById(View):
     def delete(self, request, *args, **kwargs):
         request.comment.delete()
         return JsonResponse({"success": "Successfully deleted"})
+
+
+class ReplyComment(View):
+    @method_decorator(get_comment_by_id)
+    @method_decorator(permission_needed('not request.fb_user.isAuthenticated',
+                                        'You have to be logged in - even with an anonymous account - to write a comment',
+                                        'You are banned from writing comments'))
+    def post(self, request, *args, **kwargs):
+        body = json.loads(request.body.decode('utf-8'))
+        if "content" not in body:
+            return JsonResponse({"error": "Bad input"}, status=400)
+        comm = Comment.objects.create(content=body["content"], sender=request.fb_user, parentComment=request.comment,
+                                      novel=request.comment.novel)
+        return JsonResponse(commentJson(comm))
