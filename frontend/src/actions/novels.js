@@ -1,7 +1,6 @@
 import { GOT_NOVELS, SET_NOVEL, NOVEL_ERROR } from './types';
 import axios from 'axios';
 import { setPopup } from './popup';
-import { push } from 'react-router-redux';
 import i18n from 'i18next';
 
 export const getNovels = () => async dispatch => {
