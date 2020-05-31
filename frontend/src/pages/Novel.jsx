@@ -14,51 +14,42 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
+import { setNovel } from '../actions/novels';
 
 import '../css/all/novel.scss';
 
-const Novel = ({ match, user: { role }, history, setPopup }) => {
+const Novel = ({
+  match,
+  user: { role },
+  loading,
+  novel,
+  novel: { title, favorite, uploadedAt, content, error },
+  history,
+  setPopup,
+  setNovel,
+}) => {
   const { t } = useTranslation();
   const [favPopup, setFavPopup] = useState(false);
   const [delPopup, setDelPopup] = useState(false);
-  const [novel, setNovel] = useState({});
-  //const [comments, setComments] = useState({});
-  const [redirect, changeRedirect] = useState(false);
   const limit = 300;
   const [char, setChar] = useState(300);
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState({});
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`)
-      .then(({ data }) => {
-        setNovel(data);
-        setEditData({
-          title: data.title,
-          content: data.content
-            .split('\r\n')
-            .map((item, i) =>
-              data.content.split('\r\n').length === i + 1
-                ? item
-                : `${item}\r\n\r\n`,
-            ),
-        });
-      })
-      .catch(err => {
-        if (err.response.status === 404) {
-          changeRedirect(true);
-        }
+    setNovel(match.params.title, res => {
+      setEditData({
+        title: res.title,
+        content: res.content
+          .split('\r\n')
+          .map((item, i) =>
+            res.content.split('\r\n').length === i + 1
+              ? item
+              : `${item}\r\n\r\n`,
+          ),
       });
-    // axios
-    //   .get(`${process.env.REACT_APP_SRV_ADDR}/comment/${match.params.title}`)
-    //   .then(res => {
-    //     setComments(res.data);
-    //   })
-    //   .catch(err => console.error(err.response));
-  }, [match]);
-
-  let { title, content, uploadedAt, favorite } = novel;
+    });
+  }, [match, setNovel]);
 
   const handleComment = e => {
     e.preventDefault();
@@ -135,8 +126,8 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
   };
 
   return (
-    Object.keys(novel).length > 0 &&
-    (redirect ? (
+    !loading &&
+    (error ? (
       <Redirect to='/404' />
     ) : (
       <div id='novel'>
@@ -274,6 +265,10 @@ const Novel = ({ match, user: { role }, history, setPopup }) => {
 
 const mapStateToProps = state => ({
   user: state.user,
+  novel: state.novels.novel,
+  loading: state.novels.novelLoading,
 });
 
-export default connect(mapStateToProps, { setPopup })(withRouter(Novel));
+export default connect(mapStateToProps, { setPopup, setNovel })(
+  withRouter(Novel),
+);

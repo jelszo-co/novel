@@ -52,15 +52,16 @@ const Uploader = ({ setPopup }) => {
   const { t } = useTranslation();
   const [phase, setPhase] = useState(0);
   const [novelData, setNovelData] = useState({ title: '', lore: '' });
-  const { title, lore } = novelData;
+  const { title } = novelData; // TODO: Add lore
   const container = useRef(null);
 
-  const increment = () => {
-    console.log('incrementing ' + phase + ' by 1');
+  const phaseRef = useRef(phase);
+  phaseRef.current = phase;
 
+  const increment = () => {
     container.current.style.opacity = 0;
     setTimeout(() => {
-      setPhase(phase + 1);
+      setPhase(phaseRef.current + 1);
       container.current.style.opacity = 1;
     }, 200);
   };
@@ -72,13 +73,12 @@ const Uploader = ({ setPopup }) => {
       increment();
       const data = new FormData();
       data.append('noveldoc', files[0]);
-      try {
-        await axios.post(`${process.env.REACT_APP_SRV_ADDR}/novel/new`, data);
-      } catch (err) {}
+      await axios.post(`${process.env.REACT_APP_SRV_ADDR}/novel/new`, data);
       increment();
     } catch (err) {
       console.error(err);
       setPopup('Hiba a novella feltöltése közben.', 'err');
+      setPhase(0);
     }
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
