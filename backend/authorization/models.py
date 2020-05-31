@@ -10,6 +10,7 @@ class User(models.Model):
     isAuthenticated = models.BooleanField(default=True)
     favorites = models.ManyToManyField(Novel, blank=True)
     name = models.CharField(max_length=32, default='Unknown')
+    banned = models.BooleanField(default=False)
 
     def __str__(self):  # pragma: no cover
         if self.uid == 'unauthenticated':

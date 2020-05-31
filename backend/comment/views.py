@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from authorization.decorator import permission_needed
+from authorization.decorator import permission_needed, get_user_by_id
 from authorization.models import User
 from comment.decoratos import get_comment_by_id
 from comment.models import Comment
@@ -44,7 +44,7 @@ def getCommentsForNovel(novel, user):
 class CommentByPath(View):
     @method_decorator(get_novel_by_path)
     def get(self, request, *args, **kwargs):
-        return JsonResponse(getCommentsForNovel(request.novel), safe=False)
+        return JsonResponse(getCommentsForNovel(request.novel, request.fb_user), safe=False)
 
     @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('not request.fb_user.isAuthenticated',
@@ -96,3 +96,15 @@ class LikeComment(View):
             request.comment.liked.add(request.fb_user)
         request.comment.save()
         return JsonResponse(getCommentsForNovel(request.comment.novel, request.fb_user), safe=False)
+
+
+class Ban(View):
+    @method_decorator(get_user_by_id)
+    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+                                        'Log in to do this',
+                                        'You are not admin'))
+    def post(self, request, *args, **kwargs):
+        user = request.fb_user_byId
+        user.banned = True
+        user.save()
+        return JsonResponse({'success': f'Successfully banned {user.name} from commenting'})
