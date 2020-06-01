@@ -25,21 +25,24 @@ const Popup = ({ popup }) => {
     TweenMax.fromTo(
       cont.current,
       0.2,
-      { opacity: 1, top: '1%' },
-      { opacity: 0, top: '-1%', delay: 3.6 },
+      { opacity: 1, marginTop: '0.1rem' },
+      { opacity: 0, marginTop: '-2rem', delay: 3.6 },
     );
   });
 
   return (
     popup !== null &&
-    popup.length > 0 &&
-    popup.map(({ id, msg, type = 'success' }) => (
-      <div className='popup' key={id} ref={cont}>
-        {type === 'err' ? <Cross /> : <Tick />}
-        {msg}
-        <div className='popup-line' ref={line} />
+    popup.length > 0 && (
+      <div className='popup-wrapper'>
+        {popup.map(({ id, msg, type = 'success' }) => (
+          <div className='popup' key={id} ref={cont}>
+            {type === 'err' ? <Cross /> : <Tick />}
+            {msg}
+            <div className='popup-line' ref={line} />
+          </div>
+        ))}
       </div>
-    ))
+    )
   );
 };
 

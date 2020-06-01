@@ -1,36 +1,37 @@
 @import '../variables';
 
-.popup {
+.popup-wrapper {
   position: fixed;
   top: 1%;
   left: 1%;
   font-family: 'Forum', serif;
   font-size: 1.3rem;
-
-  .popup-line {
-    display: block;
-    height: 2pt;
-    width: 0;
-    background: $white;
-  }
-  svg {
-    stroke: $white;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    margin-right: 5px;
-    fill: none;
-    stroke-miterlimit: 10;
-    stroke-width: 32px;
-    vertical-align: middle;
-    margin-bottom: 6px;
-    line,
-    polyline {
-      fill: none;
+  .popup {
+    .popup-line {
+      display: block;
+      height: 2pt;
+      width: 0;
+      background: $white;
+    }
+    svg {
       stroke: $white;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      margin-right: 5px;
+      fill: none;
+      stroke-miterlimit: 10;
       stroke-width: 32px;
+      vertical-align: middle;
+      margin-bottom: 6px;
+      line,
+      polyline {
+        fill: none;
+        stroke: $white;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 32px;
+      }
     }
   }
 }
