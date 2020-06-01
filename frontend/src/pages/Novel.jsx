@@ -15,7 +15,6 @@ import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
 import { getNovel, setNovel, setComments } from '../actions/novels';
-import { auth } from '../firebase';
 
 import '../css/all/novel.scss';
 
@@ -58,7 +57,7 @@ const Novel = ({
   const handleComment = async e => {
     e.preventDefault();
     if (comment.length > 0) {
-      if (auth().currentUser === null) {
+      if (role === 'stranger') {
         console.log('log in please');
       } else {
         try {
