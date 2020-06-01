@@ -1,0 +1,54 @@
+@import '../variables';
+
+.comment-auth-wrapper {
+  position: absolute;
+  .comment-auth-line {
+    display: block;
+    background: $white;
+    width: 25px;
+    height: 2px;
+  }
+  .comment-auth {
+    width: 220px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2pt solid $white;
+    * {
+      align-self: center;
+      font-size: 1.2rem;
+      flex-grow: 1;
+    }
+    p {
+      margin: 0 7px;
+    }
+    .anonymously {
+      background: $white;
+      color: $bg;
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+    svg {
+      width: 30px;
+      height: 30px;
+      fill: $white;
+      * {
+        stroke: $white;
+      }
+    }
+  }
+}
+
+.comment-auth-wrapper-bottom {
+  top: -45px;
+  right: 0;
+  transform: translate(calc(50% - 22.5px), -100%);
+
+  .comment-auth-line {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translate(-50%, 100%) rotate(90deg);
+  }
+}

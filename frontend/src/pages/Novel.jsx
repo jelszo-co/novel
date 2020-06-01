@@ -17,6 +17,7 @@ import { setPopup } from '../actions/popup';
 import { getNovel, setNovel, setComments } from '../actions/novels';
 
 import '../css/all/novel.scss';
+import CommentAuth from './components/CommentAuth';
 
 const Novel = ({
   match,
@@ -278,6 +279,7 @@ const Novel = ({
             <button type='submit'>
               <Send />
             </button>
+            <CommentAuth lineDir='bottom' />
           </form>
         </div>
       </div>
