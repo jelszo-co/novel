@@ -14,9 +14,10 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
-import { setNovel } from '../actions/novels';
+import { getNovel, setNovel, setComments } from '../actions/novels';
 
 import '../css/all/novel.scss';
+import CommentAuth from './components/CommentAuth';
 
 const Novel = ({
   match,
@@ -26,18 +27,21 @@ const Novel = ({
   novel: { title, favorite, uploadedAt, content, error },
   history,
   setPopup,
+  getNovel,
   setNovel,
+  setComments,
 }) => {
   const { t } = useTranslation();
   const [favPopup, setFavPopup] = useState(false);
   const [delPopup, setDelPopup] = useState(false);
   const limit = 300;
   const [char, setChar] = useState(300);
+  const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState({});
 
   useEffect(() => {
-    setNovel(match.params.title, res => {
+    getNovel(match.params.title, res => {
       setEditData({
         title: res.title,
         content: res.content
@@ -49,10 +53,25 @@ const Novel = ({
           ),
       });
     });
-  }, [match, setNovel]);
+  }, [match, getNovel]);
 
-  const handleComment = e => {
+  const handleComment = async e => {
     e.preventDefault();
+    if (comment.length > 0) {
+      if (role === 'stranger') {
+        console.log('log in please');
+      } else {
+        try {
+          const res = await axios.post(
+            `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
+          );
+          setComments(res.data);
+        } catch (err) {
+          console.error(err);
+          setPopup('Hiba a komment elküldése közben.', 'err');
+        }
+      }
+    }
   };
 
   const handleFavorite = async () => {
@@ -248,7 +267,11 @@ const Novel = ({
               name='comment'
               placeholder={t('comment_placeholder')}
               maxLength={limit}
-              onChange={e => setChar(limit - e.target.value.length)}
+              value={comment}
+              onChange={({ target: { value } }) => {
+                setChar(limit - value.length);
+                setComment(value);
+              }}
             />
             <p className='char-limit'>
               {char}/{limit}
@@ -256,6 +279,7 @@ const Novel = ({
             <button type='submit'>
               <Send />
             </button>
+            <CommentAuth lineDir='bottom' />
           </form>
         </div>
       </div>
@@ -269,6 +293,9 @@ const mapStateToProps = state => ({
   loading: state.novels.novelLoading,
 });
 
-export default connect(mapStateToProps, { setPopup, setNovel })(
-  withRouter(Novel),
-);
+export default connect(mapStateToProps, {
+  setPopup,
+  getNovel,
+  setNovel,
+  setComments,
+})(withRouter(Novel));

@@ -118,7 +118,7 @@
   }
 
   .novel-content {
-    margin-top: 20%;
+    margin-top: 25vh;
     text-align: center;
     width: 60%;
     margin-left: 20%;
@@ -178,26 +178,26 @@
       position: relative;
 
       input {
-        width: calc(100% - 120px);
+        width: calc(100% - 130px);
         background: none;
         border: none;
         border-bottom: 2.5pt solid $white;
         font-family: 'Markazi text', serif;
         font-size: 1.8rem;
         line-height: 1rem;
-        padding: 0.1rem 70px 0.1rem 0;
+        padding: 0.1rem 80px 0.1rem 0;
         margin: 0;
       }
 
       .char-limit {
         position: absolute;
-        top: 0.1rem;
+        top: 0.3rem;
         right: 50px;
         font-size: 1.6rem;
         opacity: 0.8;
       }
 
-      button {
+      button[type='submit'] {
         position: absolute;
         top: 0;
         right: 0;
