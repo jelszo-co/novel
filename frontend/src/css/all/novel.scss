@@ -9,6 +9,7 @@
     .novel-title {
       position: relative;
       font-size: 4rem;
+      max-width: 90vw;
 
       input {
         font-family: 'Forum', serif;
@@ -171,7 +172,7 @@
 
   .comments {
     width: 60%;
-    margin: 4% 20% 0;
+    margin: 4% 20% 15vh;
 
     .write {
       width: 100%;

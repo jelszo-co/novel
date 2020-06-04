@@ -3,6 +3,7 @@ import {
   SET_NOVEL,
   SET_COMMENTS,
   NOVEL_ERROR,
+  CLEAR_NOVEL,
 } from '../actions/types';
 const initialState = {
   list: {},
@@ -22,6 +23,8 @@ export default (state = initialState, action) => {
       return { ...state, comments: action.payload, novelLoading: false };
     case NOVEL_ERROR:
       return { ...state, novel: { error: true }, novelLoading: false };
+    case CLEAR_NOVEL:
+      return { ...state, novel: {}, comments: {}, novelLoading: true };
     default:
       return state;
   }
