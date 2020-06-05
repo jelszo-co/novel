@@ -14,7 +14,7 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
-import { getNovel, setNovel, setComments } from '../actions/novels';
+import { getNovel, setNovel, setComments, clearNovel } from '../actions/novels';
 
 import '../css/all/novel.scss';
 import CommentAuth from './components/CommentAuth';
@@ -30,6 +30,7 @@ const Novel = ({
   getNovel,
   setNovel,
   setComments,
+  clearNovel,
 }) => {
   const { t } = useTranslation();
   const [favPopup, setFavPopup] = useState(false);
@@ -39,6 +40,7 @@ const Novel = ({
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState({});
+  const [mainCommentPopup, setMainCommentPopup] = useState(false);
 
   useEffect(() => {
     getNovel(match.params.title, res => {
@@ -53,17 +55,18 @@ const Novel = ({
           ),
       });
     });
-  }, [match, getNovel]);
+    return () => clearNovel();
+  }, [match, getNovel, clearNovel]);
 
-  const handleComment = async e => {
-    e.preventDefault();
+  const handleComment = async () => {
     if (comment.length > 0) {
       if (role === 'stranger') {
-        console.log('log in please');
+        setMainCommentPopup(!mainCommentPopup);
       } else {
         try {
           const res = await axios.post(
             `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
+            comment,
           );
           setComments(res.data);
         } catch (err) {
@@ -71,6 +74,19 @@ const Novel = ({
           setPopup('Hiba a komment elküldése közben.', 'err');
         }
       }
+    }
+  };
+
+  const handleDeauthComment = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
+        comment,
+      );
+      setComments(res.data);
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a komment elküldése közben.', 'err');
     }
   };
 
@@ -109,7 +125,10 @@ const Novel = ({
     try {
       const res = await axios.put(
         `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`,
-        editData,
+        {
+          title: editData.title,
+          content: editData.content.join('').replace('\r\n\r\n', '\r\n'),
+        },
       );
       setNovel(res.data);
       setEditData({
@@ -261,7 +280,13 @@ const Novel = ({
 
         <h2 className='comments-header'>{t('comments_header')}</h2>
         <div className='comments'>
-          <form className='write' onSubmit={e => handleComment(e)}>
+          <form
+            className='write'
+            onSubmit={e => {
+              e.preventDefault();
+              handleComment(e);
+            }}
+          >
             <input
               type='text'
               name='comment'
@@ -279,7 +304,14 @@ const Novel = ({
             <button type='submit'>
               <Send />
             </button>
-            <CommentAuth lineDir='bottom' />
+            <CommentAuth
+              lineDir='bottom'
+              handleDeauthComment={handleDeauthComment}
+              style={{
+                opacity: mainCommentPopup ? 1 : 0,
+                pointerEvents: mainCommentPopup ? 'all' : 'none',
+              }}
+            />
           </form>
         </div>
       </div>
@@ -298,4 +330,5 @@ export default connect(mapStateToProps, {
   getNovel,
   setNovel,
   setComments,
+  clearNovel,
 })(withRouter(Novel));

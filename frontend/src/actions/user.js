@@ -18,6 +18,5 @@ export const loadUser = firebaseUser => async dispatch => {
   if (admin) {
     role = 'admin';
   }
-  console.log(role);
   dispatch({ type: AUTH_SUCCESS, payload: { role, name, user: firebaseUser } });
 };
