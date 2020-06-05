@@ -18,7 +18,7 @@ const CommentAuth = ({ lineDir = 'left', style, handleDeauthComment }) => {
       style={style}
       className={`comment-auth-wrapper comment-auth-wrapper-${lineDir}`}
     >
-      <span className={`comment-auth-line`}></span>
+      <span className='comment-auth-line'></span>
       <div className='comment-auth'>
         <Google />
         <FB />
@@ -31,7 +31,6 @@ const CommentAuth = ({ lineDir = 'left', style, handleDeauthComment }) => {
             const user = await auth()
               .signInAnonymously()
               .catch(err => console.error(err));
-
             const token = await user.user.getIdToken();
             cookie.save('usertoken', token, { path: '/' });
             handleDeauthComment();

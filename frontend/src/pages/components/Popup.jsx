@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import gsap, { TweenMax } from 'gsap';
+import PropTypes from 'prop-types';
 
 import '../../css/components/popup.scss';
 
@@ -44,6 +45,10 @@ const Popup = ({ popup }) => {
       </div>
     )
   );
+};
+
+Popup.propTypes = {
+  popup: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({

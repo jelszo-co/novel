@@ -1,3 +1,5 @@
+import axios from 'axios';
+import i18n from 'i18next';
 import {
   GOT_NOVELS,
   SET_NOVEL,
@@ -5,13 +7,11 @@ import {
   SET_COMMENTS,
   CLEAR_NOVEL,
 } from './types';
-import axios from 'axios';
 import { setPopup } from './popup';
-import i18n from 'i18next';
 
 export const getNovels = () => async dispatch => {
   try {
-    const res = await axios.get(process.env.REACT_APP_SRV_ADDR + '/novel/');
+    const res = await axios.get(`${process.env.REACT_APP_SRV_ADDR}/novel/`);
     dispatch({ type: GOT_NOVELS, payload: res.data });
   } catch (err) {
     console.error(err);

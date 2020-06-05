@@ -12,6 +12,9 @@ import { ReactComponent as StarEmpty } from '../assets/star_empty.svg';
 import { ReactComponent as Send } from '../assets/paperplane.svg';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
+import { ReactComponent as Reply } from '../assets/reply.svg';
+import { ReactComponent as HeartFilled } from '../assets/heart.svg';
+import { ReactComponent as HeartEmpty } from '../assets/heart_empty.svg';
 
 import { setPopup } from '../actions/popup';
 import { getNovel, setNovel, setComments, clearNovel } from '../actions/novels';
@@ -25,6 +28,7 @@ const Novel = ({
   loading,
   novel,
   novel: { title, favorite, uploadedAt, content, error },
+  comments,
   history,
   setPopup,
   getNovel,
@@ -189,11 +193,14 @@ const Novel = ({
               <>
                 <div className='admin-actions'>
                   {!editMode && (
-                    <button onClick={() => setEditMode(!editMode)}>
+                    <button
+                      type='button'
+                      onClick={() => setEditMode(!editMode)}
+                    >
                       <Pencil />
                     </button>
                   )}
-                  <button onClick={() => setDelPopup(!delPopup)}>
+                  <button type='button' onClick={() => setDelPopup(!delPopup)}>
                     <Trash />
                   </button>
                 </div>
@@ -203,17 +210,26 @@ const Novel = ({
                 >
                   <span />
                   {t('del_popup')}
-                  <button onClick={() => setDelPopup(false)}>
+                  <button type='button' onClick={() => setDelPopup(false)}>
                     {t('cancel')}
                   </button>
-                  <button className='delete' onClick={() => handleDelete()}>
+                  <button
+                    type='button'
+                    className='delete'
+                    onClick={() => handleDelete()}
+                  >
                     {t('delete')}
                   </button>
                 </div>
               </>
             ) : (
               <>
-                <div className='favorite' onClick={() => handleFavorite()}>
+                <div
+                  className='favorite'
+                  onClick={() => handleFavorite()}
+                  onKeyDown={() => handleFavorite()}
+                  role='button'
+                >
                   {favorite ? <StarFull /> : <StarEmpty />}
                 </div>
                 <div
@@ -313,15 +329,54 @@ const Novel = ({
               }}
             />
           </form>
+          {comments.map(comment => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
         </div>
       </div>
     ))
   );
 };
 
+const Comment = ({
+  isReply = false,
+  comment: { sender, writtenAt, likes, likedByMe, recipient, content, replies },
+}) => (
+  <div className={`comment ${isReply && 'comment-reply'}`}>
+    <div className='title-bar'>
+      <p>
+        <span>{sender.name}</span> | <Moment fromNow>{writtenAt}</Moment>
+      </p>
+      <div className='likes'>
+        {likedByMe ? (
+          <button type='button'>
+            <HeartFilled />
+          </button>
+        ) : (
+          <button type='button'>
+            <HeartEmpty />
+          </button>
+        )}
+        <p className='likes'>{likes}</p>
+      </div>
+      <button type='button'>
+        <Reply />
+      </button>
+    </div>
+    <p>
+      {recipient && recipient.name} {content}
+    </p>
+    {!isReply &&
+      replies.map(reply => (
+        <Comment key={reply.id} comment={reply} isReply={true} />
+      ))}
+  </div>
+);
+
 const mapStateToProps = state => ({
   user: state.user,
   novel: state.novels.novel,
+  comments: state.novels.comments,
   loading: state.novels.novelLoading,
 });
 

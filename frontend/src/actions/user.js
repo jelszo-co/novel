@@ -1,8 +1,8 @@
-import { AUTH_SUCCESS } from './types';
 import axios from 'axios';
+import { AUTH_SUCCESS } from './types';
 
 export const loadUser = firebaseUser => async dispatch => {
-  const res = await axios.get(process.env.REACT_APP_SRV_ADDR + '/user/');
+  const res = await axios.get(`${process.env.REACT_APP_SRV_ADDR}/user/`);
   console.log(res.data);
   const { name, stranger, anonim, authenticated, admin } = res.data;
   let role;

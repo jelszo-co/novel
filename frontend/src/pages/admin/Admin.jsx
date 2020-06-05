@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import { auth } from '../../firebase';
 import { setPopup } from '../../actions/popup';
@@ -129,6 +130,10 @@ const Uploader = ({ setPopup }) => {
       {component}
     </div>
   );
+};
+
+Admin.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
