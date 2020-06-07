@@ -1,3 +1,4 @@
+@import '../variables';
 .title {
   position: absolute;
   top: 25px;
@@ -7,4 +8,8 @@
   font-size: 5rem;
   text-align: center;
   text-transform: capitalize;
+  @media #{$mq-phone} {
+    font-size: 3rem;
+    top: 40px;
+  }
 }

@@ -115,7 +115,7 @@ const Login = ({ user, setPopup }) => {
 
   const handleGoogle = async () => {
     try {
-      auth().languageCode = i18next.t('locale_name');
+      auth().languageCode = i18next.t(['locale_name', 'en']);
       const res = await auth().signInWithPopup(GProvider);
       await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
         name: res.user.displayName,
@@ -129,7 +129,6 @@ const Login = ({ user, setPopup }) => {
   const handleFB = async () => {
     try {
       auth().languageCode = i18next.t(['locale_name', 'en']);
-      // const res =
       await auth().signInWithPopup(FProvider);
     } catch (err) {
       console.error(err);

@@ -29,6 +29,9 @@
 #list {
   .list-container {
     width: 700px;
+    @media #{$mq-phone} {
+      width: 93vw;
+    }
     .year-heading {
       display: flex;
       flex-direction: row;
@@ -59,6 +62,9 @@
         font-size: 3rem;
         vertical-align: top;
         line-height: 2.4rem;
+        @media #{$mq-phone} {
+          font-size: 2.4rem;
+        }
       }
 
       .novel-lore {
@@ -73,6 +79,9 @@
         background: $white;
         align-self: center;
         margin: 20px 0;
+        @media #{$mq-phone} {
+          width: 95%;
+        }
       }
 
       .date-cont {
