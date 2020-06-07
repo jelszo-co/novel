@@ -183,7 +183,7 @@ const Novel = ({
               type='text'
               value={editData.title}
               onChange={({ target: { value } }) =>
-                setEditData({ ...editData, title: value })
+                setModifiedEditData({ ...editData, title: value })
               }
             />
           ) : (
