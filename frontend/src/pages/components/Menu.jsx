@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import '../../css/components/menu.scss';
 
@@ -41,6 +42,7 @@ const Menu = ({ user: { role } }) => {
 
   const changeLang = ln => {
     localStorage.setItem('lng', ln);
+    moment.locale(ln);
     i18n.changeLanguage(ln);
   };
 

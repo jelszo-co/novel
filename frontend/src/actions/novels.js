@@ -19,17 +19,21 @@ export const getNovels = () => async dispatch => {
   }
 };
 
-export const getNovel = (title, callback) => async dispatch => {
-  const [novel, comments] = await Promise.all([
-    axios.get(process.env.REACT_APP_SRV_ADDR + '/novel/' + title),
-    axios.get(process.env.REACT_APP_SRV_ADDR + '/comment/path/' + title),
-  ]).catch(err => {
+export const getNovel = (title, callback = () => {}) => async dispatch => {
+  let novel, comments;
+  try {
+    [novel, comments] = await Promise.all([
+      axios.get(process.env.REACT_APP_SRV_ADDR + '/novel/' + title),
+      axios.get(process.env.REACT_APP_SRV_ADDR + '/comment/path/' + title),
+    ]);
+  } catch (err) {
     if (err.response && err.response.status === 404) {
       return dispatch({ type: NOVEL_ERROR });
     }
     console.error(err);
     dispatch(setPopup(i18n.t('err_novel_single'), 'err'));
-  });
+  }
+
   await dispatch({ type: SET_NOVEL, payload: novel.data });
   await dispatch({ type: SET_COMMENTS, payload: comments.data });
   callback(novel.data);

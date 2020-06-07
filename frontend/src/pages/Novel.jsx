@@ -43,21 +43,30 @@ const Novel = ({
   const [char, setChar] = useState(300);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [editData, setEditData] = useState({});
+  const [editData, setModifiedEditData] = useState({});
   const [mainCommentPopup, setMainCommentPopup] = useState(false);
+
+  const setEditData = gibberish => {
+    const replacement = gibberish.content
+      .split('\r\n')
+      .map((item, i) =>
+        gibberish.content.split('\r\n').length === i + 1
+          ? item
+          : `${item}\r\n\r\n`,
+      );
+
+    console.log('setting edit data', gibberish);
+
+    return setModifiedEditData({
+      content: replacement,
+      title: gibberish.title,
+    });
+  };
 
   useEffect(() => {
     getNovel(match.params.title, res => {
-      setEditData({
-        title: res.title,
-        content: res.content
-          .split('\r\n')
-          .map((item, i) =>
-            res.content.split('\r\n').length === i + 1
-              ? item
-              : `${item}\r\n\r\n`,
-          ),
-      });
+      console.log(res);
+      setEditData(res);
     });
     return () => clearNovel();
   }, [match, getNovel, clearNovel]);
@@ -131,19 +140,13 @@ const Novel = ({
         `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`,
         {
           title: editData.title,
-          content: editData.content.join('').replace('\r\n\r\n', '\r\n'),
+          content: editData.content.join('').replace(/(\r\n\r\n)/g, '\r\n'),
         },
       );
       setNovel(res.data);
       setEditData({
         title: res.data.title,
-        content: res.data.content
-          .split('\r\n')
-          .map((item, i) =>
-            res.data.content.split('\r\n').length === i + 1
-              ? item
-              : `${item}\r\n\r\n`,
-          ),
+        content: res.data.content,
       });
       setEditMode(false);
       setPopup('Sikeres mentés!');
@@ -156,13 +159,7 @@ const Novel = ({
   const handleDiscard = () => {
     setEditData({
       title: novel.title,
-      content: novel.content
-        .split('\r\n')
-        .map((item, i) =>
-          novel.content.split('\r\n').length === i + 1
-            ? item
-            : `${item}\r\n\r\n`,
-        ),
+      content: novel.content,
     });
     setEditMode(false);
   };
@@ -269,13 +266,7 @@ const Novel = ({
                 onChange={({ target: { value } }) =>
                   setEditData({
                     ...editData,
-                    content: value
-                      .split('\r\n')
-                      .map((item, i) =>
-                        value.split('\r\n').length === i + 1
-                          ? item
-                          : `${item}\r\n\r\n`,
-                      ),
+                    content: value,
                   })
                 }
               />
