@@ -103,7 +103,9 @@ const Login = ({ user, setPopup }) => {
     if (!err) {
       try {
         await auth().createUserWithEmailAndPassword(regEmail, regPass);
-        await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, fullName);
+        await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+          name: fullName,
+        });
       } catch (err) {
         console.error(err);
         setPopup('Hiba a regisztráció során.', 'err');
@@ -115,10 +117,9 @@ const Login = ({ user, setPopup }) => {
     try {
       auth().languageCode = i18next.t('locale_name');
       const res = await auth().signInWithPopup(GProvider);
-      await axios.put(
-        `${process.env.REACT_APP_SRV_ADDR}/user/`,
-        res.user.displayName,
-      );
+      await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+        name: res.user.displayName,
+      });
     } catch (err) {
       console.error(err);
       setPopup('Hiba a bejelentkezés során.', 'err');
