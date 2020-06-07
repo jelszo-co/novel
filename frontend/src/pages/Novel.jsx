@@ -70,7 +70,7 @@ const Novel = ({
         try {
           const res = await axios.post(
             `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
-            { comment: comment },
+            { content: comment },
           );
           setComments(res.data);
         } catch (err) {
@@ -85,7 +85,7 @@ const Novel = ({
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
-        { comment: comment },
+        { content: comment },
       );
       setComments(res.data);
     } catch (err) {
