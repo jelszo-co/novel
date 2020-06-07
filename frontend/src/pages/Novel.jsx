@@ -55,8 +55,6 @@ const Novel = ({
           : `${item}\r\n\r\n`,
       );
 
-    console.log('setting edit data', gibberish);
-
     return setModifiedEditData({
       content: replacement,
       title: gibberish.title,
@@ -65,7 +63,6 @@ const Novel = ({
 
   useEffect(() => {
     getNovel(match.params.title, res => {
-      console.log(res);
       setEditData(res);
     });
     return () => clearNovel();
@@ -164,168 +161,167 @@ const Novel = ({
     setEditMode(false);
   };
 
+  if (loading) return null;
+  if (error) return <Redirect to='/404' />;
   return (
-    !loading &&
-    (error ? (
-      <Redirect to='/404' />
-    ) : (
-      <div id='novel'>
-        <Link to='/list' className='novel-back'>
-          {t('back')}
-        </Link>
-        <div className='novel-header'>
-          <h2 className='novel-title'>
-            {editMode ? (
-              <input
-                type='text'
-                value={editData.title}
-                onChange={({ target: { value } }) =>
-                  setEditData({ ...editData, title: value })
-                }
-              />
-            ) : (
-              title
-            )}
-            {role === 'admin' ? (
-              <>
-                <div className='admin-actions'>
-                  {!editMode && (
-                    <button
-                      type='button'
-                      onClick={() => setEditMode(!editMode)}
-                    >
-                      <Pencil />
-                    </button>
-                  )}
-                  <button type='button' onClick={() => setDelPopup(!delPopup)}>
-                    <Trash />
-                  </button>
-                </div>
-                <div
-                  className='admin-delete-confirm'
-                  style={{ opacity: delPopup ? 1 : 0 }}
-                >
-                  <span />
-                  {t('del_popup')}
-                  <button type='button' onClick={() => setDelPopup(false)}>
-                    {t('cancel')}
-                  </button>
-                  <button
-                    type='button'
-                    className='delete'
-                    onClick={() => handleDelete()}
-                  >
-                    {t('delete')}
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div
-                  className='favorite'
-                  onClick={() => handleFavorite()}
-                  onKeyDown={() => handleFavorite()}
-                  role='button'
-                >
-                  {favorite ? <StarFull /> : <StarEmpty />}
-                </div>
-                <div
-                  className='fav-popup'
-                  style={{ opacity: favPopup ? 1 : 0 }}
-                >
-                  <span />
-                  {t('fav_popup')}
-                  <Link to='/login'>{t('form_login_title')}</Link>
-                </div>
-              </>
-            )}
-          </h2>
-          <Moment
-            format='YYYY. MMMM DD.'
-            locale={t('locale_name')}
-            className='novel-date'
-          >
-            {uploadedAt}
-          </Moment>
-        </div>
-        <div className='novel-content'>
+    <div id='novel'>
+      <button
+        type='button'
+        className='novel-back'
+        onClick={() =>
+          editMode
+            ? window.confirm(t('alert_editing')) && history.goBack()
+            : history.goBack()
+        }
+      >
+        {t('back')}
+      </button>
+      <div className='novel-header'>
+        <h2 className='novel-title'>
           {editMode ? (
-            <>
-              <p className='edit-actions'>
-                <button type='button' onClick={() => handleSave()}>
-                  {t('save')}
-                </button>
-                {t('or')}
-                <button type='button' onClick={() => handleDiscard()}>
-                  {t('discard')}
-                </button>
-              </p>
-              <TextareaAutoSize
-                spellCheck={false}
-                value={editData.content.join('')}
-                onChange={({ target: { value } }) =>
-                  setEditData({
-                    ...editData,
-                    content: value,
-                  })
-                }
-              />
-              <p className='edit-actions'>
-                <button type='button' onClick={() => handleSave()}>
-                  {t('save')}
-                </button>
-                {t('or')}
-                <button type='button' onClick={() => handleDiscard()}>
-                  {t('discard')}
-                </button>
-              </p>
-            </>
-          ) : (
-            content.split('\r\n').map((item, i) => <p key={i}>{item}</p>)
-          )}
-        </div>
-
-        <h2 className='comments-header'>{t('comments_header')}</h2>
-        <div className='comments'>
-          <form
-            className='write'
-            onSubmit={e => {
-              e.preventDefault();
-              handleComment(e);
-            }}
-          >
             <input
               type='text'
-              name='comment'
-              placeholder={t('comment_placeholder')}
-              maxLength={limit}
-              value={comment}
-              onChange={({ target: { value } }) => {
-                setChar(limit - value.length);
-                setComment(value);
-              }}
+              value={editData.title}
+              onChange={({ target: { value } }) =>
+                setEditData({ ...editData, title: value })
+              }
             />
-            <p className='char-limit'>
-              {char}/{limit}
-            </p>
-            <button type='submit'>
-              <Send />
-            </button>
-            <CommentAuth
-              lineDir='bottom'
-              handleDeauthComment={handleDeauthComment}
-              style={{
-                opacity: mainCommentPopup ? 1 : 0,
-                pointerEvents: mainCommentPopup ? 'all' : 'none',
-              }}
-            />
-          </form>
-          {comments.map(comment => (
-            <Comment key={comment.id} comment={comment} />
-          ))}
-        </div>
+          ) : (
+            title
+          )}
+          {role === 'admin' ? (
+            <>
+              <div className='admin-actions'>
+                {!editMode && (
+                  <button type='button' onClick={() => setEditMode(!editMode)}>
+                    <Pencil />
+                  </button>
+                )}
+                <button type='button' onClick={() => setDelPopup(!delPopup)}>
+                  <Trash />
+                </button>
+              </div>
+              <div
+                className='admin-delete-confirm'
+                style={{ opacity: delPopup ? 1 : 0 }}
+              >
+                <span />
+                {t('del_popup')}
+                <button type='button' onClick={() => setDelPopup(false)}>
+                  {t('cancel')}
+                </button>
+                <button
+                  type='button'
+                  className='delete'
+                  onClick={() => handleDelete()}
+                >
+                  {t('delete')}
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className='favorite'
+                onClick={() => handleFavorite()}
+                onKeyDown={() => handleFavorite()}
+                role='button'
+              >
+                {favorite ? <StarFull /> : <StarEmpty />}
+              </div>
+              <div className='fav-popup' style={{ opacity: favPopup ? 1 : 0 }}>
+                <span />
+                {t('fav_popup')}
+                <Link to='/login'>{t('form_login_title')}</Link>
+              </div>
+            </>
+          )}
+        </h2>
+        <Moment
+          format='YYYY. MMMM DD.'
+          locale={t('locale_name')}
+          className='novel-date'
+        >
+          {uploadedAt}
+        </Moment>
       </div>
-    ))
+      <div className='novel-content'>
+        {editMode ? (
+          <>
+            <p className='edit-actions'>
+              <button type='button' onClick={() => handleSave()}>
+                {t('save')}
+              </button>
+              {t('or')}
+              <button type='button' onClick={() => handleDiscard()}>
+                {t('discard')}
+              </button>
+            </p>
+            <TextareaAutoSize
+              spellCheck={false}
+              value={editData.content.join('')}
+              onChange={({ target: { value } }) =>
+                setEditData({
+                  ...editData,
+                  content: value,
+                })
+              }
+            />
+            <p className='edit-actions'>
+              <button type='button' onClick={() => handleSave()}>
+                {t('save')}
+              </button>
+              {t('or')}
+              <button type='button' onClick={() => handleDiscard()}>
+                {t('discard')}
+              </button>
+            </p>
+          </>
+        ) : (
+          content.split('\r\n').map((item, i) => <p key={i}>{item}</p>)
+        )}
+      </div>
+
+      <h2 className='comments-header'>{t('comments_header')}</h2>
+      <div className='comments'>
+        <form
+          className='write'
+          onSubmit={e => {
+            e.preventDefault();
+            handleComment(e);
+          }}
+        >
+          <input
+            type='text'
+            name='comment'
+            placeholder={t('comment_placeholder')}
+            maxLength={limit}
+            value={comment}
+            onChange={({ target: { value } }) => {
+              setChar(limit - value.length);
+              setComment(value);
+            }}
+          />
+          <p className='char-limit'>
+            {char}/{limit}
+          </p>
+          <button type='submit'>
+            <Send />
+          </button>
+          <CommentAuth
+            lineDir='bottom'
+            handleDeauthComment={handleDeauthComment}
+            style={{
+              opacity: mainCommentPopup ? 1 : 0,
+              pointerEvents: mainCommentPopup ? 'all' : 'none',
+            }}
+          />
+        </form>
+        {comments.map(comment => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
+      </div>
+    </div>
   );
 };
 

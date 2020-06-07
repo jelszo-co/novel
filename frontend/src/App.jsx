@@ -38,7 +38,7 @@ const App = () => {
   }, []);
   return (
     <Provider store={store}>
-      <Router data-test='router'>
+      <Router>
         <Popup />
         <Switch>
           <Route exact path='/' component={Landing} />

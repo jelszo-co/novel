@@ -74,6 +74,8 @@
     "admin_account_email": "E-mail módosítása",
     "admin_account_pass": "Jelszó módosítása",
 
+    "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
+
     "err_novel_list": "Hiba a novellák lekérdezésében.",
     "err_novel_single": "Hiba a novella lekérdezésében."
   }
