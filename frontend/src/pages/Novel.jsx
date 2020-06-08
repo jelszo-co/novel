@@ -133,7 +133,7 @@ const Novel = ({
 
   const handleSave = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.patch(
         `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`,
         {
           title: editData.title,
