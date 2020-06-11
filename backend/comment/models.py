@@ -12,4 +12,4 @@ class Comment(models.Model):
     content = models.TextField()
     writtenAt = models.DateTimeField(auto_now_add=True)
     parentComment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-    liked = models.ManyToManyField(User, related_name="liked", blank=True, null=True)
+    liked = models.ManyToManyField(User, related_name="liked", blank=True)

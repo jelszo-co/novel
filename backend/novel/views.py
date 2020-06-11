@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 from zipfile import BadZipFile
 
 from django.db import IntegrityError
@@ -52,17 +53,16 @@ class NovelTools(View):
     @method_decorator(get_novel_by_path)
     @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
                                         'You don\'t have permission to edit this novel'))
-    def put(self, request, *args, **kwargs):
-        required_fields = {'title', 'lore', 'content', 'lang', 'private'}
+    def patch(self, request, *args, **kwargs):
+        fields = {'title': str, 'lore': str, 'content': str, 'lang': str, 'private': bool}
         novel = request.novel
-        body = json.loads(request.body.decode('utf-8'))
-        if set(body.keys()) != required_fields or body['lang'] not in {'HU', 'EN'}:
-            return JsonResponse({"error": "Bad request.", 'neededFields': required_fields}, status=400)
-        novel.title = body['title']
-        novel.lore = body['lore']
-        novel.content = body['content']
-        novel.lang = body['lang']
-        novel.private = body['private']
+        try:
+            body = json.loads(request.body.decode('utf-8'))
+        except JSONDecodeError:
+            return JsonResponse({'error': 'Json parse error'}, status=400)
+        for p in fields.keys():
+            if p in body and type(body[p]) == fields[p] and (p != 'lang' or p in Novel._meta.get_field('lang').choices):
+                setattr(novel, p, body[p])
         novel.save()
         return JsonResponse({
             'title': novel.title,
