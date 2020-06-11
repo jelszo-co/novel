@@ -139,5 +139,6 @@ class NewUpload(View):
         novel.save()
         return JsonResponse({
             'title': novel.title,
-            'path': novel.path
+            'path': novel.path,
+            'filename': request.FILES[fn]._name
         })
