@@ -140,5 +140,5 @@ class NewUpload(View):
         return JsonResponse({
             'title': novel.title,
             'path': novel.path,
-            'filename': request.FILES[fn]._name
+            'filename': request.FILES[fn].name
         })
