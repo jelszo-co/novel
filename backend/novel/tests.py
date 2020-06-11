@@ -44,7 +44,7 @@ class GetNovelTestCase(TestCase):
                          {'uploadedAt', 'lore', 'title', 'favorite', 'content', 'lang'})
 
     def test_edit_novel(self):
-        request = self.factory.put('/api/v1/novel/utolso-percek/')
+        request = self.factory.patch('/api/v1/novel/utolso-percek/')
         request.fb_user = self.stranger
         response = NovelTools.as_view()(request, **{'path': 'utolso-percek'})
         self.assertEqual(response.status_code, 401)
