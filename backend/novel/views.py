@@ -128,10 +128,17 @@ class NewUpload(View):
             return JsonResponse({"error": "Wrong file"}, status=400)
         if len(d.paragraphs) < 2:
             return JsonResponse({"error": "Wrong file"}, status=400)
+        novel = None
         try:
             novel = Novel.objects.create(title=d.paragraphs[0].text, private=True)
         except IntegrityError:
-            return JsonResponse({"error": "Not unique title"}, status=400)
+            n = Novel.objects.get(title=d.paragraphs[0].text)
+            if n.private:
+                n.delete()
+                nonlocal novel
+                novel = Novel.objects.create(title=d.paragraphs[0].text, private=True)
+            else:
+                return JsonResponse({"error": "Not unique title"}, status=400)
         content = ''
         for p in d.paragraphs[1:]:
             content += p.text + '\n'
@@ -158,6 +165,7 @@ class IntroductionView(View):
         return JsonResponse({'introduction': intro.value})
 
     def get(self, request, *args, **kwargs):
+        lang: str = request.GET.get('lang')
         try:
             intro = Introduction.objects.get(key='intro').value
         except:
