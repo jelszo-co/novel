@@ -17,7 +17,13 @@ import { ReactComponent as HeartFilled } from '../assets/heart.svg';
 import { ReactComponent as HeartEmpty } from '../assets/heart_empty.svg';
 
 import { setPopup } from '../actions/popup';
-import { getNovel, setNovel, setComments, clearNovel } from '../actions/novels';
+import {
+  getNovel,
+  setNovel,
+  setComments,
+  clearNovel,
+  getNovels,
+} from '../actions/novels';
 
 import '../css/all/novel.scss';
 import CommentAuth from './components/CommentAuth';
@@ -32,6 +38,7 @@ const Novel = ({
   history,
   setPopup,
   getNovel,
+  getNovels,
   setNovel,
   setComments,
   clearNovel,
@@ -123,6 +130,7 @@ const Novel = ({
           `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`,
         );
         setPopup('Törölve.');
+        getNovels();
         history.push('/list');
       } catch (err) {
         setPopup('Hiba a novella törlése közben.', 'err');
@@ -372,6 +380,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   setPopup,
   getNovel,
+  getNovels,
   setNovel,
   setComments,
   clearNovel,
