@@ -19,14 +19,16 @@ def commentJson(c, user):
         "sender": {
             "id": c.sender.pk,
             "name": c.sender.name,
-            "isAdmin": c.sender.isAdmin
+            "isAdmin": c.sender.isAdmin,
+            "isYou": c.sender == user
         },
         "writtenAt": c.writtenAt,
         "content": c.content,
         "recipient": {
             "id": c.recipient.pk,
             "name": c.recipient.name,
-            "isAdmin": c.sender.isAdmin
+            "isAdmin": c.sender.isAdmin,
+            "isYou": c.sender == user
         } if c.recipient else None,
         "replies": []
     }
@@ -145,7 +147,7 @@ class Recent(View):
     def get(self, request, *args, **kwargs):
         resp: list[dict[str, dict[str, any]]] = []
         novels: set[int] = set()
-        for c in Comment.objects.filter(parentComment=None).order_by('writtenAt'):
+        for c in Comment.objects.filter(parentComment=None, sender__isAdmin=False).order_by('writtenAt'):
             if c.novel.id in novels:
                 continue
             resp.append({
