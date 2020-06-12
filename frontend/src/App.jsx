@@ -29,7 +29,7 @@ const App = () => {
     auth().onAuthStateChanged(async user => {
       if (user) {
         const token = await user.getIdToken(true);
-        cookie.save('usertoken', token, { path: '/' });
+        cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
         store.dispatch(loadUser(user));
       } else {
         store.dispatch({ type: AUTH_FAIL });
