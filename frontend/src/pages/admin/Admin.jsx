@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import { auth } from '../../firebase';
 import { setPopup } from '../../actions/popup';
+import { getNovels } from '../../actions/novels';
 
 import Title from '../components/Title';
 import Menu from '../components/Menu';
@@ -16,7 +17,7 @@ import { ReactComponent as Word } from '../../assets/word.svg';
 
 import '../../css/admin/admin.scss';
 
-const Admin = ({ user: { role }, setPopup }) => {
+const Admin = ({ user: { role }, setPopup, getNovels }) => {
   const { t } = useTranslation();
   return role === 'admin' ? (
     <div id='admin'>
@@ -52,8 +53,13 @@ const Admin = ({ user: { role }, setPopup }) => {
 const Uploader = ({ setPopup }) => {
   const { t } = useTranslation();
   const [phase, setPhase] = useState(0);
-  const [novelData, setNovelData] = useState({ title: '', lore: '' });
-  const { title } = novelData; // TODO: Add lore
+  const [novelData, setNovelData] = useState({
+    title: 'Cím a novellából',
+    lore: 'Ez egy leírás',
+    path: 'cim-a-novellabol',
+    filename: 'novella.docx', // TODO: Change back to empty
+  });
+  const { title, lore, filename, path } = novelData;
   const container = useRef(null);
 
   const phaseRef = useRef(phase);
@@ -71,10 +77,19 @@ const Uploader = ({ setPopup }) => {
     try {
       if (files.length > 1)
         return setPopup('Egyszerre csak egy novellát tölts fel.', 'err');
+      if (!/(.doc|.docx)/i.test(files[0].name))
+        return setPopup(
+          'A novellát .doc vagy .docx fájlként töltsd fel.',
+          'err',
+        );
       increment();
       const data = new FormData();
       data.append('noveldoc', files[0]);
-      await axios.post(`${process.env.REACT_APP_SRV_ADDR}/novel/new`, data);
+      const res = await axios.post(
+        `${process.env.REACT_APP_SRV_ADDR}/novel/new`,
+        data,
+      );
+      setNovelData({ ...novelData, res });
       increment();
     } catch (err) {
       console.error(err);
@@ -106,19 +121,57 @@ const Uploader = ({ setPopup }) => {
       break;
     case 3:
       component = (
-        <div className='novel-params'>
-          <p className='params-title'>{t('title')}</p>
+        <form
+          className='novel-params'
+          onSubmit={e => {
+            e.preventDefault();
+            increment();
+          }}
+        >
+          <p className='params-title'>{t('title')}:</p>
           <input
             type='text'
             value={title}
+            placeholder={t('title_hint')}
             onChange={({ target }) =>
               setNovelData({ ...novelData, title: target.value })
             }
           />
           <div className='icon'>
             <Word />
+            <p>{filename}</p>
           </div>
-        </div>
+          <input type='submit' value={t('next')} />
+        </form>
+      );
+      break;
+    case 4:
+      component = (
+        <form
+          className='novel-params'
+          onSubmit={e => {
+            e.preventDefault();
+            axios.patch(process.env.REACT_APP_SRV_ADDR + '/novel/' + path, {
+              ...novelData,
+              private: false,
+            });
+          }}
+        >
+          <p className='params-lore'>{t('description')}:</p>
+          <input
+            type='text'
+            value={lore}
+            placeholder={t('title_hint')}
+            onChange={({ target }) =>
+              setNovelData({ ...novelData, lore: target.value })
+            }
+          />
+          <div className='icon'>
+            <Word />
+            <p>{filename}</p>
+          </div>
+          <input type='submit' value={t('publish')} />
+        </form>
       );
       break;
     default:
@@ -140,4 +193,4 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { setPopup })(Admin);
+export default connect(mapStateToProps, { setPopup, getNovels })(Admin);
