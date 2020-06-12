@@ -135,7 +135,6 @@ class NewUpload(View):
             n = Novel.objects.get(title=d.paragraphs[0].text)
             if n.private:
                 n.delete()
-                nonlocal novel
                 novel = Novel.objects.create(title=d.paragraphs[0].text, private=True)
             else:
                 return JsonResponse({"error": "Not unique title"}, status=400)
