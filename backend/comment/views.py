@@ -18,7 +18,7 @@ def commentJson(c, user):
         "likedByMe": c.liked.filter(id=user.id).exists(),
         "sender": {
             "id": c.sender.pk,
-            "name": c.sender.namem,
+            "name": c.sender.name,
             "isAdmin": c.sender.isAdmin
         },
         "writtenAt": c.writtenAt,
