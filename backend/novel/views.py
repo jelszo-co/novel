@@ -138,7 +138,12 @@ class NewUpload(View):
                 novel = Novel.objects.create(title=d.paragraphs[0].text, private=True)
             else:
                 return JsonResponse({"error": "Not unique title"}, status=400)
-        content = '\r\n'.join(d.paragraphs[1:])
+        # string.join won't work
+        content = ''
+        padding = '\r\n'
+        for l in d.paragraphs[1:]:
+            content += l.text + padding
+        content = content[:-len(padding)]
         novel.content = content
         novel.save()
         return JsonResponse({
