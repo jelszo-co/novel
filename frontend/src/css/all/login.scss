@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 #login {
   #login-social {
@@ -6,6 +6,10 @@
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
+    @media #{$mq-phone} {
+      width: 100vw;
+      text-align: center;
+    }
 
     svg {
       fill: $white;
@@ -31,6 +35,11 @@
     flex-direction: row;
     width: 55%;
     justify-content: space-between;
+    @media #{$mq-phone} {
+      transform: translate(-50%, -50%);
+      top: 60%;
+      width: 80vw;
+    }
 
     form {
       display: flex;
@@ -42,6 +51,8 @@
       h3 {
         text-align: center;
         font-size: 1.5rem;
+        @media #{$mq-phone} {
+        }
       }
 
       input {
@@ -51,14 +62,14 @@
         border: none;
         margin: 0;
         padding: 0;
-        font-family: 'Markazi text', serif;
+        font-family: "Markazi text", serif;
         font-size: 1.8rem;
         line-height: 1.6rem;
         align-self: center;
         border-bottom: 2.5pt solid $white;
         transition: 0.1s all ease-in-out;
 
-        &[type='submit'] {
+        &[type="submit"] {
           cursor: pointer;
         }
       }
@@ -176,11 +187,14 @@
           background: none;
           margin: 0;
           padding: 0;
-          font-family: 'Markazi text', serif;
+          font-family: "Markazi text", serif;
           font-size: 1.2rem;
           text-decoration: underline;
           float: right;
           cursor: pointer;
+          @media #{$mq-phone} {
+            white-space: nowrap;
+          }
         }
 
         button.forgot-back {

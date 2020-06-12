@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 #novel {
   .novel-header {
@@ -10,9 +10,13 @@
       position: relative;
       font-size: 4rem;
       max-width: 90vw;
+      @media #{$mq-phone} {
+        font-size: 2rem;
+        max-width: 80vw;
+      }
 
       input {
-        font-family: 'Forum', serif;
+        font-family: "Forum", serif;
         font-size: 4rem;
         border-bottom: 4pt solid $white;
         width: 40vw;
@@ -25,12 +29,18 @@
       font-size: 1.6rem;
       font-weight: 200;
       letter-spacing: 1px;
+      @media #{$mq-phone} {
+        display: inline;
+      }
     }
 
     .favorite {
       display: inline;
       margin-left: 20px;
       cursor: pointer;
+      @media #{$mq-phone} {
+        margin-left: 0;
+      }
     }
 
     svg {
@@ -43,10 +53,13 @@
 
     .fav-popup {
       display: inline;
-      font-family: 'Markazi text', serif;
+      font-family: "Markazi text", serif;
       font-size: 1.5rem;
       vertical-align: middle;
       transition: 0.2s all ease-in-out;
+      @media #{$mq-phone} {
+        display: none;
+      }
 
       span {
         display: inline-block;
@@ -80,7 +93,7 @@
     }
     .admin-delete-confirm {
       display: inline;
-      font-family: 'Markazi text', serif;
+      font-family: "Markazi text", serif;
       font-size: 1.5rem;
       vertical-align: middle;
       transition: 0.2s all ease-in-out;
@@ -126,6 +139,12 @@
     font-size: 1.7rem;
     letter-spacing: 0.1px;
     line-height: 2rem;
+    @media #{$mq-phone} {
+      font-size: 1.4rem;
+      width: 80%;
+      margin-left: 10vw;
+      margin-top: 20vh;
+    }
 
     p {
       margin-bottom: 20px;
@@ -134,7 +153,7 @@
     textarea {
       background: none;
       border: 3pt dashed $white;
-      font-family: 'Markazi text', serif;
+      font-family: "Markazi text", serif;
       text-align: center;
       font-size: inherit;
       width: 100%;
@@ -166,13 +185,17 @@
   .comments-header {
     margin-top: 6%;
     margin-left: 25pt;
-    font-family: 'Forum', serif;
+    font-family: "Forum", serif;
     font-size: 3.5rem;
   }
 
   .comments {
     width: 60%;
     margin: 4% 20% 15vh;
+    @media #{$mq-phone} {
+      width: 80%;
+      margin-left: 10vw;
+    }
 
     .write {
       width: 100%;
@@ -183,11 +206,14 @@
         background: none;
         border: none;
         border-bottom: 2.5pt solid $white;
-        font-family: 'Markazi text', serif;
+        font-family: "Markazi text", serif;
         font-size: 1.8rem;
         line-height: 1rem;
         padding: 0.1rem 80px 0.1rem 0;
         margin: 0;
+        @media #{$mq-phone} {
+          font-size: 1rem;
+        }
       }
 
       .char-limit {
@@ -196,9 +222,12 @@
         right: 50px;
         font-size: 1.6rem;
         opacity: 0.8;
+        @media #{$mq-phone} {
+          font-size: 0.8rem;
+        }
       }
 
-      button[type='submit'] {
+      button[type="submit"] {
         position: absolute;
         top: 0;
         right: 0;
@@ -226,7 +255,7 @@
         align-items: center;
         margin-bottom: 10px;
         span {
-          font-family: 'Forum';
+          font-family: "Forum";
         }
         p:not(.likes) {
           border-bottom: 2pt solid $white;
