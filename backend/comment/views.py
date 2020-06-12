@@ -136,3 +136,29 @@ class Banned(View):
                 "id": u.id
             })
         return JsonResponse(resp, safe=False)
+
+
+class Recent(View):
+    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+                                        'Log in to do this',
+                                        'You are not admin'))
+    def get(self, request, *args, **kwargs):
+        resp: list[dict[str, dict[str, any]]] = []
+        novels: set[int] = set()
+        for c in Comment.objects.filter(parentComment=None).order_by('writtenAt'):
+            if c.novel.id in novels:
+                continue
+            resp.append({
+                'novel': {
+                    'title': c.novel.title,
+                    'path': c.novel.path,
+                },
+                'comment': {
+                    'content': c.content,
+                    'writtenAt': c.writtenAt,
+                    'senderName': c.sender.name
+                }
+            })
+            if len(novels) >= 5:
+                break
+        return JsonResponse(resp, safe=False)
