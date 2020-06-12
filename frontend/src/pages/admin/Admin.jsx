@@ -89,8 +89,8 @@ const Uploader = ({ setPopup }) => {
         `${process.env.REACT_APP_SRV_ADDR}/novel/new`,
         data,
       );
-      setNovelData({ ...novelData, ...res });
-      console.log({ ...novelData, ...res });
+      setNovelData({ ...novelData, ...res.data });
+      console.log({ ...novelData, ...res.data });
       increment();
     } catch (err) {
       console.error(err);
