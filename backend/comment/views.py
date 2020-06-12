@@ -73,7 +73,7 @@ class DeleteCommentById(View):
 
 class ReplyComment(View):
     @method_decorator(get_comment_by_id)
-    @method_decorator(permission_needed('not request.fb_user.isAuthenticated',
+    @method_decorator(permission_needed('not request.fb_user.isAuthenticated or request.fb_user.banned',
                                         'You have to be logged in - even with an anonymous account - to write a comment',
                                         'You are banned from writing comments'))
     def post(self, request, *args, **kwargs):
@@ -88,7 +88,7 @@ class ReplyComment(View):
 
 class LikeComment(View):
     @method_decorator(get_comment_by_id)
-    @method_decorator(permission_needed('not request.fb_user.isAuthenticated',
+    @method_decorator(permission_needed('not request.fb_user.isAuthenticated or request.fb_user.banned',
                                         'You have to be logged in - even with an anonymous account - to like a comment',
                                         'You are banned from writing comments'))
     def post(self, request, *args, **kwargs):
@@ -110,3 +110,55 @@ class Ban(View):
         user.banned = True
         user.save()
         return JsonResponse({'success': f'Successfully banned {user.name} from commenting'})
+
+
+class Unban(View):
+    @method_decorator(get_user_by_id)
+    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+                                        'Log in to do this',
+                                        'You are not admin'))
+    def post(self, request, *args, **kwargs):
+        user = request.fb_user_byId
+        user.banned = False
+        user.save()
+        return JsonResponse({'success': f'Successfully unbanned {user.name} from commenting'})
+
+
+class Banned(View):
+    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+                                        'Log in to do this',
+                                        'You are not admin'))
+    def get(self, request, *args, **kwargs):
+        resp: list[dict[str, any]] = []
+        for u in User.objects.filter(banned=True):
+            resp.append({
+                "name": u.name,
+                "id": u.id
+            })
+        return JsonResponse(resp, safe=False)
+
+
+class Recent(View):
+    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+                                        'Log in to do this',
+                                        'You are not admin'))
+    def get(self, request, *args, **kwargs):
+        resp: list[dict[str, dict[str, any]]] = []
+        novels: set[int] = set()
+        for c in Comment.objects.filter(parentComment=None).order_by('writtenAt'):
+            if c.novel.id in novels:
+                continue
+            resp.append({
+                'novel': {
+                    'title': c.novel.title,
+                    'path': c.novel.path,
+                },
+                'comment': {
+                    'content': c.content,
+                    'writtenAt': c.writtenAt,
+                    'senderName': c.sender.name
+                }
+            })
+            if len(novels) >= 5:
+                break
+        return JsonResponse(resp, safe=False)

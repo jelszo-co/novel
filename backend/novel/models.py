@@ -24,3 +24,11 @@ class Novel(models.Model):
         if not self.lore:
             self.lore = ''
         super(Novel, self).save(*args, **kwargs)
+
+
+class Introduction(models.Model):
+    key = models.CharField(max_length=32)
+    value = models.TextField()
+
+    def __str__(self):
+        return f'{self.key}: {self.value}'
