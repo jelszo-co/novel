@@ -158,13 +158,15 @@ class IntroductionView(View):
             return JsonResponse({'error': 'Json parse error'}, status=400)
         if not ('introduction' in body and isinstance(body['introduction'], str)):
             return JsonResponse({'error': 'introduction property missing'}, status=400)
-        intro, _ = Introduction.objects.update_or_create(key='intro', value=body['introduction'])
+        if not ('lang' in body and isinstance(body['introduction'], str)):
+            return JsonResponse({'error': 'lang property missing'}, status=400)
+        intro, _ = Introduction.objects.update_or_create(key=body['lang'], value=body['introduction'])
         return JsonResponse({'introduction': intro.value})
 
     def get(self, request, *args, **kwargs):
-        lang: str = request.GET.get('lang')
+        lang: str = request.GET.get('lang', 'EN')
         try:
-            intro = Introduction.objects.get(key='intro').value
+            intro = Introduction.objects.get(key=lang).value
         except:
-            intro = 'Bocsi, de még nincs bemutatkozó szövegem ¯\_( ͡° ͜ʖ ͡°)_/¯'
+            intro = 'Sorry, I don\'t use this language ¯\\_( ͡° ͜ʖ ͡°)_/¯'
         return JsonResponse({'introduction': intro})
