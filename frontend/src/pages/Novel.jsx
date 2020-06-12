@@ -161,8 +161,10 @@ const Novel = ({
     setEditMode(false);
   };
 
+  console.log(match.params.title);
   if (loading) return null;
   if (error) return <Redirect to='/404' />;
+  if (match.params.title === '') return <redirect to='/list' />;
   return (
     <div id='novel'>
       <button
