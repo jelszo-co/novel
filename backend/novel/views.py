@@ -11,7 +11,7 @@ from docx import Document
 
 from authorization.decorator import permission_needed
 from novel.decorator import get_novel_by_path
-from novel.models import Novel
+from novel.models import Novel, Introduction
 
 
 class GetAllNovels(View):
@@ -142,3 +142,24 @@ class NewUpload(View):
             'path': novel.path,
             'filename': request.FILES[fn].name
         })
+
+
+class IntroductionView(View):
+    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit introduction',
+                                        'You don\'t have permission to edit introduction'))
+    def post(self, request, *args, **kwargs):
+        try:
+            body = json.loads(request.body.decode('utf-8'))
+        except JSONDecodeError:
+            return JsonResponse({'error': 'Json parse error'}, status=400)
+        if not ('introduction' in body and isinstance(body['introduction'], str)):
+            return JsonResponse({'error': 'introduction property missing'}, status=400)
+        intro, _ = Introduction.objects.update_or_create(key='intro', value=body['introduction'])
+        return JsonResponse({'introduction': intro.value})
+
+    def get(self, request, *args, **kwargs):
+        try:
+            intro = Introduction.objects.get(key='intro').value
+        except:
+            intro = 'Bocsi, de még nincs bemutatkozó szövegem ¯\_( ͡° ͜ʖ ͡°)_/¯'
+        return JsonResponse({'introduction': intro})

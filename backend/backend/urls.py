@@ -1,10 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 
+from novel.views import IntroductionView
+
 urls = [
     path('novel/', include('novel.urls')),
     path('user/', include('authorization.urls')),
-    path('comment/', include('comment.urls'))
+    path('comment/', include('comment.urls')),
+    path('introduction/', IntroductionView.as_view())
 ]
 
 urlpatterns = [
