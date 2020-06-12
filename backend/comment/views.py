@@ -18,13 +18,15 @@ def commentJson(c, user):
         "likedByMe": c.liked.filter(id=user.id).exists(),
         "sender": {
             "id": c.sender.pk,
-            "name": c.sender.name
+            "name": c.sender.name,
+            "isAdmin": c.sender.isAdmin
         },
         "writtenAt": c.writtenAt,
         "content": c.content,
         "recipient": {
             "id": c.recipient.pk,
-            "name": c.recipient.name
+            "name": c.recipient.name,
+            "isAdmin": c.sender.isAdmin
         } if c.recipient else None,
         "replies": []
     }
