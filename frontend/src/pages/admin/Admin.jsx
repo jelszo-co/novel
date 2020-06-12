@@ -14,6 +14,7 @@ import Title from '../components/Title';
 import Menu from '../components/Menu';
 
 import { ReactComponent as Word } from '../../assets/word.svg';
+import { ReactComponent as Tick } from '../../assets/tick.svg';
 
 import '../../css/admin/admin.scss';
 
@@ -156,10 +157,12 @@ const Uploader = ({ setPopup }) => {
               ...novelData,
               private: false,
             });
+            increment();
+            getNovels();
           }}
         >
           <p className='params-lore'>{t('description')}:</p>
-          <input
+          <input // TODO: Change to Textarea
             type='text'
             value={lore}
             placeholder={t('title_hint')}
@@ -173,6 +176,14 @@ const Uploader = ({ setPopup }) => {
           </div>
           <input type='submit' value={t('publish')} />
         </form>
+      );
+      break;
+    case 5:
+      component = (
+        <div className='novel-success'>
+          <Tick />
+          <p>{t('success')}</p>
+        </div>
       );
       break;
     default:
