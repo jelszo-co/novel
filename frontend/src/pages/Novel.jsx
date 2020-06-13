@@ -155,6 +155,7 @@ const Novel = ({
       });
       setEditMode(false);
       setPopup('Sikeres mentés!');
+      history.push('/' + res.data.path);
     } catch (err) {
       console.error(err);
       setPopup('Hiba a novella mentése közben.', 'err');
