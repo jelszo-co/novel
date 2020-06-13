@@ -53,7 +53,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
 
 const Uploader = ({ setPopup, getNovels }) => {
   const { t } = useTranslation();
-  const [phase, setPhase] = useState(3);
+  const [phase, setPhase] = useState(0);
   const [novelData, setNovelData] = useState({
     title: '',
     lore: '',
