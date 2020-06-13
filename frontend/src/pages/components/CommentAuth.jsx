@@ -32,7 +32,7 @@ const CommentAuth = ({ lineDir = 'left', style, handleDeauthComment }) => {
               .signInAnonymously()
               .catch(err => console.error(err));
             const token = await user.user.getIdToken();
-            cookie.save('usertoken', token, { path: '/' });
+            cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
             handleDeauthComment();
           }}
         >

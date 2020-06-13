@@ -32,7 +32,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       </div>
       <div className='upload'>
         <p className='panel-title'>{t('admin_upload_title')}</p>
-        <Uploader setPopup={setPopup} />
+        <Uploader setPopup={setPopup} getNovels={getNovels} />
       </div>
       <div className='panel panel-right'>
         <p className='panel-title'>{t('admin_banned_title')}</p>
@@ -51,7 +51,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
   );
 };
 
-const Uploader = ({ setPopup }) => {
+const Uploader = ({ setPopup, getNovels }) => {
   const { t } = useTranslation();
   const [phase, setPhase] = useState(0);
   const [novelData, setNovelData] = useState({
