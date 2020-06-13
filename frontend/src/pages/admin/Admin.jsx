@@ -21,7 +21,8 @@ import '../../css/admin/admin.scss';
 
 const Admin = ({ user: { role }, setPopup, getNovels }) => {
   const { t } = useTranslation();
-  return role === 'admin' ? (
+  if (role !== 'admin') return <Redirect to='/login' />;
+  return (
     <div id='admin'>
       <Menu />
       <Title>Admin panel</Title>
@@ -47,8 +48,6 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         <button onClick={() => auth().signOut()}>{t('profile_logout')}</button>
       </div>
     </div>
-  ) : (
-    <Redirect to='/login' />
   );
 };
 
@@ -126,7 +125,7 @@ const Uploader = ({ setPopup, getNovels }) => {
     case 2:
       component = (
         <div className='upload-progress'>
-          <img src={ripple} />
+          <img alt='' src={ripple} />
           <p>{t('upload_progress')}</p>
         </div>
       );
