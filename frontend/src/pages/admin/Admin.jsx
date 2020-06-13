@@ -15,6 +15,7 @@ import Menu from '../components/Menu';
 
 import { ReactComponent as Word } from '../../assets/word.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';
+import ripple from '../../assets/ripple.gif';
 
 import '../../css/admin/admin.scss';
 
@@ -53,12 +54,12 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
 
 const Uploader = ({ setPopup, getNovels }) => {
   const { t } = useTranslation();
-  const [phase, setPhase] = useState(0);
+  const [phase, setPhase] = useState(3);
   const [novelData, setNovelData] = useState({
-    title: 'Cím a novellából',
-    lore: 'Ez egy leírás',
-    path: 'cim-a-novellabol',
-    filename: 'novella.docx', // TODO: Change back to empty
+    title: '',
+    lore: '',
+    path: '',
+    filename: '',
   });
   const { title, lore, filename, path } = novelData;
   const container = useRef(null);
@@ -114,17 +115,25 @@ const Uploader = ({ setPopup, getNovels }) => {
       component = (
         <div {...getRootProps({ className: 'uploader-zone' })}>
           <input {...getInputProps()} />
-          {isDragActive ? <p>Drop files here</p> : <p>click to select</p>}
+          {isDragActive ? (
+            <p>{t('upload_dropzone_active')}</p>
+          ) : (
+            <p>{t('upload_dropzone_hint')}</p>
+          )}
         </div>
       );
       break;
     case 2:
-      component = <p>Feltöltés...</p>;
+      component = (
+        <div className='upload-progress'>
+          <img src={ripple} />
+          <p>{t('upload_progress')}</p>
+        </div>
+      );
       break;
     case 3:
       component = (
         <form
-          className='novel-params'
           onSubmit={e => {
             e.preventDefault();
             increment();
@@ -132,6 +141,7 @@ const Uploader = ({ setPopup, getNovels }) => {
         >
           <p className='params-title'>{t('title')}:</p>
           <input
+            required
             type='text'
             value={title}
             placeholder={t('title_hint')}
@@ -141,7 +151,7 @@ const Uploader = ({ setPopup, getNovels }) => {
           />
           <div className='icon'>
             <Word />
-            <p>{filename}</p>
+            <p className='filename'>{filename}</p>
           </div>
           <input type='submit' value={t('next')} />
         </form>
@@ -164,11 +174,14 @@ const Uploader = ({ setPopup, getNovels }) => {
             getNovels();
           }}
         >
-          <p className='params-lore'>{t('description')}:</p>
-          <input // TODO: Change to Textarea
-            type='text'
+          <p className='params-title'>{t('description')}:</p>
+          <textarea
+            required
+            rows='4'
+            align='bottom'
             value={lore}
-            placeholder={t('title_hint')}
+            placeholder={t('description_hint')}
+            spellCheck='false'
             onChange={({ target }) =>
               setNovelData({ ...novelData, lore: target.value })
             }

@@ -68,19 +68,83 @@ $indent: 4%;
   transform: translate(-50%, -50%);
   transition: 0.2s all ease-in-out;
 
-  .novel-params {
+  button {
+    font-family: 'Forum';
+    font-size: 2rem;
+    padding: 0 8px;
+    border-bottom: 2pt solid $white;
+    transition: 0.1s all ease-in-out;
+    &:hover {
+      border-width: 3pt;
+    }
+  }
+
+  .uploader-zone {
+    border: 2pt dashed $white;
+    width: 20vw;
+    height: 20vh;
+
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 1.3rem;
+    }
+  }
+  .upload-progress {
+    img {
+      width: 120px;
+    }
+    p {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+  }
+
+  form {
+    p.params-title {
+      text-transform: capitalize;
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
     input {
       font-family: 'Markazi Text';
       margin: 0;
       padding: 0;
+      width: 20vw;
+      height: 1.6rem;
+      text-align: center;
       &[type='text'] {
+        margin-bottom: 3.6rem;
+        font-size: 1.5rem;
+        font-family: 'Forum';
         border-bottom: 2pt solid $white;
       }
+      &[type='submit'] {
+        font-size: 1.4rem;
+        text-decoration: underline;
+        text-transform: capitalize;
+        cursor: pointer;
+      }
     }
-    svg {
-      width: 50px;
-      height: 50px;
-      fill: $white;
+    textarea {
+      resize: none;
+      width: 20vw;
+      font-family: 'Markazi Text';
+      font-size: 1.3rem;
+      border-bottom: 2pt solid $white;
+    }
+    .icon {
+      margin: 30px 0;
+      text-align: center;
+      svg {
+        width: 50px;
+        height: 50px;
+        fill: $white;
+      }
     }
   }
 }

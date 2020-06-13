@@ -74,11 +74,14 @@
     "admin_banned_title": "Tiltott felhasználók",
     "admin_banned_link": "Összes tiltott felhasználó",
     "admin_upload_title": "Új novella feltöltése",
-    "upload_begin": "Feltöltés",
     "admin_account_email": "E-mail módosítása",
     "admin_account_pass": "Jelszó módosítása",
-    "title_hint": "az új novellám címe",
-    "description_hint": "rövid leírás",
+    "title_hint": "Az új novellám címe",
+    "description_hint": "Rövid leírás",
+    "upload_begin": "Feltöltés",
+    "upload_dropzone_active": "Engedd el a fájlt a feltöltéshez!",
+    "upload_dropzone_hint": "Húzd ide a fájlt, vagy kattints a manuális feltöltéshez.",
+    "upload_progress": "Feltöltés...",
 
     "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
 
