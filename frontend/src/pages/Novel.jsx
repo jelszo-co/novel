@@ -52,6 +52,7 @@ const Novel = ({
   const [editMode, setEditMode] = useState(false);
   const [editData, setModifiedEditData] = useState({});
   const [mainCommentPopup, setMainCommentPopup] = useState(false);
+  const [redirectOnSave, setRedirect] = useState('');
 
   const setEditData = gibberish => {
     const replacement = gibberish.content
@@ -155,7 +156,7 @@ const Novel = ({
       });
       setEditMode(false);
       setPopup('Sikeres mentés!');
-      history.push('/' + res.data.path);
+      setRedirect(res.data.path);
     } catch (err) {
       console.error(err);
       setPopup('Hiba a novella mentése közben.', 'err');
@@ -170,10 +171,9 @@ const Novel = ({
     setEditMode(false);
   };
 
-  console.log(match.params.title);
   if (loading) return null;
   if (error) return <Redirect to='/404' />;
-  if (match.params.title === '') return <redirect to='/list' />;
+  if (redirectOnSave !== '') return <Redirect to={redirectOnSave} />;
   return (
     <div id='novel'>
       <button
