@@ -73,7 +73,10 @@ const Novel = ({
     getNovel(match.params.title, res => {
       setEditData(res);
     });
-    return () => clearNovel();
+    return () => {
+      clearNovel();
+      setRedirect('');
+    };
   }, [match, getNovel, clearNovel]);
 
   const handleComment = async () => {
@@ -174,6 +177,7 @@ const Novel = ({
   if (loading) return null;
   if (error) return <Redirect to='/404' />;
   if (redirectOnSave !== '') return <Redirect to={redirectOnSave} />;
+
   return (
     <div id='novel'>
       <button
