@@ -78,6 +78,13 @@
     .admin-actions {
       display: inline;
       margin-left: 20px;
+      @media #{$mq-phone} {
+        margin: 0;
+        &::before {
+          content: "\A";
+          white-space: pre;
+        }
+      }
 
       button {
         display: inline;
@@ -97,6 +104,9 @@
       font-size: 1.5rem;
       vertical-align: middle;
       transition: 0.2s all ease-in-out;
+      @media #{$mq-phone} {
+        display: none;
+      }
 
       span {
         display: inline-block;
@@ -129,6 +139,9 @@
     font-size: 1.8rem;
     text-decoration: none;
     color: $white;
+    @media #{$mq-phone} {
+      top: 1%;
+    }
   }
 
   .novel-content {
@@ -143,7 +156,8 @@
       font-size: 1.4rem;
       width: 80%;
       margin-left: 10vw;
-      margin-top: 20vh;
+      margin-top: 25vh;
+      line-height: 1.5rem;
     }
 
     p {
