@@ -151,12 +151,15 @@ const Uploader = ({ setPopup, getNovels }) => {
       component = (
         <form
           className='novel-params'
-          onSubmit={e => {
+          onSubmit={async e => {
             e.preventDefault();
-            axios.patch(process.env.REACT_APP_SRV_ADDR + '/novel/' + path, {
-              ...novelData,
-              private: false,
-            });
+            await axios.patch(
+              process.env.REACT_APP_SRV_ADDR + '/novel/' + path,
+              {
+                ...novelData,
+                private: false,
+              },
+            );
             increment();
             getNovels();
           }}
