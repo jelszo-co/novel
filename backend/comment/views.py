@@ -145,22 +145,30 @@ class Recent(View):
                                         'Log in to do this',
                                         'You are not admin'))
     def get(self, request, *args, **kwargs):
-        resp: list[dict[str, dict[str, any]]] = []
-        novels: set[int] = set()
-        for c in Comment.objects.filter(parentComment=None, sender__isAdmin=False).order_by('writtenAt'):
-            if c.novel.id in novels:
-                continue
+        resp: list[dict[str, any]] = []
+        comments = Comment.objects.filter(parentComment=None, sender__isAdmin=False).order_by('-writtenAt')
+        for c in comments:
+            found = False
+            for n in resp:
+                if n['title'] == c.novel.title:
+                    found = True
+                    n['comments'].append({
+                        'content': c.content,
+                        'senderName': c.sender.name,
+                        'writtenAt': c.writtenAt
+                    })
+                    break
+            if found: continue
             resp.append({
-                'novel': {
-                    'title': c.novel.title,
-                    'path': c.novel.path,
-                },
-                'comment': {
-                    'content': c.content,
-                    'writtenAt': c.writtenAt,
-                    'senderName': c.sender.name
-                }
+                'title': c.novel.title,
+                'path': c.novel.path,
+                'comments': [
+                    {
+                        'content': c.content,
+                        'senderName': c.sender.name,
+                        'writtenAt': c.writtenAt
+                    }
+                ]
             })
-            if len(novels) >= 5:
-                break
+
         return JsonResponse(resp, safe=False)
