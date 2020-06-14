@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import useQuery from '../components/useQuery';
-import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { auth } from '../../firebase';
 import { connect } from 'react-redux';
