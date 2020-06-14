@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,18 @@ import ripple from '../../assets/ripple.gif';
 import '../../css/admin/admin.scss';
 
 const Admin = ({ user: { role }, setPopup, getNovels }) => {
+  const [comments, setComments] = useState([]);
+  const [banned, setBanned] = useState([]);
+  useEffect(() => {
+    axios
+      .get(process.env.REACT_APP_SRV_ADDR + '/comment/recent')
+      .then(res => setComments(res.data))
+      .catch(err => console.error(err));
+    axios
+      .get(process.env.REACT_APP_SRV_ADDR + '/banned')
+      .then(res => setBanned(res.data))
+      .catch(err => console.error(err));
+  }, []);
   const { t } = useTranslation();
   if (role !== 'admin') return <Redirect to='/login' />;
   return (
@@ -28,6 +40,13 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <Title>Admin panel</Title>
       <div className='panel panel-left'>
         <p className='panel-title'>{t('admin_comments_title')}</p>
+        <div className='comments'>
+          {comments.map((
+            cmt, // TODO
+          ) => (
+            <div></div>
+          ))}
+        </div>
         <Link to='/list' className='panel-link'>
           {t('admin_comments_link')}
         </Link>
@@ -38,13 +57,20 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       </div>
       <div className='panel panel-right'>
         <p className='panel-title'>{t('admin_banned_title')}</p>
+        <div className='banned-list'>
+          {banned.map((
+            usr, // TODO
+          ) => (
+            <div></div>
+          ))}
+        </div>
         <Link to='/admin/banned' className='panel-link'>
           {t('admin_banned_link')}
         </Link>
       </div>
       <div className='account-management'>
-        <button>{t('admin_account_email')}</button>
-        <button>{t('admin_account_pass')}</button>
+        <Link to='/update-email'>{t('admin_account_email')}</Link>
+        <Link to='/update-pass'>{t('admin_account_pass')}</Link>
         <button onClick={() => auth().signOut()}>{t('profile_logout')}</button>
       </div>
     </div>

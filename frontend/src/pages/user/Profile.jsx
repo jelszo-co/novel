@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +11,18 @@ import { setPopup } from '../../actions/popup';
 import { auth } from '../../firebase';
 
 import '../../css/user/profile.scss';
+import axios from 'axios';
 
 const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   const { t } = useTranslation();
-  const [activeNode, setActiveNode] = useState('');
+  const [favs, setFavs] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(process.env.REACT_APP_SRV_ADDR + '/novel/favorites')
+      .then(res => setFavs(res.data))
+      .catch(err => console.error(err));
+  }, []);
 
   const { email, emailVerified } = fUser;
   const sendEmail = async () => {
@@ -24,34 +32,6 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
     } catch (err) {
       console.error(err);
       setPopup('Hiba az email küldése közben.', 'err');
-    }
-  };
-
-  const deleteUser = async () => {
-    try {
-      await fUser.delete();
-      setPopup('Fiók törölve.');
-    } catch (err) {
-      console.error(err);
-      setPopup('Hiba a fiók törlése közben.', 'err');
-    }
-  };
-
-  const showPopup = node => {
-    const nodeEl = document.querySelector('.' + node);
-    const popup = document.querySelectorAll('.profile-popup');
-    if (node === activeNode) {
-      nodeEl.style.opacity = 0;
-      setActiveNode('');
-      setTimeout(() => (nodeEl.style.display = 'none'), 200);
-    } else {
-      popup.forEach(p => (p.style.opacity = 0));
-      setTimeout(() => {
-        popup.forEach(p => (p.style.display = 'none'));
-        nodeEl.style.display = 'block';
-        setTimeout(() => (nodeEl.style.opacity = 1), 20);
-        setActiveNode(node);
-      }, 200);
     }
   };
 
@@ -75,29 +55,14 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
                 </button>
               )}
             </p>
-            <button type='button' className='change-upleft'>
+            <Link to='/update-email' className='change-upleft'>
               {t('profile_change_general')}
-            </button>
+            </Link>
           </div>
           <div className='col-item col-item-left'>
-            <p className='profile-popup delete-confirm border-left'>
-              {t('profile_delete_confirm_msg')}{' '}
-              <button type='button' onClick={() => showPopup('delete-confirm')}>
-                {t('cancel')}
-              </button>
-              <button
-                type='button'
-                onClick={() => deleteUser()}
-                className='dangerous'
-              >
-                {t('delete')}
-              </button>
-            </p>
             <div className='border-left'>
-              <button type='button'>{t('profile_change_password')}</button>
-              <button type='button' onClick={() => showPopup('delete-confirm')}>
-                {t('profile_delete_account')}
-              </button>
+              <Link to='/update-pass'>{t('profile_change_password')}</Link>
+              <Link to='/delete'>{t('profile_delete_account')}</Link>
             </div>
           </div>
         </div>
@@ -107,7 +72,11 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
         <div className='col-side'>
           <div className='col-item col-item-right'>
             <p className='fav-title'>{t('profile_fav_novels')}</p>
-            <div className='fav-novels'></div>
+            <div className='fav-novels'>
+              {favs.map(fav => (
+                <Link to={fav.path}>{fav.title}</Link>
+              ))}
+            </div>
           </div>
           <div className='col-item col-item-right'>
             <button

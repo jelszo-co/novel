@@ -18,6 +18,9 @@ import Novel from './pages/Novel';
 import Profile from './pages/user/Profile';
 import Admin from './pages/admin/Admin';
 import Err from './pages/404';
+import DeleteUser from './pages/user/DeleteUser';
+import UpdateEmail from './pages/user/UpdateEmail';
+import UpdatePass from './pages/user/UpdatePass';
 
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
@@ -48,8 +51,12 @@ const App = () => {
           <Route exact path='/novels/:title' component={Novel} />
 
           <Route exact path='/profile' component={Profile} />
+          <Route exact path='/delete' component={DeleteUser} />
+          <Route exact path='/update-email' component={UpdateEmail} />
+          <Route exact path='/update-pass' component={UpdatePass} />
 
           <Route exact path='/admin' component={Admin} />
+
           <Route component={Err} />
         </Switch>
       </Router>

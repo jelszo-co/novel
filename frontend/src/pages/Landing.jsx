@@ -17,7 +17,8 @@ const Landing = () => {
           '/introduction?lang=' +
           t('locale_name').toUpperCase(),
       )
-      .then(res => setIntro(res.data));
+      .then(res => setIntro(res.data))
+      .catch(err => console.error(err));
   }, [t]);
   if (intro === '') return null;
   return (
