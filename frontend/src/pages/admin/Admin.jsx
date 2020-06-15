@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useDropzone } from 'react-dropzone';
@@ -15,23 +16,48 @@ import Menu from '../components/Menu';
 
 import { ReactComponent as Word } from '../../assets/word.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';
+import { ReactComponent as Reply } from '../../assets/reply.svg';
 import ripple from '../../assets/ripple.gif';
 
 import '../../css/admin/admin.scss';
 
 const Admin = ({ user: { role }, setPopup, getNovels }) => {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([
+    {
+      title: 'Utols\u00f3 percek',
+      path: 'utolso-percek',
+      comments: [
+        {
+          content:
+            'Elad\u00f3 Honda Jazz 1.6 turb\u00f3 sz\u00edv\u00f3 2010 64E km 3.6M k\u00f6szhelo',
+          senderName: 'Unknown',
+          writtenAt: '2020-06-12T18:50:27.456Z',
+        },
+        {
+          content: 'Benc\u00e9t Bannoln\u00e1m',
+          senderName: 'Unknown',
+          writtenAt: '2020-06-07T17:46:36.432Z',
+        },
+      ],
+    },
+  ]);
   const [banned, setBanned] = useState([]);
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/comment/recent')
       .then(res => setComments(res.data))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setPopup('Hiba a kommentek lekérdezése közben.', 'err');
+      });
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/banned')
       .then(res => setBanned(res.data))
-      .catch(err => console.error(err));
-  }, []);
+      .catch(err => {
+        console.error(err);
+        setPopup('Hiba a tiltott felhasználók lekérdezésében.', 'err');
+      });
+  }, [setPopup]);
   const { t } = useTranslation();
   if (role !== 'admin') return <Redirect to='/login' />;
   return (
@@ -41,8 +67,21 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <div className='panel panel-left'>
         <p className='panel-title'>{t('admin_comments_title')}</p>
         <div className='comments'>
-          {comments.map(cmt => (
-            <div></div> // TODO
+          {comments.map(comment => (
+            <div className='comment-wrapper'>
+              <h3>
+                {comment.title}
+                <Reply />
+              </h3>
+              {comment.comments.map(cmt => (
+                <div className='comment-body'>
+                  <p className='comment-title'>
+                    {cmt.senderName} | <Moment fromNow>{cmt.writtenAt}</Moment>
+                  </p>
+                  <p className='comment-content'>{cmt.content}</p>
+                </div>
+              ))}
+            </div>
           ))}
         </div>
         <Link to='/list' className='panel-link'>
