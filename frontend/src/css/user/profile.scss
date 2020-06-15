@@ -106,7 +106,31 @@
       }
     }
 
-    button {
+    .fav-novels {
+      margin-top: 25px;
+      border-right: 2pt solid $white;
+      .no-fav {
+        display: block;
+        font-size: 1.4rem;
+        margin: 0;
+        margin-right: 10px;
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        font-family: 'Forum';
+        font-size: 1.7rem;
+        margin: 0;
+        margin-right: 10px;
+
+        &:not(:last-of-type) {
+          margin-bottom: 25px;
+        }
+      }
+    }
+
+    button,
+    .profile-action {
       margin: 0;
       padding: 0;
       display: block;

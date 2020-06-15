@@ -68,6 +68,7 @@
     "profile_delete_account": "Fiók törlése",
     "profile_logout": "Kijelentkezés",
     "profile_delete_confirm_msg": "Biztosan törlöd a fiókod?",
+    "profile_no_fav": "Még egy novellát sem jelöltél meg kedvencként.",
 
     "admin_comments_title": "Legfrissebb kommentek",
     "admin_comments_link": "Ugrás a novellákhoz",

@@ -61,8 +61,16 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
           </div>
           <div className='col-item col-item-left'>
             <div className='border-left'>
-              <Link to='/update-pass'>{t('profile_change_password')}</Link>
-              <Link to='/delete'>{t('profile_delete_account')}</Link>
+              <Link
+                className='profile-action'
+                style={{ marginBottom: '10px' }}
+                to='/update-pass'
+              >
+                {t('profile_change_password')}
+              </Link>
+              <Link className='profile-action' to='/delete'>
+                {t('profile_delete_account')}
+              </Link>
             </div>
           </div>
         </div>
@@ -73,9 +81,11 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
           <div className='col-item col-item-right'>
             <p className='fav-title'>{t('profile_fav_novels')}</p>
             <div className='fav-novels'>
-              {favs.map(fav => (
-                <Link to={fav.path}>{fav.title}</Link>
-              ))}
+              {favs.length > 0 ? (
+                favs.map(fav => <Link to={fav.path}>{fav.title}</Link>)
+              ) : (
+                <p className='no-fav'>{t('profile_no_fav')}</p>
+              )}
             </div>
           </div>
           <div className='col-item col-item-right'>
