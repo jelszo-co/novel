@@ -115,6 +115,8 @@ DEBUG_RELEASE = os.environ.get('DEBUG', 0) == '1'
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG_RELEASE
 
+CORS_ALLOW_CREDENTIALS = DEBUG_RELEASE
+
 if not DEBUG_RELEASE:
     sentry_sdk.init(
         dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
