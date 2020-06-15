@@ -1,0 +1,31 @@
+@import '../variables';
+#update-email {
+  form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+
+    input {
+      margin: 0;
+      padding: 0;
+      width: 300px;
+      font-family: 'Markazi Text';
+      font-size: 1.4rem;
+      border-bottom: 2pt solid $white;
+      &:not(:last-of-type) {
+        margin-bottom: 30px;
+      }
+      &[type='submit'] {
+        margin-top: 20px;
+        width: auto;
+        align-self: center;
+        font-size: 1.6rem;
+        line-height: 1.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 $top: 22.5%;
 $indent: 4%;
 
@@ -9,7 +9,7 @@ $indent: 4%;
     a {
       position: absolute;
       bottom: 0;
-      font-family: "Forum", serif;
+      font-family: 'Forum', serif;
       font-size: 1.4rem;
       text-decoration: none;
       border-bottom: 3px solid $white;
@@ -19,7 +19,7 @@ $indent: 4%;
   }
 
   .panel-title {
-    font-family: "Forum", serif;
+    font-family: 'Forum', serif;
     font-size: 1.4rem;
   }
 
@@ -62,7 +62,9 @@ $indent: 4%;
       width: 100vw;
       text-align: center;
     }
-    button {
+    button,
+    a {
+      text-decoration: none;
       margin: 0 10px;
       font-size: 1.5rem;
       @media #{$mq-phone} {
@@ -81,7 +83,7 @@ $indent: 4%;
   transition: 0.2s all ease-in-out;
 
   button {
-    font-family: "Forum";
+    font-family: 'Forum';
     font-size: 2rem;
     padding: 0 8px;
     border-bottom: 2pt solid $white;
@@ -123,19 +125,19 @@ $indent: 4%;
       margin-bottom: 10px;
     }
     input {
-      font-family: "Markazi Text";
+      font-family: 'Markazi Text';
       margin: 0;
       padding: 0;
       width: 20vw;
       height: 1.6rem;
       text-align: center;
-      &[type="text"] {
+      &[type='text'] {
         margin-bottom: 3.6rem;
         font-size: 1.5rem;
-        font-family: "Forum";
+        font-family: 'Forum';
         border-bottom: 2pt solid $white;
       }
-      &[type="submit"] {
+      &[type='submit'] {
         font-size: 1.4rem;
         text-decoration: underline;
         text-transform: capitalize;
@@ -145,7 +147,7 @@ $indent: 4%;
     textarea {
       resize: none;
       width: 20vw;
-      font-family: "Markazi Text";
+      font-family: 'Markazi Text';
       font-size: 1.3rem;
       border-bottom: 2pt solid $white;
     }

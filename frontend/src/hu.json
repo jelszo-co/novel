@@ -12,7 +12,6 @@
     "description": "leírás",
     "next": "tovább",
     "publish": "Publikálás",
-    "err_body": "Nálunk ilyen oldal nem létezik.",
 
     "landing_welcome": "Üdvözöllek.",
     "landing_button": "Írásaim",
@@ -84,9 +83,14 @@
     "upload_dropzone_hint": "Húzd ide a fájlt, vagy kattints a manuális feltöltéshez.",
     "upload_progress": "Feltöltés...",
 
+    "update_email_title": "E-mail frissítése",
+    "update_email_email": "Új e-mail cím",
+    "current_password": "Jelenlegi jelszó",
+
     "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
 
     "err_novel_list": "Hiba a novellák lekérdezésében.",
-    "err_novel_single": "Hiba a novella lekérdezésében."
+    "err_novel_single": "Hiba a novella lekérdezésében.",
+    "err_body": "Nálunk ilyen oldal nem létezik."
   }
 }

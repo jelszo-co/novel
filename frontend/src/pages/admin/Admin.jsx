@@ -41,10 +41,8 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <div className='panel panel-left'>
         <p className='panel-title'>{t('admin_comments_title')}</p>
         <div className='comments'>
-          {comments.map((
-            cmt, // TODO
-          ) => (
-            <div></div>
+          {comments.map(cmt => (
+            <div></div> // TODO
           ))}
         </div>
         <Link to='/list' className='panel-link'>
@@ -58,10 +56,8 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <div className='panel panel-right'>
         <p className='panel-title'>{t('admin_banned_title')}</p>
         <div className='banned-list'>
-          {banned.map((
-            usr, // TODO
-          ) => (
-            <div></div>
+          {banned.map(usr => (
+            <div></div> // TODO
           ))}
         </div>
         <Link to='/admin/banned' className='panel-link'>
