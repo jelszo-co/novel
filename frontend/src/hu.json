@@ -85,7 +85,9 @@
 
     "update_email_title": "E-mail frissítése",
     "update_email_email": "Új e-mail cím",
+    "update_pass_title": "Jelszó frissítése",
     "current_password": "Jelenlegi jelszó",
+    "new_password": "Új jelszó",
 
     "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
 

@@ -29,6 +29,12 @@ const UpdateEmail = ({ setPopup, history }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (email === '' || pass === '') {
+      if (email === '') alertUser('email');
+      if (!email.match(emailPatt)) alertUser('email');
+      if (pass === '') alertUser('password');
+      return;
+    }
     if (!email.match(emailPatt)) return alertUser('email');
     const user = auth().currentUser;
     try {
@@ -49,10 +55,12 @@ const UpdateEmail = ({ setPopup, history }) => {
 
   return (
     <div id='update-email'>
+      <button onClick={() => history.goBack()} className='back'>
+        {t('back')}
+      </button>
       <Title>{t('update_email_title')}</Title>
-      <form onSubmit={e => handleSubmit(e)}>
+      <form onSubmit={e => handleSubmit(e)} noValidate>
         <input
-          required
           type='email'
           name='email'
           autoComplete='email'
@@ -64,7 +72,6 @@ const UpdateEmail = ({ setPopup, history }) => {
           placeholder={t('update_email_email')}
         />
         <input
-          required
           type='password'
           name='password'
           autoComplete='current-password'

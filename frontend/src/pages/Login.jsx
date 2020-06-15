@@ -198,11 +198,9 @@ const Login = ({ user, setPopup }) => {
   const grey = 'rgba(255, 255, 255, 0.7)';
 
   // RETURN
-  return user.role === 'admin' ? (
-    <Redirect to='/admin' />
-  ) : user.role === 'user' ? (
-    <Redirect to='/profile' />
-  ) : (
+  if (user.role === 'admin') return <Redirect to='/admin' />;
+  if (user.role === 'user') return <Redirect to='/profile' />;
+  return (
     <div id='login'>
       <Title>{t('login_title')}</Title>
       <Menu />
