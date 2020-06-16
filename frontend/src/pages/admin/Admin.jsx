@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -50,7 +50,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
     { name: 'Bence', id: 4 },
     { name: 'Norbi', id: 3 },
   ]);
-  const getBanned = () => {
+  const getBanned = useCallback(() => {
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/banned')
       .then(res => setBanned(res.data))
@@ -58,7 +58,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         console.error(err);
         setPopup('Hiba a tiltott felhasználók lekérdezésében.', 'err');
       });
-  };
+  }, [setPopup]);
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/comment/recent')
@@ -68,7 +68,8 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         setPopup('Hiba a kommentek lekérdezése közben.', 'err');
       });
     getBanned();
-  }, [setPopup]);
+  }, [setPopup, getBanned]);
+
   const { t } = useTranslation();
   if (role !== 'admin') return <Redirect to='/login' />;
   return (
@@ -114,9 +115,15 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
                 <button
                   onClick={() => {
                     axios
-                      .post(process.env.REACT_APP_SRV_ADDR + '/user/unban', {
-                        id,
-                      })
+                      .post(
+                        process.env.REACT_APP_SRV_ADDR +
+                          '/comment/user/' +
+                          id +
+                          '/unban/',
+                        {
+                          id,
+                        },
+                      )
                       .then(res => setBanned(res.data))
                       .catch(err => {
                         console.error(err);
