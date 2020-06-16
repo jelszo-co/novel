@@ -155,7 +155,8 @@ class Recent(View):
                     n['comments'].append({
                         'content': c.content,
                         'senderName': c.sender.name,
-                        'writtenAt': c.writtenAt
+                        'writtenAt': c.writtenAt,
+                        'id': c.id
                     })
                     break
             if found: continue
@@ -166,7 +167,8 @@ class Recent(View):
                     {
                         'content': c.content,
                         'senderName': c.sender.name,
-                        'writtenAt': c.writtenAt
+                        'writtenAt': c.writtenAt,
+                        'id': c.id
                     }
                 ]
             })
