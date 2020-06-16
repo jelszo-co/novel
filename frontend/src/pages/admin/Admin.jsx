@@ -17,6 +17,7 @@ import Menu from '../components/Menu';
 import { ReactComponent as Word } from '../../assets/word.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';
 import { ReactComponent as Reply } from '../../assets/reply.svg';
+import { ReactComponent as Cross } from '../../assets/cross-filled.svg';
 import ripple from '../../assets/ripple.gif';
 
 import '../../css/admin/admin.scss';
@@ -43,7 +44,21 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       ],
     },
   ]);
-  const [banned, setBanned] = useState([]);
+  const [banned, setBanned] = useState([
+    { name: 'Zoli', id: 5 },
+    { name: 'Pisti', id: 6 },
+    { name: 'Bence', id: 4 },
+    { name: 'Norbi', id: 3 },
+  ]);
+  const getBanned = () => {
+    axios
+      .get(process.env.REACT_APP_SRV_ADDR + '/banned')
+      .then(res => setBanned(res.data))
+      .catch(err => {
+        console.error(err);
+        setPopup('Hiba a tiltott felhasználók lekérdezésében.', 'err');
+      });
+  };
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/comment/recent')
@@ -52,13 +67,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         console.error(err);
         setPopup('Hiba a kommentek lekérdezése közben.', 'err');
       });
-    axios
-      .get(process.env.REACT_APP_SRV_ADDR + '/banned')
-      .then(res => setBanned(res.data))
-      .catch(err => {
-        console.error(err);
-        setPopup('Hiba a tiltott felhasználók lekérdezésében.', 'err');
-      });
+    getBanned();
   }, [setPopup]);
   const { t } = useTranslation();
   if (role !== 'admin') return <Redirect to='/login' />;
@@ -73,7 +82,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
             <div key={novel.path} className='comment-wrapper'>
               <h3>
                 {novel.title}
-                <Link to={novel.path}>
+                <Link to={'/novels/' + novel.path}>
                   <Reply />
                 </Link>
               </h3>
@@ -99,8 +108,30 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <div className='panel panel-right'>
         <p className='panel-title'>{t('admin_banned_title')}</p>
         <div className='banned-list'>
-          {banned.map(usr => (
-            <div></div> // TODO
+          {banned.slice(0, 11).map(({ name, id }) => (
+            <div className='banned-card' key={id}>
+              <p>
+                <button
+                  onClick={() => {
+                    axios
+                      .post(process.env.REACT_APP_SRV_ADDR + '/user/unban', {
+                        id,
+                      })
+                      .then(res => setBanned(res.data))
+                      .catch(err => {
+                        console.error(err);
+                        setPopup(
+                          'Hiba a felhasználó tiltásának eltávolítása közben.',
+                          'err',
+                        );
+                      });
+                  }}
+                >
+                  <Cross />
+                </button>
+                {name}
+              </p>
+            </div>
           ))}
         </div>
         <Link to='/admin/banned' className='panel-link'>
