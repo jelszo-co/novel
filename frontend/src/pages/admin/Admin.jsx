@@ -28,12 +28,14 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       path: 'utolso-percek',
       comments: [
         {
+          id: 1,
           content:
             'Elad\u00f3 Honda Jazz 1.6 turb\u00f3 sz\u00edv\u00f3 2010 64E km 3.6M k\u00f6szhelo',
           senderName: 'Unknown',
           writtenAt: '2020-06-12T18:50:27.456Z',
         },
         {
+          id: 2,
           content: 'Benc\u00e9t Bannoln\u00e1m',
           senderName: 'Unknown',
           writtenAt: '2020-06-07T17:46:36.432Z',
@@ -67,14 +69,16 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <div className='panel panel-left'>
         <p className='panel-title'>{t('admin_comments_title')}</p>
         <div className='comments'>
-          {comments.map(comment => (
-            <div className='comment-wrapper'>
+          {comments.map(novel => (
+            <div key={novel.path} className='comment-wrapper'>
               <h3>
-                {comment.title}
-                <Reply />
+                {novel.title}
+                <Link to={novel.path}>
+                  <Reply />
+                </Link>
               </h3>
-              {comment.comments.map(cmt => (
-                <div className='comment-body'>
+              {novel.comments.map(cmt => (
+                <div key={cmt.id} className='comment-body'>
                   <p className='comment-title'>
                     {cmt.senderName} | <Moment fromNow>{cmt.writtenAt}</Moment>
                   </p>

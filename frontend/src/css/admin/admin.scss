@@ -6,7 +6,7 @@ $indent: 4%;
   .panel {
     height: 70%;
 
-    a {
+    a.panel-link {
       position: absolute;
       bottom: 0;
       font-family: 'Forum', serif;
@@ -21,6 +21,7 @@ $indent: 4%;
   .panel-title {
     font-family: 'Forum', serif;
     font-size: 1.4rem;
+    margin-bottom: 20px;
   }
 
   .panel-left {
@@ -28,9 +29,46 @@ $indent: 4%;
     left: $indent;
     top: $top;
 
-    a {
+    a.panel-link {
       left: 50%;
       transform: translateX(-50%);
+    }
+
+    .comments {
+      max-width: 250px;
+      .comment-wrapper {
+        h3 {
+          font-size: 1.8rem;
+          border-bottom: 2pt solid $white;
+          a {
+            svg {
+              margin-left: 10px;
+              width: 1.5rem;
+              height: 1.5rem;
+              fill: white;
+              transform: scaleX(-1);
+            }
+          }
+        }
+
+        .comment-body {
+          margin: 15px 0 30px;
+
+          p.comment-title {
+            border-bottom: 1pt solid $white;
+            display: inline-block;
+            font-family: 'Forum';
+            font-size: 1.4rem;
+            time {
+              font-family: 'Markazi Text';
+              font-weight: bold;
+            }
+          }
+          p.comment-content {
+            font-size: 1.4rem;
+          }
+        }
+      }
     }
   }
   .panel-right {
@@ -39,7 +77,7 @@ $indent: 4%;
     right: $indent;
     top: $top;
 
-    a {
+    a.panel-link {
       right: 50%;
       transform: translateX(50%);
     }
