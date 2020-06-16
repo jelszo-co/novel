@@ -11,7 +11,7 @@ def permission_needed(cond403, e401, e403):
         def wrapper(request, *args, **kwargs):
             if not request.fb_user.isAuthenticated:
                 return JsonResponse({'error': e401}, status=401)
-            if eval(cond403):
+            if cond403(request):
                 return JsonResponse({'error': e403}, status=403)
             return function(request, *args, **kwargs)
 

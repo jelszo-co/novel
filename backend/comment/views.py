@@ -51,7 +51,7 @@ class CommentByPath(View):
         return JsonResponse(getCommentsForNovel(request.novel, request.fb_user), safe=False)
 
     @method_decorator(get_novel_by_path)
-    @method_decorator(permission_needed('not request.fb_user.isAuthenticated',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAuthenticated,
                                         'You have to be logged in - even with an anonymous account - to write a comment',
                                         'You are banned from writing comments'))
     def post(self, request, *args, **kwargs):
@@ -66,7 +66,7 @@ class CommentByPath(View):
 class DeleteCommentById(View):
     @method_decorator(get_comment_by_id)
     @method_decorator(
-        permission_needed('not (request.fb_user==request.comment.sender or request.fb_user.isAdmin)',
+        permission_needed(lambda request: not (request.fb_user == request.comment.sender or request.fb_user.isAdmin),
                           'You have to be logged in to delete comments', 'You cannot delete this comment'))
     def delete(self, request, *args, **kwargs):
         request.comment.delete()
@@ -75,7 +75,7 @@ class DeleteCommentById(View):
 
 class ReplyComment(View):
     @method_decorator(get_comment_by_id)
-    @method_decorator(permission_needed('not request.fb_user.isAuthenticated or request.fb_user.banned',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAuthenticated or request.fb_user.banned,
                                         'You have to be logged in - even with an anonymous account - to write a comment',
                                         'You are banned from writing comments'))
     def post(self, request, *args, **kwargs):
@@ -90,7 +90,7 @@ class ReplyComment(View):
 
 class LikeComment(View):
     @method_decorator(get_comment_by_id)
-    @method_decorator(permission_needed('not request.fb_user.isAuthenticated or request.fb_user.banned',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAuthenticated or request.fb_user.banned,
                                         'You have to be logged in - even with an anonymous account - to like a comment',
                                         'You are banned from writing comments'))
     def post(self, request, *args, **kwargs):
@@ -104,7 +104,7 @@ class LikeComment(View):
 
 class Ban(View):
     @method_decorator(get_user_by_id)
-    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin,
                                         'Log in to do this',
                                         'You are not admin'))
     def post(self, request, *args, **kwargs):
@@ -116,7 +116,7 @@ class Ban(View):
 
 class Unban(View):
     @method_decorator(get_user_by_id)
-    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin,
                                         'Log in to do this',
                                         'You are not admin'))
     def post(self, request, *args, **kwargs):
@@ -127,7 +127,7 @@ class Unban(View):
 
 
 class Banned(View):
-    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin,
                                         'Log in to do this',
                                         'You are not admin'))
     def get(self, request, *args, **kwargs):
@@ -141,7 +141,7 @@ class Banned(View):
 
 
 class Recent(View):
-    @method_decorator(permission_needed('not request.fb_user.isAdmin',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin,
                                         'Log in to do this',
                                         'You are not admin'))
     def get(self, request, *args, **kwargs):

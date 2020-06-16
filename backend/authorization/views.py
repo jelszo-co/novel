@@ -19,7 +19,7 @@ class UserView(View):
             'name': user.name
         })
 
-    @method_decorator(permission_needed('request.fb_user.isAnonymous', 'Log in to change your name',
+    @method_decorator(permission_needed(lambda request: request.fb_user.isAnonymous, 'Log in to change your name',
                                         'Anonymous accounts can\'t change name'))
     def put(self, request, *args, **kwargs):
         decoded = json.loads(request.body)

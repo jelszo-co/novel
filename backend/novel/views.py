@@ -51,8 +51,9 @@ class NovelTools(View):
         }, charset='utf-8')
 
     @method_decorator(get_novel_by_path)
-    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
-                                        'You don\'t have permission to edit this novel'))
+    @method_decorator(
+        permission_needed(lambda request: not request.fb_user.isAdmin, 'You have to be logged in to edit novels',
+                          'You don\'t have permission to edit this novel'))
     def patch(self, request, *args, **kwargs):
         fields = {'title': str, 'lore': str, 'content': str, 'lang': str, 'private': bool}
         novel = request.novel
@@ -74,8 +75,9 @@ class NovelTools(View):
         })
 
     @method_decorator(get_novel_by_path)
-    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit novels',
-                                        'You don\'t have permission to edit this novel'))
+    @method_decorator(
+        permission_needed(lambda request: not request.fb_user.isAdmin, 'You have to be logged in to edit novels',
+                          'You don\'t have permission to edit this novel'))
     def delete(self, request, *args, **kwargs):
         request.novel.delete()
         return JsonResponse({"success": "Deleted successfully"})
@@ -83,8 +85,9 @@ class NovelTools(View):
 
 class NovelFavoriteToggle(View):
     @method_decorator(get_novel_by_path)
-    @method_decorator(permission_needed('request.fb_user.isAnonymous', 'Log in to mark novels as favorite',
-                                        "Log in with a non-Anonymous account"))
+    @method_decorator(
+        permission_needed(lambda request: request.fb_user.isAnonymous, 'Log in to mark novels as favorite',
+                          "Log in with a non-Anonymous account"))
     def post(self, request, *args, **kwargs):
         novel = request.novel
         favs = request.fb_user.favorites
@@ -96,15 +99,16 @@ class NovelFavoriteToggle(View):
             return JsonResponse({'favorite': True})
 
     @method_decorator(get_novel_by_path)
-    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'Log in to see this value',
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin, 'Log in to see this value',
                                         'You have to be admin to see this value'))
     def get(self, request, *args, **kwargs):
         return JsonResponse({'favorites': len(request.novel.user_set.all())})
 
 
 class UserFavorites(View):
-    @method_decorator(permission_needed('request.fb_user.isAnonymous', 'Log in to have novels as favorite',
-                                        "Log in with a non-Anonymous account"))
+    @method_decorator(
+        permission_needed(lambda request: request.fb_user.isAnonymous, 'Log in to have novels as favorite',
+                          "Log in with a non-Anonymous account"))
     def get(self, request, *args, **kwargs):
         resp = []
         for fav in request.fb_user.favorites.all():
@@ -116,8 +120,9 @@ class UserFavorites(View):
 
 
 class NewUpload(View):
-    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to upload novels',
-                                        'You don\'t have permission to upload novels'))
+    @method_decorator(
+        permission_needed(lambda request: not request.fb_user.isAdmin, 'You have to be logged in to upload novels',
+                          'You don\'t have permission to upload novels'))
     def post(self, request, *args, **kwargs):
         fn = 'noveldoc'
         try:
@@ -154,8 +159,9 @@ class NewUpload(View):
 
 
 class IntroductionView(View):
-    @method_decorator(permission_needed('not request.fb_user.isAdmin', 'You have to be logged in to edit introduction',
-                                        'You don\'t have permission to edit introduction'))
+    @method_decorator(
+        permission_needed(lambda request: not request.fb_user.isAdmin, 'You have to be logged in to edit introduction',
+                          'You don\'t have permission to edit introduction'))
     def post(self, request, *args, **kwargs):
         try:
             body = json.loads(request.body.decode('utf-8'))
