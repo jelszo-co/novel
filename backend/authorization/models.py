@@ -9,7 +9,7 @@ class User(models.Model):
     isAnonymous = models.BooleanField(default=False)
     isAuthenticated = models.BooleanField(default=True)
     favorites = models.ManyToManyField(Novel, blank=True)
-    name = models.CharField(max_length=32, default='Unknown')
+    name = models.CharField(max_length=32, default='Anonymous')
     banned = models.BooleanField(default=False)
 
     def __str__(self):  # pragma: no cover
