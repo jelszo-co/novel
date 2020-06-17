@@ -29,4 +29,4 @@ class UserView(View):
         user = request.fb_user
         user.name = decoded['name']
         user.save()
-        return JsonResponse({'name': User.objects.get(id=user.id)})
+        return JsonResponse({'name': User.objects.get(id=user.id).name})
