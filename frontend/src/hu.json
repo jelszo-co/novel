@@ -92,6 +92,9 @@
     "current_password": "Jelenlegi jelszó",
     "new_password": "Új jelszó",
 
+    "delete_title": "Fiók törlése",
+    "delete_lore": "Biztos vagy benne? Ez visszavonhatatlan!",
+
     "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
 
     "err_novel_list": "Hiba a novellák lekérdezésében.",
