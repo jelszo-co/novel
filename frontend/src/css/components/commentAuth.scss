@@ -4,6 +4,7 @@
   position: absolute;
   transition: 0.2s all ease-in-out;
   .comment-auth-line {
+    position: absolute;
     display: block;
     background: $white;
     width: 25px;
@@ -47,9 +48,29 @@
   transform: translate(calc(50% - 22.5px), -100%);
 
   .comment-auth-line {
-    position: absolute;
     bottom: -25px;
     left: 50%;
     transform: translate(-50%, 100%) rotate(90deg);
+  }
+}
+
+.comment-auth-wrapper-left {
+  top: 50%;
+  right: 0;
+  transform: translate(calc(100% + 55px), -50%);
+
+  .comment-auth-line {
+    left: -25px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .comment-auth {
+    .anonymously {
+      flex-basis: content;
+    }
+    svg {
+      width: 30px;
+    }
   }
 }

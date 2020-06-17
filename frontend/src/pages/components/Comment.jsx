@@ -24,14 +24,24 @@ const Comment = ({
   role,
   setComments,
   setPopup,
+  cascadedReplyBar,
+  cascadedReplyState,
+  cascadedSetReplyState,
 }) => {
   const { t } = useTranslation();
-  const replyBar = useRef();
-  const [replyState, setReplyState] = useState(true);
+  let replyBar = useRef();
+  let [replyState, setReplyState] = useState(true);
   const [replyPopup, setReplyPopup] = useState(false);
   const limit = 300;
   const [char, setChar] = useState(300);
   const [reply, setReply] = useState('');
+
+  if (isReply) {
+    replyBar = cascadedReplyBar;
+    replyState = cascadedReplyState;
+    setReplyState = cascadedSetReplyState;
+  }
+
   const handleReply = async () => {
     if (reply.length > 0) {
       if (role === 'stranger') {
@@ -72,9 +82,12 @@ const Comment = ({
           type='button'
           onClick={() => {
             setReplyState(!replyState);
-            console.log(replyState);
-            replyBar.current.style.display = replyState ? 'block' : 'none';
+            replyBar.current.style.pointerEvents = replyState ? 'all' : 'none';
+            replyBar.current.style.marginTop = replyState ? '10px' : '-1.6rem';
             replyBar.current.style.opacity = replyState ? 1 : 0;
+            setTimeout(() => {
+              if (!replyState) setReply('');
+            }, 200);
           }}
         >
           <Reply />
@@ -85,43 +98,50 @@ const Comment = ({
       </p>
       {!isReply &&
         replies.map(reply => (
-          <Comment key={reply.id} comment={reply} isReply />
+          <Comment
+            key={reply.id}
+            comment={reply}
+            isReply
+            cascadedReplyBar={replyBar}
+            cascadedReplyState={replyState}
+            cascadedSetReplyState={setReplyState}
+          />
         ))}
       {!isReply && (
-        <div className='reply-bar' ref={replyBar}>
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              handleReply(e);
+        <form
+          className='reply-bar'
+          ref={replyBar}
+          onSubmit={e => {
+            e.preventDefault();
+            handleReply(e);
+          }}
+        >
+          <input
+            type='text'
+            name='reply'
+            placeholder={t('reply_placeholder')}
+            maxLength={limit}
+            value={reply}
+            onChange={({ target: { value } }) => {
+              setChar(limit - value.length);
+              setReply(value);
             }}
-          >
-            <input
-              type='text'
-              name='reply'
-              placeholder={t('reply_placeholder')}
-              maxLength={limit}
-              value={reply}
-              onChange={({ target: { value } }) => {
-                setChar(limit - value.length);
-                setReply(value);
-              }}
-            />
-            <p className='char-limit'>
-              {char}/{limit}
-            </p>
-            <button type='submit'>
-              <Send />
-            </button>
-            <CommentAuth
-              lineDir='left'
-              handleDeauthComment={handleDeauthComment}
-              style={{
-                opacity: replyPopup ? 1 : 0,
-                pointerEvents: replyPopup ? 'all' : 'none',
-              }}
-            />
-          </form>
-        </div>
+          />
+          <p className='char-limit'>
+            {char}/{limit}
+          </p>
+          <button type='submit'>
+            <Send />
+          </button>
+          <CommentAuth
+            lineDir='left'
+            handleDeauthComment={handleDeauthComment}
+            style={{
+              opacity: replyPopup ? 1 : 0,
+              pointerEvents: replyPopup ? 'all' : 'none',
+            }}
+          />
+        </form>
       )}
     </div>
   );

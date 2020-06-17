@@ -148,7 +148,13 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
       <div className='account-management'>
         <Link to='/update-email'>{t('admin_account_email')}</Link>
         <Link to='/update-pass'>{t('admin_account_pass')}</Link>
-        <button onClick={() => auth().signOut()}>{t('profile_logout')}</button>
+        <button
+          onClick={() =>
+            auth().signOut().then(setPopup('Sikeres Kijelentkezés.'))
+          }
+        >
+          {t('profile_logout')}
+        </button>
       </div>
     </div>
   );
