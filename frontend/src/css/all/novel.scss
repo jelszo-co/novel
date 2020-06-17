@@ -258,49 +258,5 @@
         }
       }
     }
-
-    .comment {
-      width: 80%;
-      margin: 30px 10%;
-      .title-bar {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 10px;
-        font-weight: bold;
-        span {
-          font-weight: normal;
-          font-family: 'Forum';
-        }
-        p:not(.likes) {
-          border-bottom: 2pt solid $white;
-        }
-        p {
-          font-size: 1.5rem;
-          line-height: 1.5rem;
-        }
-        .likes {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          margin: 0 10px;
-          p {
-            margin: 0;
-            margin-left: 3px;
-          }
-        }
-      }
-      button,
-      svg {
-        width: 1.5rem;
-        height: 1.5rem;
-        fill: $white;
-      }
-    }
-
-    .comment-reply {
-      width: 80%;
-    }
   }
 }

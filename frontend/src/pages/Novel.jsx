@@ -7,14 +7,14 @@ import axios from 'axios';
 import Moment from 'react-moment';
 import 'moment/locale/hu';
 
+import Comment from './components/Comment';
+import CommentAuth from './components/CommentAuth';
+
 import { ReactComponent as StarFull } from '../assets/star_full.svg';
 import { ReactComponent as StarEmpty } from '../assets/star_empty.svg';
 import { ReactComponent as Send } from '../assets/paperplane.svg';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
-import { ReactComponent as Reply } from '../assets/reply.svg';
-import { ReactComponent as HeartFilled } from '../assets/heart.svg';
-import { ReactComponent as HeartEmpty } from '../assets/heart_empty.svg';
 
 import { setPopup } from '../actions/popup';
 import {
@@ -26,7 +26,6 @@ import {
 } from '../actions/novels';
 
 import '../css/all/novel.scss';
-import CommentAuth from './components/CommentAuth';
 
 const Novel = ({
   match,
@@ -333,47 +332,17 @@ const Novel = ({
           />
         </form>
         {comments.map(comment => (
-          <Comment key={comment.id} comment={comment} />
+          <Comment
+            key={comment.id}
+            comment={comment}
+            handleDeauthComment={handleDeauthComment}
+            match={match}
+          />
         ))}
       </div>
     </div>
   );
 };
-
-const Comment = ({
-  isReply = false,
-  comment: { sender, writtenAt, likes, likedByMe, recipient, content, replies },
-}) => (
-  <div className={`comment ${isReply && 'comment-reply'}`}>
-    <div className='title-bar'>
-      <p>
-        <span>{sender.name}</span> | <Moment fromNow>{writtenAt}</Moment>
-      </p>
-      <div className='likes'>
-        {likedByMe ? (
-          <button type='button'>
-            <HeartFilled />
-          </button>
-        ) : (
-          <button type='button'>
-            <HeartEmpty />
-          </button>
-        )}
-        <p className='likes'>{likes}</p>
-      </div>
-      <button type='button'>
-        <Reply />
-      </button>
-    </div>
-    <p>
-      {recipient && recipient.name} {content}
-    </p>
-    {!isReply &&
-      replies.map(reply => (
-        <Comment key={reply.id} comment={reply} isReply={true} />
-      ))}
-  </div>
-);
 
 const mapStateToProps = state => ({
   user: state.user,
