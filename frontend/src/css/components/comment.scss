@@ -40,6 +40,11 @@
 
   .comment-content {
     font-size: 1.3rem;
+    line-height: 1.3rem;
+    span {
+      border-bottom: 2pt solid $white;
+      display: inline-block;
+    }
   }
 
   .reply-bar {

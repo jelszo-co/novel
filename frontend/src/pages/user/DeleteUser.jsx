@@ -4,6 +4,7 @@ import { auth } from '../../firebase';
 import { connect } from 'react-redux';
 
 import { setPopup } from '../../actions/popup';
+import axios from 'axios';
 
 const DeleteUser = ({ setPopup }) => {
   const { t } = useTranslation();
@@ -11,11 +12,17 @@ const DeleteUser = ({ setPopup }) => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const user = auth().currentUser;
-    const credential = auth.EmailAuthProvider.credential(user.email, pass);
-    await user.reauthenticateWithCredential(credential);
-    await user.delete();
-    setPopup('Fiók sikeresen törölve.');
+    try {
+      const user = auth().currentUser;
+      const credential = auth.EmailAuthProvider.credential(user.email, pass);
+      await user.reauthenticateWithCredential(credential);
+      await user.delete();
+      await axios.delete(process.env.REACT_APP_SRV_ADDR + '/user/');
+      setPopup('Fiók sikeresen törölve.');
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a felhasználó törlése közben.', 'err');
+    }
   };
 
   return (

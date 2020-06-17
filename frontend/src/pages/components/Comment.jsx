@@ -18,7 +18,16 @@ import '../../css/components/comment.scss';
 
 const Comment = ({
   isReply = false,
-  comment: { sender, writtenAt, likes, likedByMe, recipient, content, replies },
+  comment: {
+    id,
+    sender,
+    writtenAt,
+    likes,
+    likedByMe,
+    recipient,
+    content,
+    replies,
+  },
   handleDeauthComment,
   match,
   role,
@@ -49,10 +58,13 @@ const Comment = ({
       } else {
         try {
           const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
-            { content: reply },
+            `${process.env.REACT_APP_SRV_ADDR}/comment/id/c${id}`,
+            { content: reply, recipient: sender.id },
           );
           setComments(res.data);
+          setReply('');
+          setReplyState(false);
+          setReplyPopup(false);
         } catch (err) {
           console.error(err);
           setPopup('Hiba a válasz elküldése közben.', 'err');
@@ -85,16 +97,19 @@ const Comment = ({
             replyBar.current.style.pointerEvents = replyState ? 'all' : 'none';
             replyBar.current.style.marginTop = replyState ? '10px' : '-1.6rem';
             replyBar.current.style.opacity = replyState ? 1 : 0;
-            setTimeout(() => {
-              if (!replyState) setReply('');
-            }, 200);
+            if (!replyState) {
+              setTimeout(() => {
+                setReply('');
+                setReplyPopup(false);
+              }, 200);
+            }
           }}
         >
           <Reply />
         </button>
       </div>
       <p className='comment-content'>
-        {recipient && recipient.name} {content}
+        {recipient && <span>{recipient.name}</span>} {content}
       </p>
       {!isReply &&
         replies.map(reply => (
@@ -119,7 +134,7 @@ const Comment = ({
           <input
             type='text'
             name='reply'
-            placeholder={t('reply_placeholder')}
+            placeholder={`${t('reply_placeholder')} ${sender.name}`}
             maxLength={limit}
             value={reply}
             onChange={({ target: { value } }) => {
