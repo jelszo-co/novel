@@ -29,3 +29,9 @@ class UserView(View):
         user.name = decoded['name']
         user.save()
         return JsonResponse({'name': user.name})
+
+    @method_decorator(permission_needed(lambda request: request.fb_user.isAnonymous, 'Log in to delete your account',
+                                        'Anonymous accounts can\'t delete themselves'))
+    def delete(self, request, *args, **kwargs):
+        request.fb_user.delete()
+        return JsonResponse({'success': 'Deleted successfully'})
