@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from authorization.decorator import permission_needed
+from authorization.models import User
 
 
 class UserView(View):
@@ -28,4 +29,4 @@ class UserView(View):
         user = request.fb_user
         user.name = decoded['name']
         user.save()
-        return JsonResponse({'name': user.name})
+        return JsonResponse({'name': User.objects.get(id=user.id)})
