@@ -58,7 +58,7 @@ const Comment = ({
       } else {
         try {
           const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/id/c${id}`,
+            `${process.env.REACT_APP_SRV_ADDR}/comment/id/c${id}/reply`,
             { content: reply, recipient: sender.id },
           );
           setComments(res.data);
