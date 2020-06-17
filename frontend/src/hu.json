@@ -12,6 +12,8 @@
     "description": "leírás",
     "next": "tovább",
     "publish": "Publikálás",
+    "you": "te",
+    "author": "szerző",
 
     "landing_welcome": "Üdvözöllek.",
     "landing_button": "Írásaim",

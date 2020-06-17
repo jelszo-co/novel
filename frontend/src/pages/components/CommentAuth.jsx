@@ -1,28 +1,74 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cookie from 'react-cookies';
+import i18next from 'i18next';
+import axios from 'axios';
 
 import { ReactComponent as Google } from '../../assets/google.svg';
 import { ReactComponent as FB } from '../../assets/facebook.svg';
 import { ReactComponent as Mail } from '../../assets/mail.svg';
 import { useTranslation } from 'react-i18next';
 
-import { auth } from '../../firebase';
+import { auth, GProvider, FProvider } from '../../firebase';
+
+import { setPopup } from '../../actions/popup';
 
 import '../../css/components/commentAuth.scss';
 
-const CommentAuth = ({ lineDir = 'left', style, handleDeauthComment }) => {
+const CommentAuth = ({
+  lineDir = 'left',
+  style,
+  handleDeauthComment,
+  setPopup,
+  callBack = () => {},
+}) => {
   const { t } = useTranslation();
+
+  const handleFB = async () => {
+    try {
+      auth().languageCode = i18next.t(['locale_name', 'en']);
+      const res = await auth().signInWithPopup(FProvider);
+      await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+        name: res.user.displayName,
+      });
+      callBack();
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a bejelentkezés során.', 'err');
+    }
+  };
+
+  const handleGoogle = async () => {
+    try {
+      auth().languageCode = i18next.t(['locale_name', 'en']);
+      const res = await auth().signInWithPopup(GProvider);
+      await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+        name: res.user.displayName,
+      });
+      callBack();
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a bejelentkezés során.', 'err');
+    }
+  };
+
   return (
     <div
       style={style}
       className={`comment-auth-wrapper comment-auth-wrapper-${lineDir}`}
     >
-      <span className='comment-auth-line'></span>
+      <span className='comment-auth-line' />
       <div className='comment-auth'>
-        <Google />
-        <FB />
-        <Mail />
+        <button type='button' onClick={() => handleGoogle()}>
+          <Google />
+        </button>
+        <button type='button' onClick={() => handleFB()}>
+          <FB />
+        </button>
+        <Link to='/login'>
+          <Mail />
+        </Link>
         <p>{t('or')}</p>
         <button
           type='button'
@@ -47,4 +93,4 @@ const mapStateToProps = state => ({
   role: state.user.role,
 });
 
-export default connect(mapStateToProps)(CommentAuth);
+export default connect(mapStateToProps, { setPopup })(CommentAuth);

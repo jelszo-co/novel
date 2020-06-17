@@ -15,6 +15,14 @@
     }
     p:not(.likes) {
       border-bottom: 2pt solid $white;
+      padding-bottom: 3px;
+      .sender-modif {
+        background: $white;
+        border-radius: 5px;
+        padding: 0 5px;
+        color: $bg;
+        text-transform: capitalize;
+      }
     }
     p {
       font-size: 1.5rem;

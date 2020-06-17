@@ -27,10 +27,11 @@ const Comment = ({
     recipient,
     content,
     replies,
+    isYou,
+    isAdmin,
   },
-  handleDeauthComment,
-  match,
   role,
+  handleDeauthComment,
   setComments,
   setPopup,
   cascadedReplyBar,
@@ -58,7 +59,7 @@ const Comment = ({
       } else {
         try {
           const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/id/c${id}/reply`,
+            `${process.env.REACT_APP_SRV_ADDR}/comment/id/c${id}/reply/`,
             { content: reply, recipient: sender.id },
           );
           setComments(res.data);
@@ -72,15 +73,21 @@ const Comment = ({
       }
     }
   };
+  let senderDisplay;
+  if (isYou) senderDisplay = <span className='sender-modif'>{t('you')}</span>;
+  else if (isAdmin)
+    senderDisplay = <span className='sender-modif'>{t('author')}</span>;
+  else senderDisplay = <span>{sender.name}</span>;
+
   return (
     <div className={`comment ${isReply && 'comment-reply'}`}>
       <div className='title-bar'>
         <p>
-          <span>{sender.name}</span> | <Moment fromNow>{writtenAt}</Moment>
+          {senderDisplay} | <Moment fromNow>{writtenAt}</Moment>
         </p>
         <div className='likes'>
           {likedByMe ? (
-            <button type='button'>
+            <button type='button' onClick={() => {}}>
               <HeartFilled />
             </button>
           ) : (
@@ -132,6 +139,7 @@ const Comment = ({
           }}
         >
           <input
+            autoFocus
             type='text'
             name='reply'
             placeholder={`${t('reply_placeholder')} ${sender.name}`}
@@ -154,6 +162,13 @@ const Comment = ({
             style={{
               opacity: replyPopup ? 1 : 0,
               pointerEvents: replyPopup ? 'all' : 'none',
+            }}
+            callback={async () => {
+              setReplyPopup(false);
+              const res = await axios.post(
+                `${process.env.REACT_APP_SRV_ADDR}/reply`,
+              );
+              setComments(res.data);
             }}
           />
         </form>

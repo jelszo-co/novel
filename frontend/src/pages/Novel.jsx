@@ -108,6 +108,7 @@ const Novel = ({
       console.error(err);
       setPopup('Hiba a komment elküldése közben.', 'err');
     }
+    setMainCommentPopup(false);
   };
 
   const handleFavorite = async () => {
@@ -323,8 +324,8 @@ const Novel = ({
             <Send />
           </button>
           <CommentAuth
-            lineDir='bottom'
             handleDeauthComment={handleDeauthComment}
+            lineDir='bottom'
             style={{
               opacity: mainCommentPopup ? 1 : 0,
               pointerEvents: mainCommentPopup ? 'all' : 'none',
@@ -336,7 +337,6 @@ const Novel = ({
             key={comment.id}
             comment={comment}
             handleDeauthComment={handleDeauthComment}
-            match={match}
           />
         ))}
       </div>

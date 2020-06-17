@@ -31,7 +31,9 @@
       padding: 1px 6px;
       border-radius: 5px;
     }
-    svg {
+    svg,
+    a,
+    button:not(.anonymously) {
       width: 30px;
       height: 30px;
       fill: $white;
