@@ -244,25 +244,23 @@ const Uploader = ({ setPopup, getNovels }) => {
       component = (
         <div className='upload-lang-selector'>
           <p>{t('upload_select_lang')}</p>
-          <div className='btns'>
-            <button
-              className='upload-btn'
-              type='button'
-              onClick={() => {
-                setNovelData({ ...novelData, lang: 'hu' });
-                increment();
-              }}
-            >
-              HU
-            </button>
-            <button
-              className='upload-btn'
-              type='button'
-              onClick={() => setNovelData({ ...novelData, lang: 'en' })}
-            >
-              EN
-            </button>
-          </div>
+          <button
+            className='upload-btn'
+            type='button'
+            onClick={() => {
+              setNovelData({ ...novelData, lang: 'hu' });
+              increment();
+            }}
+          >
+            HU
+          </button>
+          <button
+            className='upload-btn'
+            type='button'
+            onClick={() => setNovelData({ ...novelData, lang: 'en' })}
+          >
+            EN
+          </button>
         </div>
       );
       break;
