@@ -162,12 +162,13 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
 
 const Uploader = ({ setPopup, getNovels }) => {
   const { t } = useTranslation();
-  const [phase, setPhase] = useState(0);
+  const [phase, setPhase] = useState(3);
   const [novelData, setNovelData] = useState({
     title: '',
     lore: '',
     path: '',
     filename: '',
+    lang: '',
   });
   const { title, lore, filename, path } = novelData;
   const container = useRef(null);
@@ -241,6 +242,32 @@ const Uploader = ({ setPopup, getNovels }) => {
       break;
     case 3:
       component = (
+        <div className='upload-lang-selector'>
+          <p>{t('upload_select_lang')}</p>
+          <div className='btns'>
+            <button
+              className='upload-btn'
+              type='button'
+              onClick={() => {
+                setNovelData({ ...novelData, lang: 'hu' });
+                increment();
+              }}
+            >
+              HU
+            </button>
+            <button
+              className='upload-btn'
+              type='button'
+              onClick={() => setNovelData({ ...novelData, lang: 'en' })}
+            >
+              EN
+            </button>
+          </div>
+        </div>
+      );
+      break;
+    case 4:
+      component = (
         <form
           onSubmit={e => {
             e.preventDefault();
@@ -265,7 +292,7 @@ const Uploader = ({ setPopup, getNovels }) => {
         </form>
       );
       break;
-    case 4:
+    case 5:
       component = (
         <form
           className='novel-params'
@@ -302,7 +329,7 @@ const Uploader = ({ setPopup, getNovels }) => {
         </form>
       );
       break;
-    case 5:
+    case 6:
       component = (
         <div className='novel-success'>
           <Tick />

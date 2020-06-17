@@ -59,7 +59,7 @@ const Comment = ({
       } else {
         try {
           const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/id/c${id}/reply/`,
+            `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`,
             { content: reply, recipient: sender.id },
           );
           setComments(res.data);
@@ -166,7 +166,8 @@ const Comment = ({
             callback={async () => {
               setReplyPopup(false);
               const res = await axios.post(
-                `${process.env.REACT_APP_SRV_ADDR}/reply`,
+                `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`,
+                { content: reply, recipient: sender.id },
               );
               setComments(res.data);
             }}
