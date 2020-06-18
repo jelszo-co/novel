@@ -36,8 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext .js --ext .jsx ./"
+    "lint": "eslint --ext .js --ext .jsx ./",
+    "analyze": "node analyze.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,6 +69,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "jest-enzyme": "^7.1.2"
+    "jest-enzyme": "^7.1.2",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }

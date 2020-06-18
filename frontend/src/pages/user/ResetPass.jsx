@@ -55,7 +55,7 @@ const UpdatePass = ({ setPopup, history }) => {
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPass);
       setPopup('Jelszó sikeresen frissítve.');
-      history.goBack();
+      history.push('/login');
     } catch (err) {
       if (err.code === 'auth/wrong-password') {
         alertUser('password');
@@ -68,29 +68,26 @@ const UpdatePass = ({ setPopup, history }) => {
 
   return (
     <div id='update-email'>
-      <button onClick={() => history.goBack()} className='back'>
-        {t('back')}
-      </button>
-      <Title>{t('update_pass_title')}</Title>
+      <Title>{t('reset_pass_title')}</Title>
       <form onSubmit={e => handleSubmit(e)} noValidate>
         <input
           type='password'
-          name='current-pass'
-          autoComplete='current-password'
+          name='new-pass-1'
+          autoComplete='new-password'
           autoCorrect='on'
           value={currentPass}
           onChange={({ target }) =>
             setFormData({ ...formData, currentPass: target.value })
           }
-          placeholder={t('current_password')}
+          placeholder={t('new_password')}
         />
         <input
           type='password'
           name='new-pass'
-          autoComplete='current-password'
+          autoComplete='new-password'
           autoCorrect='off'
           value={newPass}
-          placeholder={t('new_password')}
+          placeholder={t('new_password_confirm')}
           onChange={({ target: { value } }) => {
             setFormData({ ...formData, newPass: value });
             setValidState({

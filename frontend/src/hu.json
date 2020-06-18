@@ -92,6 +92,9 @@
     "update_pass_title": "Jelszó frissítése",
     "current_password": "Jelenlegi jelszó",
     "new_password": "Új jelszó",
+    "new_password_confirm": "Új jelszó mégegyszer",
+
+    "reset_pass_title": "Jelszó visszaállítása",
 
     "delete_title": "Fiók törlése",
     "delete_lore": "Biztos vagy benne? Ez visszavonhatatlan!",

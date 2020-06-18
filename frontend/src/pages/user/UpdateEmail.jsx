@@ -6,7 +6,7 @@ import { auth } from '../../firebase';
 import { useTranslation } from 'react-i18next';
 import { setPopup } from '../../actions/popup';
 
-import '../../css/user/updateEmail.scss';
+import '../../css/user/smallForms.scss';
 
 const UpdateEmail = ({ setPopup, history }) => {
   const { t } = useTranslation();
