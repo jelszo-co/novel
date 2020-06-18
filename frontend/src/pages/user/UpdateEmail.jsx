@@ -54,7 +54,7 @@ const UpdateEmail = ({ setPopup, history }) => {
   };
 
   return (
-    <div id='update-email'>
+    <div id='small-form'>
       <button onClick={() => history.goBack()} className='back'>
         {t('back')}
       </button>

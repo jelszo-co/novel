@@ -1,5 +1,5 @@
 @import '../variables';
-#update-email {
+#small-form {
   form {
     position: absolute;
     top: 50%;
@@ -71,5 +71,10 @@
         }
       }
     }
+  }
+
+  .pass-valid-reset {
+    bottom: 100%;
+    transform: translate(105%, calc(100% - 8pt));
   }
 }

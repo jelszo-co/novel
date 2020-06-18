@@ -8,11 +8,11 @@ import { setPopup } from '../../actions/popup';
 
 import '../../css/user/smallForms.scss';
 
-const UpdatePass = ({ setPopup, history }) => {
+const ResetPass = ({ setPopup, history }) => {
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({ currentPass: '', newPass: '' });
-  const { currentPass, newPass } = formData;
+  const [formData, setFormData] = useState({ newPass1: '', newPass2: '' });
+  const { newPass1, newPass2 } = formData;
   const [valid, setValidState] = useState({
     length: false,
     case: false,
@@ -25,71 +25,64 @@ const UpdatePass = ({ setPopup, history }) => {
   const pattLet = /(?=.*[a-z])(?=.*[A-Z]).{0,}/g;
   const pattNum = /([0-9])/g;
 
-  const alertUser = field => {
-    const sc = `input[name=${field}]`;
-    document.querySelector(sc).style.borderColor = alertColor;
-    document.querySelector(sc).style.color = alertColor;
+  const alertUser = name => {
+    const field = document.querySelector(`input[name=${name}]`);
+    field.style.borderColor = alertColor;
+    field.style.color = alertColor;
     setTimeout(() => {
-      document.querySelector(sc).style.borderColor = '#fff';
-      document.querySelector(sc).style.color = '#fff';
+      field.style.borderColor = '#fff';
+      field.style.color = '#fff';
     }, 800);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (currentPass === '' || newPass === '') {
-      if (currentPass === '') alertUser('current-pass');
-      if (newPass === '') alertUser('new-pass');
-      if (!valid.case || !valid.length || !valid.num) alertUser('new-pass');
+    if (newPass1 === '' || newPass2 === '') {
+      if (newPass1 === '') alertUser('new-pass-1');
+      if (newPass2 === '') alertUser('new-pass-2');
+      if (!valid.case || !valid.length || !valid.num) alertUser('new-pass-1');
       return;
     }
     if (!valid.case || !valid.length || !valid.num)
-      return alertUser('new-pass');
-
-    const user = auth().currentUser;
+      return alertUser('new-pass-1');
+    if (newPass1 !== newPass2) return alertUser('new-pass-2');
     try {
-      const credential = auth.EmailAuthProvider.credential(
-        user.email,
-        currentPass,
+      await auth().confirmPasswordReset(
+        sessionStorage.getItem('oobCode'),
+        newPass1,
       );
-      await user.reauthenticateWithCredential(credential);
-      await user.updatePassword(newPass);
       setPopup('Jelszó sikeresen frissítve.');
+      sessionStorage.clear();
       history.push('/login');
     } catch (err) {
-      if (err.code === 'auth/wrong-password') {
-        alertUser('password');
-      } else {
-        setPopup('Hiba az email megváltoztatása közben.', 'err');
-        console.error(err);
+      switch (err.code) {
+        case 'auth/expired-action-code':
+          setPopup('A link lejárt.', 'err');
+          break;
+        case 'auth/invalid-action-code':
+          setPopup('Hibás link!', 'err');
+          break;
+        default:
+          setPopup('Hiba az email megváltoztatása közben.', 'err');
+          console.error(err);
+          break;
       }
     }
   };
 
   return (
-    <div id='update-email'>
+    <div id='small-form'>
       <Title>{t('reset_pass_title')}</Title>
       <form onSubmit={e => handleSubmit(e)} noValidate>
         <input
           type='password'
           name='new-pass-1'
           autoComplete='new-password'
-          autoCorrect='on'
-          value={currentPass}
-          onChange={({ target }) =>
-            setFormData({ ...formData, currentPass: target.value })
-          }
-          placeholder={t('new_password')}
-        />
-        <input
-          type='password'
-          name='new-pass'
-          autoComplete='new-password'
           autoCorrect='off'
-          value={newPass}
-          placeholder={t('new_password_confirm')}
+          value={newPass1}
+          placeholder={t('new_password')}
           onChange={({ target: { value } }) => {
-            setFormData({ ...formData, newPass: value });
+            setFormData({ ...formData, newPass1: value });
             setValidState({
               length: value.length >= 6,
               case: value.match(pattLet),
@@ -99,7 +92,21 @@ const UpdatePass = ({ setPopup, history }) => {
           onFocus={() => changeValidator(1)}
           onBlur={() => changeValidator(0)}
         />
-        <ul className='pass-validation' style={{ opacity: showValidator }}>
+        <input
+          type='password'
+          name='new-pass-2'
+          autoComplete='new-password'
+          autoCorrect='off'
+          value={newPass2}
+          placeholder={t('new_password_confirm')}
+          onChange={({ target: { value } }) =>
+            setFormData({ ...formData, newPass2: value })
+          }
+        />
+        <ul
+          className='pass-validation pass-valid-reset'
+          style={{ opacity: showValidator }}
+        >
           <li>
             <p
               style={{
@@ -149,4 +156,4 @@ const UpdatePass = ({ setPopup, history }) => {
   );
 };
 
-export default connect(null, { setPopup })(withRouter(UpdatePass));
+export default connect(null, { setPopup })(withRouter(ResetPass));

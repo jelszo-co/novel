@@ -22,6 +22,7 @@ import DeleteUser from './pages/user/DeleteUser';
 import UpdateEmail from './pages/user/UpdateEmail';
 import UpdatePass from './pages/user/UpdatePass';
 import ResetPass from './pages/user/ResetPass';
+import ActionCenter from './pages/components/ActionCenter';
 
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
@@ -56,6 +57,7 @@ const App = () => {
           <Route exact path='/update-email' component={UpdateEmail} />
           <Route exact path='/update-pass' component={UpdatePass} />
           <Route exact path='/reset-pass' component={ResetPass} />
+          <Route exact path='/action-center' component={ActionCenter} />
 
           <Route exact path='/admin' component={Admin} />
 
