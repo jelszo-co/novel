@@ -293,7 +293,7 @@ const Novel = ({
             </p>
           </>
         ) : (
-          content.split('\r\n').map((item, i) => <p key={i}>{item}</p>)
+          content.split('\n').map((item, i) => <p key={i}>{item}</p>)
         )}
       </div>
 
