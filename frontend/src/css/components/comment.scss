@@ -1,7 +1,8 @@
 @import '../variables';
 .comment {
   width: 80%;
-  margin: 30px 10%;
+  margin: 25px calc(10% - 3pt);
+  border: 3pt solid transparent;
   .title-bar {
     position: relative;
     display: flex;
@@ -44,6 +45,21 @@
     width: 1.5rem;
     height: 1.5rem;
     fill: $white;
+  }
+
+  .admin-btn {
+    margin-left: 10px;
+    svg {
+      stroke: $white;
+      stroke-width: 20px;
+      fill: none;
+      width: 30px;
+      height: 30px;
+    }
+    .ban {
+      stroke: none;
+      fill: $white;
+    }
   }
 
   .comment-content {
@@ -103,4 +119,66 @@
 
 .comment-reply {
   width: 80%;
+  margin: 25px 10% 0;
+}
+
+.fader {
+  transition: 0.2s all ease-in-out;
+}
+
+.deleted,
+.banned {
+  position: relative;
+  border: 3pt dashed $white;
+  margin: 25px calc(10% - 3pt);
+  width: 80%;
+  .text {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    * {
+      display: inline-block;
+      font-size: 1.3rem;
+      line-height: 1.1rem;
+    }
+    span {
+      border-bottom: 2pt solid $white;
+    }
+    button {
+      margin-left: 10px;
+      text-decoration: underline;
+    }
+  }
+}
+
+.success {
+  position: relative;
+  border: 3pt dashed $white;
+  margin: 25px calc(10% - 3pt);
+  width: 80%;
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+  }
+}
+
+.comment-close {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  svg,
+  line {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: $white;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 32px;
+  }
 }

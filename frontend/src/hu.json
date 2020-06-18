@@ -60,6 +60,11 @@
     "comments_header": "Kommentek",
     "comment_placeholder": "Komment írása...",
     "reply_placeholder": "Válasz neki:",
+    "comment_deleted": "kommentje törölve",
+    "to_ban": "tiltása",
+    "banned": "letiltva",
+    "delete_this_comment": "Ez a komment törlése",
+    "delete_all_comments": "Minden komment törlése",
 
     "profile_title": "Fiókom",
     "profile_last_comments": "Legutóbbi kommentjeim",

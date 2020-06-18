@@ -23,33 +23,8 @@ import ripple from '../../assets/ripple.gif';
 import '../../css/admin/admin.scss';
 
 const Admin = ({ user: { role }, setPopup, getNovels }) => {
-  const [comments, setComments] = useState([
-    {
-      title: 'Utols\u00f3 percek',
-      path: 'utolso-percek',
-      comments: [
-        {
-          id: 1,
-          content:
-            'Elad\u00f3 Honda Jazz 1.6 turb\u00f3 sz\u00edv\u00f3 2010 64E km 3.6M k\u00f6szhelo',
-          senderName: 'Unknown',
-          writtenAt: '2020-06-12T18:50:27.456Z',
-        },
-        {
-          id: 2,
-          content: 'Benc\u00e9t Bannoln\u00e1m',
-          senderName: 'Unknown',
-          writtenAt: '2020-06-07T17:46:36.432Z',
-        },
-      ],
-    },
-  ]);
-  const [banned, setBanned] = useState([
-    { name: 'Zoli', id: 5 },
-    { name: 'Pisti', id: 6 },
-    { name: 'Bence', id: 4 },
-    { name: 'Norbi', id: 3 },
-  ]);
+  const [comments, setComments] = useState([]);
+  const [banned, setBanned] = useState([]);
   const getBanned = useCallback(() => {
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/banned')
