@@ -6,9 +6,9 @@ from novel.models import Novel
 
 
 class Comment(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.SET(User.objects.get(uid='unauthenticated').pk),
+    sender = models.ForeignKey(User, on_delete=lambda: models.SET(User.objects.get(uid='unauthenticated').pk),
                                related_name="sender")
-    recipient = models.ForeignKey(User, on_delete=models.SET(User.objects.get(uid='unauthenticated').pk),
+    recipient = models.ForeignKey(User, on_delete=lambda: models.SET(User.objects.get(uid='unauthenticated').pk),
                                   related_name="recipient", null=True, blank=True)
     novel = models.ForeignKey(Novel, models.CASCADE)
     content = models.TextField()
