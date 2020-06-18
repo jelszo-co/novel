@@ -192,6 +192,30 @@ $indent: 4%;
     }
   }
 
+  .upload-success {
+    svg {
+      stroke: $white;
+      width: 100px;
+      height: 100px;
+      display: inline-block;
+      fill: none;
+      stroke-miterlimit: 10;
+      stroke-width: 15px;
+      line,
+      polyline {
+        fill: none;
+        stroke: $white;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 15px;
+      }
+    }
+    p {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  }
+
   form {
     p.params-title {
       text-transform: capitalize;

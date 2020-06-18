@@ -162,7 +162,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
 
 const Uploader = ({ setPopup, getNovels }) => {
   const { t } = useTranslation();
-  const [phase, setPhase] = useState(0);
+  const [phase, setPhase] = useState(6);
   const [novelData, setNovelData] = useState({
     title: '',
     lore: '',
@@ -305,6 +305,9 @@ const Uploader = ({ setPopup, getNovels }) => {
             );
             increment();
             getNovels();
+            setTimeout(() => {
+              setPhase(0);
+            }, 1000);
           }}
         >
           <p className='params-title'>{t('description')}:</p>
@@ -329,7 +332,7 @@ const Uploader = ({ setPopup, getNovels }) => {
       break;
     case 6:
       component = (
-        <div className='novel-success'>
+        <div className='upload-success'>
           <Tick />
           <p>{t('success')}</p>
         </div>
