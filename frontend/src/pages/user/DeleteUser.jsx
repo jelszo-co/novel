@@ -10,6 +10,7 @@ import axios from 'axios';
 import Title from '../components/Title';
 
 import '../../css/user/deleteUser.scss';
+import cookie from 'react-cookies';
 
 const DeleteUser = ({ setPopup, history }) => {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ const DeleteUser = ({ setPopup, history }) => {
       await user.reauthenticateWithCredential(credential);
       await user.delete();
       await axios.delete(process.env.REACT_APP_SRV_ADDR + '/user/');
+      cookie.remove('usertoken');
       setPopup('Fiók sikeresen törölve.');
     } catch (err) {
       if (err.code === 'auth/wrong-password') {

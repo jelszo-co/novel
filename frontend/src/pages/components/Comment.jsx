@@ -79,9 +79,10 @@ const Comment = ({
     if (auth().currentUser === null)
       return setPopup('Kérlek jelentkezz be a komment kedveléséhez.', 'err');
     try {
-      await axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`,
       );
+      setComments(res.data);
     } catch (err) {
       console.error(err);
       setPopup('Hiba a komment kedvelése közben.', 'err');

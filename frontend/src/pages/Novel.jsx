@@ -78,19 +78,17 @@ const Novel = ({
 
   const handleComment = async () => {
     if (comment.length > 0) {
-      if (role === 'stranger') {
-        setMainCommentPopup(!mainCommentPopup);
-      } else {
-        try {
-          const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
-            { content: comment },
-          );
-          setComments(res.data);
-        } catch (err) {
-          console.error(err);
-          setPopup('Hiba a komment elküldése közben.', 'err');
-        }
+      if (role === 'stranger') return setMainCommentPopup(!mainCommentPopup);
+      try {
+        const res = await axios.post(
+          `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,
+          { content: comment },
+        );
+        setComments(res.data);
+        setComment('');
+      } catch (err) {
+        console.error(err);
+        setPopup('Hiba a komment elküldése közben.', 'err');
       }
     }
   };
@@ -102,6 +100,7 @@ const Novel = ({
         { content: comment },
       );
       setComments(res.data);
+      setComment('');
     } catch (err) {
       console.error(err);
       setPopup('Hiba a komment elküldése közben.', 'err');
