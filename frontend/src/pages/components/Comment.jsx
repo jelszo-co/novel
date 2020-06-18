@@ -15,6 +15,7 @@ import { setComments } from '../../actions/novels';
 import { setPopup } from '../../actions/popup';
 
 import '../../css/components/comment.scss';
+import { auth } from 'firebase';
 
 const Comment = ({
   isReply = false,
@@ -73,6 +74,20 @@ const Comment = ({
       }
     }
   };
+
+  const handleLike = async () => {
+    if (auth().currentUser === null)
+      return setPopup('Kérlek jelentkezz be a komment kedveléséhez.', 'err');
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`,
+      );
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a komment kedvelése közben.', 'err');
+    }
+  };
+
   let senderDisplay;
   if (isYou) senderDisplay = <span className='sender-modif'>{t('you')}</span>;
   else if (isAdmin)
@@ -87,11 +102,11 @@ const Comment = ({
         </p>
         <div className='likes'>
           {likedByMe ? (
-            <button type='button' onClick={() => {}}>
+            <button type='button' onClick={() => handleLike()}>
               <HeartFilled />
             </button>
           ) : (
-            <button type='button' onClick={() => {}}>
+            <button type='button' onClick={() => handleLike()}>
               <HeartEmpty />
             </button>
           )}
