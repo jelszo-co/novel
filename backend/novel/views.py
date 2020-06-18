@@ -145,7 +145,7 @@ class NewUpload(View):
                 return JsonResponse({"error": "Not unique title"}, status=400)
         # string.join won't work
         content = ''
-        padding = '\r\n'
+        padding = '\n'
         for l in d.paragraphs[1:]:
             content += l.text + padding
         content = content[:-len(padding)]
