@@ -55,11 +55,9 @@ const Novel = ({
 
   const setEditData = gibberish => {
     const replacement = gibberish.content
-      .split('\r\n')
+      .split('\n')
       .map((item, i) =>
-        gibberish.content.split('\r\n').length === i + 1
-          ? item
-          : `${item}\r\n\r\n`,
+        gibberish.content.split('\n').length === i + 1 ? item : `${item}\n\n`,
       );
 
     return setModifiedEditData({
@@ -149,7 +147,7 @@ const Novel = ({
         `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}`,
         {
           title: editData.title,
-          content: editData.content.join('').replace(/(\r\n\r\n)/g, '\r\n'),
+          content: editData.content.join('').replace(/(\n\n)/g, '\n'),
         },
       );
       setNovel(res.data);
