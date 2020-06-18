@@ -38,6 +38,7 @@ const App = () => {
         store.dispatch(loadUser(user));
       } else {
         store.dispatch({ type: AUTH_FAIL });
+        cookie.remove('usertoken');
       }
     });
   }, []);
