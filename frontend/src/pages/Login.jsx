@@ -87,29 +87,17 @@ const Login = ({ user, setPopup }) => {
 
   const handleRegister = async e => {
     e.preventDefault();
-    let err = false;
-    if (fullName.length === 0) {
-      err = true;
-      alertUser('fullName');
-    }
-    if (!regEmail.match(emailPatt)) {
-      err = true;
-      alertUser('regEmail');
-    }
-    if (!valid.length || !valid.case || !valid.num) {
-      err = true;
-      alertUser('regPass');
-    }
-    if (!err) {
-      try {
-        await auth().createUserWithEmailAndPassword(regEmail, regPass);
-        await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
-          name: fullName,
-        });
-      } catch (err) {
-        console.error(err);
-        setPopup('Hiba a regisztráció során.', 'err');
-      }
+    if (fullName.length === 0) return alertUser('fullName');
+    if (!regEmail.match(emailPatt)) return alertUser('regEmail');
+    if (!valid.length || !valid.case || !valid.num) return alertUser('regPass');
+    try {
+      await auth().createUserWithEmailAndPassword(regEmail, regPass);
+      await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+        name: fullName,
+      });
+    } catch (err) {
+      console.error(err);
+      setPopup('Hiba a regisztráció során.', 'err');
     }
   };
 

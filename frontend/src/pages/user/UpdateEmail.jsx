@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import { auth } from '../../firebase';
 import { useTranslation } from 'react-i18next';
 import { setPopup } from '../../actions/popup';
+import axios from 'axios';
 
 import '../../css/user/smallForms.scss';
 
 const UpdateEmail = ({ setPopup, history }) => {
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({ email: '', pass: '' });
-  const { email, pass } = formData;
+  const [formData, setFormData] = useState({ name: '', email: '', pass: '' });
+  const { name, email, pass } = formData;
 
   const alertColor = '#ab1717';
   const emailPatt = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/g;
@@ -38,6 +39,9 @@ const UpdateEmail = ({ setPopup, history }) => {
     if (!email.match(emailPatt)) return alertUser('email');
     const user = auth().currentUser;
     try {
+      if (name !== '') {
+        await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, { name });
+      }
       const credential = auth.EmailAuthProvider.credential(user.email, pass);
       await user.reauthenticateWithCredential(credential);
       await user.updateEmail(email);
@@ -60,6 +64,17 @@ const UpdateEmail = ({ setPopup, history }) => {
       </button>
       <Title>{t('update_email_title')}</Title>
       <form onSubmit={e => handleSubmit(e)} noValidate>
+        <input
+          type='text'
+          name='name'
+          autoComplete='name'
+          autoCorrect='on'
+          value={name}
+          onChange={({ target }) =>
+            setFormData({ ...formData, name: target.value })
+          }
+          placeholder={`${t('form_name')} (${t('unnecessary')})`}
+        />
         <input
           type='email'
           name='email'

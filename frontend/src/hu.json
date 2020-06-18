@@ -98,6 +98,7 @@
     "current_password": "Jelenlegi jelszó",
     "new_password": "Új jelszó",
     "new_password_confirm": "Új jelszó mégegyszer",
+    "unnecessary": "nem kötelező",
 
     "reset_pass_title": "Jelszó visszaállítása",
 
