@@ -5,10 +5,14 @@ from authorization.models import User
 from novel.models import Novel
 
 
+def get_deleted_user(self):
+    return User.objects.get(uid='unauthenticated')
+
+
 class Comment(models.Model):
-    sender = models.ForeignKey(User, on_delete=lambda: models.SET(User.objects.get(uid='unauthenticated').pk),
+    sender = models.ForeignKey(User, on_delete=models.SET(get_deleted_user),
                                related_name="sender")
-    recipient = models.ForeignKey(User, on_delete=lambda: models.SET(User.objects.get(uid='unauthenticated').pk),
+    recipient = models.ForeignKey(User, on_delete=models.SET(get_deleted_user),
                                   related_name="recipient", null=True, blank=True)
     novel = models.ForeignKey(Novel, models.CASCADE)
     content = models.TextField()
