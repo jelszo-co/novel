@@ -20,9 +20,12 @@ class AuthorizationMiddleware:
                 request.fb_user = user
             except (FirebaseError, User.DoesNotExist):
                 request.fb_user = User.objects.get_or_create(uid='unauthenticated', isAuthenticated=False)[0]
+                request.fb_user.name = "¯\\_(ツ)_/¯"
+                request.fb_user.save()
         else:
             request.fb_user = User.objects.get_or_create(uid='unauthenticated', isAuthenticated=False)[0]
-
+            request.fb_user.name = "¯\\_(ツ)_/¯"
+            request.fb_user.save()
         response = self.get_response(request)
         return response
 

@@ -123,7 +123,13 @@ class Unban(View):
         user = request.fb_user_byId
         user.banned = False
         user.save()
-        return JsonResponse({'success': f'Successfully unbanned {user.name} from commenting'})
+        resp: list[dict[str, any]] = []
+        for u in User.objects.filter(banned=True):
+            resp.append({
+                "name": u.name,
+                "id": u.id
+            })
+        return JsonResponse(resp, safe=False)
 
 
 class Banned(View):
