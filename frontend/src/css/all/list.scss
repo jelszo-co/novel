@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 #search {
   position: absolute;
   top: 20%;
@@ -21,12 +21,16 @@
     border-bottom: 2.25pt solid $white;
     color: $white;
     padding: 2pt 0;
-    font-family: "Markazi text", serif;
+    font-family: 'Markazi text', serif;
     font-size: 1.4rem;
   }
 }
 
 #list {
+  .list-empty {
+    text-align: center;
+    font-size: 1.5rem;
+  }
   .list-container {
     width: 700px;
     @media #{$mq-phone} {
