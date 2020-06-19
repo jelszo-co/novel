@@ -34,6 +34,8 @@ const List = ({ novels: { loading, list } }) => {
         </span>
       ));
     };
+    if (inp.length === 0)
+      return <p className='list-empty'>{t('list_empty')}</p>;
     return inp.map(yr => {
       const cyr = Object.keys(yr)[0];
       const cNovels =
