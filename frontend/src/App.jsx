@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Novel from './pages/Novel';
 import Profile from './pages/user/Profile';
 import Admin from './pages/admin/Admin';
+import Banned from './pages/admin/Banned';
 import Err from './pages/404';
 import DeleteUser from './pages/user/DeleteUser';
 import UpdateEmail from './pages/user/UpdateEmail';
@@ -61,6 +62,7 @@ const App = () => {
           <Route exact path='/action-center' component={ActionCenter} />
 
           <Route exact path='/admin' component={Admin} />
+          <Route exact path='/admin/banned' component={Banned} />
 
           <Route component={Err} />
         </Switch>
