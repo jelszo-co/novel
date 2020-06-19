@@ -15,7 +15,7 @@
     "you": "te",
     "author": "szerző",
 
-    "landing_welcome": "Üdvözöllek.",
+    "landing_welcome": "Üdvözöllek!",
     "landing_button": "Írásaim",
 
     "menu_invoke": "Menü",
@@ -110,6 +110,30 @@
 
     "err_novel_list": "Hiba a novellák lekérdezésében.",
     "err_novel_single": "Hiba a novella lekérdezésében.",
-    "err_body": "Nálunk ilyen oldal nem létezik."
+    "err_body": "Nálunk ilyen oldal nem létezik.",
+    "err_send_response": "Hiba a válasz elküldése közben.",
+    "err_like_login": "Kérlek jelentkezz be a komment kedveléséhez.",
+    "err_like_comment": "Hiba a komment kedvelése közben.",
+    "err_del_comment": "Hiba a komment törlése közben.",
+    "err_del_comments": "Hiba a kommentek törlése közben.",
+    "err_block_user": "Hiba a felhasználó tiltása közben.",
+    "err_send_comment": "Hiba a komment elküldése közben.",
+    "err_del_novel": "Hiba a novella törlése közben.",
+    "err_save_novel": "Hiba a novella mentése közben.",
+
+    "err_login": "Hiba a bejelentkezés során.",
+    "err_register": "Hiba a regisztráció során.",
+    "err_uname_pass": "Hibás felhasználónév vagy jelszó!",
+    "err_email": "Nem található ilyen e-mail cím.",
+
+    "err_admin_block_users": "Hiba a tiltott felhasználók lekérdezésében.",
+    "err_admin_load_comments": "Hiba a kommentek lekérdezése közben.",
+    "err_admin_unblock_user": "Hiba a felhasználó tiltásának eltávolítása közben.",
+    "err_admin_one_novel": "Egyszerre csak egy novellát tölts fel.",
+    "err_admin_not_doc": "A novellát .doc vagy .docx fájlként töltsd fel.",
+    "err_admin_upload_novel": "Hiba a novella feltöltése közben.",
+
+    "succes_login": "Sikeres bejelentkezés.",
+    "succes_logout": "Sikeres Kijelentkezés."
   }
 }

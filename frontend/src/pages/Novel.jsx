@@ -17,13 +17,7 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
-import {
-  getNovel,
-  setNovel,
-  setComments,
-  clearNovel,
-  getNovels,
-} from '../actions/novels';
+import { getNovel, setNovel, setComments, clearNovel, getNovels } from '../actions/novels';
 
 import '../css/all/novel.scss';
 
@@ -56,9 +50,7 @@ const Novel = ({
   const setEditData = gibberish => {
     const replacement = gibberish.content
       .split('\n')
-      .map((item, i) =>
-        gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`,
-      );
+      .map((item, i) => (gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`));
 
     return setModifiedEditData({
       content: replacement,
@@ -88,7 +80,7 @@ const Novel = ({
         setComment('');
       } catch (err) {
         console.error(err);
-        setPopup('Hiba a komment elküldése közben.', 'err');
+        setPopup(t('err_send_comment'), 'err');
       }
     }
   };
@@ -103,7 +95,7 @@ const Novel = ({
       setComment('');
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a komment elküldése közben.', 'err');
+      setPopup(t('err_send_comment'), 'err');
     }
     setMainCommentPopup(false);
   };
@@ -127,14 +119,12 @@ const Novel = ({
   const handleDelete = async () => {
     if (document.querySelector('.admin-delete-confirm').style.opacity === '1') {
       try {
-        await axios.delete(
-          `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`,
-        );
+        await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`);
         setPopup('Törölve.');
         getNovels();
         history.push('/list');
       } catch (err) {
-        setPopup('Hiba a novella törlése közben.', 'err');
+        setPopup(t('err_del_novel'), 'err');
         console.error(err);
       }
     }
@@ -159,7 +149,7 @@ const Novel = ({
       setRedirect(res.data.path);
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a novella mentése közben.', 'err');
+      setPopup(t('err_save_novel'), 'err');
     }
   };
 
@@ -181,9 +171,7 @@ const Novel = ({
         type='button'
         className='novel-back'
         onClick={() =>
-          editMode
-            ? window.confirm(t('alert_editing')) && history.goBack()
-            : history.goBack()
+          editMode ? window.confirm(t('alert_editing')) && history.goBack() : history.goBack()
         }
       >
         {t('back')}
@@ -213,20 +201,13 @@ const Novel = ({
                   <Trash />
                 </button>
               </div>
-              <div
-                className='admin-delete-confirm'
-                style={{ opacity: delPopup ? 1 : 0 }}
-              >
+              <div className='admin-delete-confirm' style={{ opacity: delPopup ? 1 : 0 }}>
                 <span />
                 {t('del_popup')}
                 <button type='button' onClick={() => setDelPopup(false)}>
                   {t('cancel')}
                 </button>
-                <button
-                  type='button'
-                  className='delete'
-                  onClick={() => handleDelete()}
-                >
+                <button type='button' className='delete' onClick={() => handleDelete()}>
                   {t('delete')}
                 </button>
               </div>
@@ -249,11 +230,7 @@ const Novel = ({
             </>
           )}
         </h2>
-        <Moment
-          format='YYYY. MMMM DD.'
-          locale={t('locale_name')}
-          className='novel-date'
-        >
+        <Moment format='YYYY. MMMM DD.' locale={t('locale_name')} className='novel-date'>
           {uploadedAt}
         </Moment>
       </div>
@@ -330,11 +307,7 @@ const Novel = ({
           />
         </form>
         {comments.map(comment => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            handleDeauthComment={handleDeauthComment}
-          />
+          <Comment key={comment.id} comment={comment} handleDeauthComment={handleDeauthComment} />
         ))}
       </div>
     </div>

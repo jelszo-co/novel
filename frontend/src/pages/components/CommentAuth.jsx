@@ -35,7 +35,7 @@ const CommentAuth = ({
       callBack();
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a bejelentkezés során.', 'err');
+      setPopup(t('err_login'), 'err');
     }
   };
 
@@ -49,15 +49,12 @@ const CommentAuth = ({
       callBack();
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a bejelentkezés során.', 'err');
+      setPopup(t('err_login'), 'err');
     }
   };
 
   return (
-    <div
-      style={style}
-      className={`comment-auth-wrapper comment-auth-wrapper-${lineDir}`}
-    >
+    <div style={style} className={`comment-auth-wrapper comment-auth-wrapper-${lineDir}`}>
       <span className='comment-auth-line' />
       <div className='comment-auth'>
         <button type='button' onClick={() => handleGoogle()}>

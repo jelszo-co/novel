@@ -24,7 +24,7 @@ const Banned = ({ setPopup, history }) => {
       .then(res => setBanned(res.data))
       .catch(err => {
         console.error(err);
-        setPopup('Hiba a tiltott felhasználók lekérdezésében.', 'err');
+        setPopup(t('err_admin_block_users'), 'err');
       });
   }, [setPopup]);
   return (
@@ -41,19 +41,11 @@ const Banned = ({ setPopup, history }) => {
                 <button
                   onClick={() => {
                     axios
-                      .post(
-                        process.env.REACT_APP_SRV_ADDR +
-                          '/comment/user/' +
-                          id +
-                          '/unban/',
-                      )
+                      .post(process.env.REACT_APP_SRV_ADDR + '/comment/user/' + id + '/unban/')
                       .then(res => setBanned(res.data))
                       .catch(err => {
                         console.error(err);
-                        setPopup(
-                          'Hiba a felhasználó tiltásának eltávolítása közben.',
-                          'err',
-                        );
+                        setPopup(t('err_admin_unblock_user'), 'err');
                       });
                   }}
                 >

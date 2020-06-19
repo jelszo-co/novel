@@ -97,7 +97,7 @@ const Login = ({ user, setPopup }) => {
       });
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a regisztráció során.', 'err');
+      setPopup(t('err_register'), 'err');
     }
   };
 
@@ -110,7 +110,7 @@ const Login = ({ user, setPopup }) => {
       });
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a bejelentkezés során.', 'err');
+      setPopup(t('err_login'), 'err');
     }
   };
 
@@ -120,7 +120,7 @@ const Login = ({ user, setPopup }) => {
       await auth().signInWithPopup(FProvider);
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a bejelentkezés során.', 'err');
+      setPopup(t('err_login'), 'err');
     }
   };
 
@@ -138,11 +138,11 @@ const Login = ({ user, setPopup }) => {
     if (!err) {
       try {
         await auth().signInWithEmailAndPassword(loginEmail, loginPass);
-        setPopup('Sikeres bejelentkezés.');
+        setPopup(t('succes_login'));
       } catch (err) {
         alertUser('loginEmail');
         alertUser('loginPass');
-        alertLogin('Hibás felhasználónév vagy jelszó!');
+        alertLogin(t('err_uname_pass'));
       }
     }
   };
@@ -156,7 +156,7 @@ const Login = ({ user, setPopup }) => {
       } catch (err) {
         if (err.code === 'auth/user-not-found') {
           alertUser('loginEmail');
-          alertLogin('Nem található ilyen e-mail cím.');
+          alertLogin(t('err_email'));
         }
         console.error(err);
       }
@@ -308,9 +308,7 @@ const Login = ({ user, setPopup }) => {
 
         <form
           id='login-form'
-          onSubmit={e =>
-            resetState === 'login' ? handleLogin(e) : handleForgot(e)
-          }
+          onSubmit={e => (resetState === 'login' ? handleLogin(e) : handleForgot(e))}
           noValidate
         >
           <h3 className='form-title'>{t('form_login_title')}</h3>

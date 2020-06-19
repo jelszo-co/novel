@@ -19,21 +19,11 @@ import { setPopup } from '../../actions/popup';
 
 import '../../css/components/comment.scss';
 import { auth } from '../../firebase';
+import { plugToRequest } from 'react-cookies';
 
 const Comment = ({
   isReply = false,
-  comment: {
-    id,
-    sender,
-    writtenAt,
-    likes,
-    likedByMe,
-    recipient,
-    content,
-    replies,
-    isYou,
-    isAdmin,
-  },
+  comment: { id, sender, writtenAt, likes, likedByMe, recipient, content, replies, isYou, isAdmin },
   role,
   handleDeauthComment,
   setComments,
@@ -77,33 +67,30 @@ const Comment = ({
         setReplyPopup(!replyPopup);
       } else {
         try {
-          const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`,
-            { content: reply, recipient: sender.id },
-          );
+          const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`, {
+            content: reply,
+            recipient: sender.id,
+          });
           setComments(res.data);
           setReply('');
           setReplyState(false);
           setReplyPopup(false);
         } catch (err) {
           console.error(err);
-          setPopup('Hiba a válasz elküldése közben.', 'err');
+          setPopup(t('err_send_response'), 'err');
         }
       }
     }
   };
 
   const handleLike = async () => {
-    if (auth().currentUser === null)
-      return setPopup('Kérlek jelentkezz be a komment kedveléséhez.', 'err');
+    if (auth().currentUser === null) return setPopup(t('err_like_login'), 'err');
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`,
-      );
+      const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`);
       setComments(res.data);
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a komment kedvelése közben.', 'err');
+      setPopup(t('err_like_comment'), 'err');
     }
   };
 
@@ -113,9 +100,7 @@ const Comment = ({
 
   const deleteComment = async (cId = id) => {
     try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`,
-      );
+      const res = await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`);
       setComments(res.data);
       fader.forEach(el => (el.style.opacity = 0));
       setTimeout(() => {
@@ -128,7 +113,7 @@ const Comment = ({
       }, 200);
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a komment törlése közben.', 'err');
+      setPopup(t('err_del_comment'), 'err');
     }
   };
 
@@ -143,15 +128,13 @@ const Comment = ({
       }, 200);
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a kommentek törlése közben.', 'err');
+      setPopup(t('err_del_comments'), 'err');
     }
   };
 
   const banUser = async (uId = sender.id) => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/ban/`,
-      );
+      await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/ban/`);
       fader.forEach(el => (el.style.opacity = 0));
       setTimeout(() => {
         if (modif === 'deleted') {
@@ -163,7 +146,7 @@ const Comment = ({
       }, 200);
     } catch (err) {
       console.error(err);
-      setPopup('Hiba a felhasználó tiltása közben.', 'err');
+      setPopup(t('err_block_user'), 'err');
     }
   };
 
@@ -213,10 +196,7 @@ const Comment = ({
             <button type='button' onClick={() => deleteComment(commentId)}>
               {t('delete_this_comment')}
             </button>
-            <button
-              type='button'
-              onClick={() => deleteAllComments(commentSender.id)}
-            >
+            <button type='button' onClick={() => deleteAllComments(commentSender.id)}>
               {t('delete_all_comments')}
             </button>
           </div>
@@ -235,9 +215,7 @@ const Comment = ({
     default:
       return (
         <div
-          className={`comment fader fader-${commentId} ${
-            isReply ? 'comment-reply' : ''
-          }`}
+          className={`comment fader fader-${commentId} ${isReply ? 'comment-reply' : ''}`}
           ref={commentWrapper}
         >
           <div className='title-bar'>
@@ -260,12 +238,8 @@ const Comment = ({
               type='button'
               onClick={() => {
                 setReplyState(!replyState);
-                replyBar.current.style.pointerEvents = replyState
-                  ? 'all'
-                  : 'none';
-                replyBar.current.style.marginTop = replyState
-                  ? '10px'
-                  : '-1.6rem';
+                replyBar.current.style.pointerEvents = replyState ? 'all' : 'none';
+                replyBar.current.style.marginTop = replyState ? '10px' : '-1.6rem';
                 replyBar.current.style.opacity = replyState ? 1 : 0;
                 if (!replyState) {
                   setTimeout(() => {
