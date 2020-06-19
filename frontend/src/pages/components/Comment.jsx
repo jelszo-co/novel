@@ -150,7 +150,7 @@ const Comment = ({
   const banUser = async (uId = sender.id) => {
     try {
       await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/ban`,
+        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/ban/`,
       );
       fader.forEach(el => (el.style.opacity = 0));
       setTimeout(() => {
