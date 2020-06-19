@@ -57,7 +57,7 @@ const Novel = ({
     const replacement = gibberish.content
       .split('\n')
       .map((item, i) =>
-        gibberish.content.split('\n').length === i + 1 ? item : `${item}\n\n`,
+        gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`,
       );
 
     return setModifiedEditData({
