@@ -15,6 +15,14 @@ $indent: 4%;
       border-bottom: 3px solid $white;
       padding: 4px 10px;
       white-space: nowrap;
+      @media #{$mq-phone} {
+        font-size: 1.2rem;
+        border-bottom: 2px solid $white;
+        margin: 0 -20px;
+        margin-bottom: 40px;
+        white-space: normal;
+        text-align: center;
+      }
     }
   }
 

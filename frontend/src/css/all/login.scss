@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 
 #login {
   #login-social {
@@ -47,6 +47,9 @@
       justify-content: space-between;
       height: 50vh;
       width: 35%;
+      @media #{$mq-phone} {
+        width: 40%;
+      }
 
       h3 {
         text-align: center;
@@ -62,15 +65,19 @@
         border: none;
         margin: 0;
         padding: 0;
-        font-family: "Markazi text", serif;
+        font-family: 'Markazi text', serif;
         font-size: 1.8rem;
         line-height: 1.6rem;
         align-self: center;
         border-bottom: 2.5pt solid $white;
         transition: 0.1s all ease-in-out;
 
-        &[type="submit"] {
+        &[type='submit'] {
           cursor: pointer;
+        }
+
+        @media #{$mq-phone} {
+          font-size: 1.5rem;
         }
       }
 
@@ -90,6 +97,10 @@
 
           &:first-child {
             margin-top: 0;
+          }
+
+          @media #{$mq-phone} {
+            font-size: 1.2rem;
           }
         }
       }
@@ -180,6 +191,9 @@
           width: 100%;
           display: inline-block;
           transition: 0.1s all ease-in-out;
+          @media #{$mq-phone} {
+            font-size: 1.2rem;
+          }
         }
 
         button {
@@ -187,7 +201,7 @@
           background: none;
           margin: 0;
           padding: 0;
-          font-family: "Markazi text", serif;
+          font-family: 'Markazi text', serif;
           font-size: 1.2rem;
           text-decoration: underline;
           float: right;
