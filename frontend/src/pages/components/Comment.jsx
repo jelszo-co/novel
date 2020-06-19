@@ -297,6 +297,8 @@ const Comment = ({
                 key={reply.id}
                 comment={reply}
                 isReply
+                role={role}
+                setPopup={setPopup}
                 cascadedReplyBar={replyBar}
                 cascadedReplyState={replyState}
                 cascadedSetReplyState={setReplyState}
