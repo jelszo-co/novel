@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
@@ -11,7 +12,7 @@ import { ReactComponent as Cross } from '../../assets/cross-filled.svg';
 
 import '../../css/admin/banned.scss';
 
-const Banned = ({ setPopup }) => {
+const Banned = ({ setPopup, history }) => {
   const { t } = useTranslation();
   const [banned, setBanned] = useState([
     { name: 'Unknown', id: 5 },
@@ -28,6 +29,9 @@ const Banned = ({ setPopup }) => {
   }, [setPopup]);
   return (
     <>
+      <button onClick={() => history.goBack()} className='banned-back'>
+        {t('back')}
+      </button>
       <Title>{t('admin_banned_title')}</Title>
       <div id='banned'>
         {banned.length > 0
@@ -63,4 +67,4 @@ const Banned = ({ setPopup }) => {
   );
 };
 
-export default connect(null, { setPopup })(Banned);
+export default connect(null, { setPopup })(withRouter(Banned));
