@@ -147,12 +147,15 @@ class Banned(View):
 
 
 class Recent(View):
-    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin,
+    @method_decorator(permission_needed(lambda request: request.fb_user.isAnonymous,
                                         'Log in to do this',
                                         'You are not admin'))
     def get(self, request, *args, **kwargs):
         resp: list[dict[str, any]] = []
-        comments = Comment.objects.filter(parentComment=None, sender__isAdmin=False).order_by('-writtenAt')
+        if request.fb_user.isAdmin:
+            comments = Comment.objects.filter(parentComment=None, sender__isAdmin=False).order_by('-writtenAt')[:5]
+        else:
+            comments = Comment.objects.filter(sender=request.fb_user).order_by('-writtenAt')[:5]
         for c in comments:
             found = False
             for n in resp:
@@ -162,7 +165,9 @@ class Recent(View):
                         'content': c.content,
                         'senderName': c.sender.name,
                         'writtenAt': c.writtenAt,
-                        'id': c.id
+                        'id': c.id,
+                        'recipientName': c.recipient.name if c.recipient else None,
+                        'isReply': c.parentComment is not None
                     })
                     break
             if found: continue
@@ -174,7 +179,9 @@ class Recent(View):
                         'content': c.content,
                         'senderName': c.sender.name,
                         'writtenAt': c.writtenAt,
-                        'id': c.id
+                        'id': c.id,
+                        'recipientName': c.recipient.name if c.recipient else None,
+                        'isReply': c.parentComment is not None
                     }
                 ]
             })
