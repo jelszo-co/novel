@@ -140,7 +140,7 @@ const Login = ({ user, setPopup }) => {
     if (!err) {
       try {
         await auth().signInWithEmailAndPassword(loginEmail, loginPass);
-        setPopup(t('succes_login'));
+        setPopup(t('success_login'));
       } catch (err) {
         alertUser('loginEmail');
         alertUser('loginPass');
