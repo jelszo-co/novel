@@ -1,9 +1,9 @@
-@import "../variables";
+@import '../variables';
 #menu-btn {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-family: "Forum", serif;
+  font-family: 'Forum', serif;
   font-size: 1.6rem;
   cursor: pointer;
   background: none;
@@ -26,6 +26,7 @@
   right: 20px;
   list-style: none;
   z-index: 9000;
+  background: $bg;
   @media #{$mq-phone} {
     background: $bg;
     height: 100%;
@@ -35,7 +36,7 @@
   li {
     text-align: right;
     font-size: 2rem;
-    font-family: "Forum", serif;
+    font-family: 'Forum', serif;
     margin: 8pt 0;
     @media #{$mq-phone} {
       background: $bg;
@@ -46,7 +47,7 @@
     button {
       background: none;
       border: none;
-      font-family: "Forum", serif;
+      font-family: 'Forum', serif;
       font-size: 1.8rem;
       padding: 0;
       text-transform: uppercase;
