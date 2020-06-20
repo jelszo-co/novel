@@ -133,7 +133,7 @@
     "err_admin_not_doc": "A novellát .doc vagy .docx fájlként töltsd fel.",
     "err_admin_upload_novel": "Hiba a novella feltöltése közben.",
 
-    "succes_login": "Sikeres bejelentkezés.",
-    "succes_logout": "Sikeres Kijelentkezés."
+    "success_login": "Sikeres bejelentkezés.",
+    "success_logout": "Sikeres Kijelentkezés."
   }
 }

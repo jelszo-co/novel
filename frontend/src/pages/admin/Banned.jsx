@@ -26,7 +26,7 @@ const Banned = ({ setPopup, history }) => {
         console.error(err);
         setPopup(t('err_admin_block_users'), 'err');
       });
-  }, [setPopup]);
+  }, [setPopup, t]);
   return (
     <>
       <button onClick={() => history.goBack()} className='banned-back'>
@@ -41,7 +41,12 @@ const Banned = ({ setPopup, history }) => {
                 <button
                   onClick={() => {
                     axios
-                      .post(process.env.REACT_APP_SRV_ADDR + '/comment/user/' + id + '/unban/')
+                      .post(
+                        process.env.REACT_APP_SRV_ADDR +
+                          '/comment/user/' +
+                          id +
+                          '/unban/',
+                      )
                       .then(res => setBanned(res.data))
                       .catch(err => {
                         console.error(err);

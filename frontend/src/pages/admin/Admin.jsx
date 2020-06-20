@@ -23,6 +23,7 @@ import ripple from '../../assets/ripple.gif';
 import '../../css/admin/admin.scss';
 
 const Admin = ({ user: { role }, setPopup, getNovels }) => {
+  const { t } = useTranslation();
   const [comments, setComments] = useState([]);
   const [banned, setBanned] = useState([]);
   const getBanned = useCallback(() => {
@@ -33,7 +34,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         console.error(err);
         setPopup(t('err_admin_block_users'), 'err');
       });
-  }, [setPopup]);
+  }, [setPopup, t]);
   useEffect(() => {
     axios
       .get(process.env.REACT_APP_SRV_ADDR + '/comment/recent')
@@ -43,9 +44,8 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         setPopup(t('err_admin_load_comments'), 'err');
       });
     getBanned();
-  }, [setPopup, getBanned]);
+  }, [setPopup, getBanned, t]);
 
-  const { t } = useTranslation();
   if (role !== 'admin') return <Redirect to='/login' />;
   return (
     <div id='admin'>
@@ -90,9 +90,15 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
                 <button
                   onClick={() => {
                     axios
-                      .post(process.env.REACT_APP_SRV_ADDR + '/comment/user/' + id + '/unban/', {
-                        id,
-                      })
+                      .post(
+                        process.env.REACT_APP_SRV_ADDR +
+                          '/comment/user/' +
+                          id +
+                          '/unban/',
+                        {
+                          id,
+                        },
+                      )
                       .then(res => setBanned(res.data))
                       .catch(err => {
                         console.error(err);
@@ -118,7 +124,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
           onClick={() =>
             auth()
               .signOut()
-              .then(setPopup(t('succes_logout')))
+              .then(setPopup(t('success_logout')))
           }
         >
           {t('profile_logout')}
@@ -155,11 +161,15 @@ const Uploader = ({ setPopup, getNovels }) => {
   const onDrop = async files => {
     try {
       if (files.length > 1) return setPopup(t('err_admin_one_novel'), 'err');
-      if (!/(.doc|.docx)/i.test(files[0].name)) return setPopup(t('err_admin_not_doc'), 'err');
+      if (!/(.doc|.docx)/i.test(files[0].name))
+        return setPopup(t('err_admin_not_doc'), 'err');
       increment();
       const data = new FormData();
       data.append('noveldoc', files[0]);
-      const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/novel/new`, data);
+      const res = await axios.post(
+        `${process.env.REACT_APP_SRV_ADDR}/novel/new`,
+        data,
+      );
       setNovelData({ ...novelData, ...res.data });
       console.log({ ...novelData, ...res.data });
       increment();
@@ -184,7 +194,11 @@ const Uploader = ({ setPopup, getNovels }) => {
       component = (
         <div {...getRootProps({ className: 'uploader-zone' })}>
           <input {...getInputProps()} />
-          {isDragActive ? <p>{t('upload_dropzone_active')}</p> : <p>{t('upload_dropzone_hint')}</p>}
+          {isDragActive ? (
+            <p>{t('upload_dropzone_active')}</p>
+          ) : (
+            <p>{t('upload_dropzone_hint')}</p>
+          )}
         </div>
       );
       break;
@@ -234,7 +248,9 @@ const Uploader = ({ setPopup, getNovels }) => {
             type='text'
             value={title}
             placeholder={t('title_hint')}
-            onChange={({ target }) => setNovelData({ ...novelData, title: target.value })}
+            onChange={({ target }) =>
+              setNovelData({ ...novelData, title: target.value })
+            }
           />
           <div className='icon'>
             <Word />
@@ -250,10 +266,13 @@ const Uploader = ({ setPopup, getNovels }) => {
           className='novel-params'
           onSubmit={async e => {
             e.preventDefault();
-            await axios.patch(process.env.REACT_APP_SRV_ADDR + '/novel/' + path, {
-              ...novelData,
-              private: false,
-            });
+            await axios.patch(
+              process.env.REACT_APP_SRV_ADDR + '/novel/' + path,
+              {
+                ...novelData,
+                private: false,
+              },
+            );
             increment();
             getNovels();
             setTimeout(() => {
@@ -269,7 +288,9 @@ const Uploader = ({ setPopup, getNovels }) => {
             value={lore}
             placeholder={t('description_hint')}
             spellCheck='false'
-            onChange={({ target }) => setNovelData({ ...novelData, lore: target.value })}
+            onChange={({ target }) =>
+              setNovelData({ ...novelData, lore: target.value })
+            }
           />
           <div className='icon'>
             <Word />

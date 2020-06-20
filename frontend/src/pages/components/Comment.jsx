@@ -19,7 +19,6 @@ import { setPopup } from '../../actions/popup';
 
 import '../../css/components/comment.scss';
 import { auth } from '../../firebase';
-import { plugToRequest } from 'react-cookies';
 
 const Comment = ({
   isReply = false,
