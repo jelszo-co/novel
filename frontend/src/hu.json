@@ -145,7 +145,7 @@
     "success_logout": "Sikeres Kijelentkezés.",
     "success_save": "Sikeres mentés!",
     "success_email_send": "Email sikeresen elküldve.",
-    "success_acc_delete": "Hiba a felhasználó törlése közben.",
+    "success_acc_delete": "Fiók sikeresen törölve.",
     "success_update_pass": "Jelszó sikeresen frissítve.",
     "success_update_email": "E-mail sikeresen frissítve."
   }

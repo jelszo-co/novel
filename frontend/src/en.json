@@ -3,6 +3,7 @@
     "locale_name": "en",
     "cancel": "Cancel",
     "delete": "Delete",
+    "deleted": "Deleted.",
     "back": "Back",
     "save": "Save",
     "discard": "Discard",
@@ -114,12 +115,19 @@
     "err_send_response": "An error has occurred while sending the comment.",
     "err_like_login": "You must be logged in to like a message.",
     "err_like_comment": "An error has occurred while liking this comment.",
+    "err_fav_novel": "An error occured during adding novel to favourites.",
     "err_del_comment": "An error has occurred while deleting this comment.",
     "err_del_comments": "An error has occurred while deleting these comments.",
     "err_block_user": "An error has occurred while blocking the user.",
     "err_send_comment": "An error has occurred while sending the message.",
     "err_del_novel": "An error has occurred while deleting the novel.",
     "err_save_novel": "An error has occurred while saving the novel.",
+    "err_email_send": "Couldn't send e-mail.",
+    "err_acc_delete": "Acccount deleted successfully.",
+    "err_link_expired": "The link has expired.",
+    "err_link_damaged": "Faulty link!",
+    "err_update_email": "An error occured during changing the e-mail.",
+    "err_update_pass": "An error occured during changing the password.",
 
     "err_login": "An error has occurred while logging in.",
     "err_register": "An error has occurred while signing up.",
@@ -134,6 +142,11 @@
     "err_admin_upload_novel": "An error has occurred while uploading the novel.",
 
     "success_login": "Successfully logged in.",
-    "success_logout": "Successfully logged out."
+    "success_logout": "Successfully logged out.",
+    "success_save": "Saved successfully!",
+    "success_email_send": "Email sent successfully.",
+    "success_acc_delete": "Account deleted successfully.",
+    "success_update_pass": "Password updated successfully.",
+    "success_update_email": "E-mail updated successfully."
   }
 }
