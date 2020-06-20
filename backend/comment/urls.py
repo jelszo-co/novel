@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from comment.views import CommentByPath, DeleteCommentById, ReplyComment, LikeComment, Ban, Unban, Recent
+from comment.views import CommentByPath, DeleteCommentById, ReplyComment, LikeComment, Ban, Unban, Recent, DeleteAll
 
 byId = [
     path('', DeleteCommentById.as_view()),
@@ -10,7 +10,8 @@ byId = [
 
 byUId = [
     path('ban/', Ban.as_view()),
-    path('unban/', Unban.as_view())
+    path('unban/', Unban.as_view()),
+    path('deleteall/', DeleteAll.as_view())
 ]
 
 urlpatterns = [

@@ -187,3 +187,13 @@ class Recent(View):
             })
 
         return JsonResponse(resp, safe=False)
+
+
+class DeleteAll(View):
+    @method_decorator(get_user_by_id)
+    @method_decorator(permission_needed(lambda request: not request.fb_user.isAdmin,
+                                        'Log in to do this',
+                                        'You are not admin'))
+    def delete(self, request, *args, **kwargs):
+        Comment.objects.filter(sender=request.fb_user_byId).delete()
+        return JsonResponse({"success": "Deleted successfully"})
