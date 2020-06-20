@@ -57,13 +57,13 @@ const UpdatePass = ({ setPopup, history }) => {
       );
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPass);
-      setPopup('Jelszó sikeresen frissítve.');
+      setPopup(t('success_update_pass'));
       history.goBack();
     } catch (err) {
       if (err.code === 'auth/wrong-password') {
         alertUser('password');
       } else {
-        setPopup('Hiba az email megváltoztatása közben.', 'err');
+        setPopup(t('err_update_pass'), 'err');
         console.error(err);
       }
     }

@@ -48,13 +48,13 @@ const UpdateEmail = ({ setPopup, history }) => {
       const credential = auth.EmailAuthProvider.credential(user.email, pass);
       await user.reauthenticateWithCredential(credential);
       await user.updateEmail(email);
-      setPopup('E-mail sikeresen frissítve.');
+      setPopup(t('success_update_email'));
       history.goBack();
     } catch (err) {
       if (err.code === 'auth/wrong-password') {
         alertUser('password');
       } else {
-        setPopup('Hiba az email megváltoztatása közben.', 'err');
+        setPopup(t('err_update_email'), 'err');
         console.error(err);
       }
     }

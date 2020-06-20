@@ -3,6 +3,7 @@
     "locale_name": "hu",
     "cancel": "Mégse",
     "delete": "Törlés",
+    "deleted": "Törölve.",
     "back": "Vissza",
     "save": "Mentés",
     "discard": "Elvetés",
@@ -54,7 +55,6 @@
 
     "forgot_button": "Elfelejtett jelszó?",
     "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
-    "success": "Siker!",
 
     "fav_popup": "A kedvencekhez adáshoz kérlek jelentkezz be.",
     "del_popup": "Biztosan törlöd?",
@@ -114,12 +114,19 @@
     "err_send_response": "Hiba a válasz elküldése közben.",
     "err_like_login": "Kérlek jelentkezz be a komment kedveléséhez.",
     "err_like_comment": "Hiba a komment kedvelése közben.",
+    "err_fav_novel": "Hiba a novella kedvencekhez adása közben.",
     "err_del_comment": "Hiba a komment törlése közben.",
     "err_del_comments": "Hiba a kommentek törlése közben.",
     "err_block_user": "Hiba a felhasználó tiltása közben.",
     "err_send_comment": "Hiba a komment elküldése közben.",
     "err_del_novel": "Hiba a novella törlése közben.",
     "err_save_novel": "Hiba a novella mentése közben.",
+    "err_email_send": "Hiba az email elküldése közben.",
+    "err_acc_delete": "Fiók siekresen törölve.",
+    "err_link_expired": "A link lejárt.",
+    "err_link_damaged": "Hibás link!",
+    "err_update_email": "Hiba az email megváltoztatása közben.",
+    "err_update_pass": "Hiba a jelszó megváltoztatása közben.",
 
     "err_login": "Hiba a bejelentkezés során.",
     "err_register": "Hiba a regisztráció során.",
@@ -133,7 +140,13 @@
     "err_admin_not_doc": "A novellát .doc vagy .docx fájlként töltsd fel.",
     "err_admin_upload_novel": "Hiba a novella feltöltése közben.",
 
+    "success": "Siker!",
     "success_login": "Sikeres bejelentkezés.",
-    "success_logout": "Sikeres Kijelentkezés."
+    "success_logout": "Sikeres Kijelentkezés.",
+    "success_save": "Sikeres mentés!",
+    "success_email_send": "Email sikeresen elküldve.",
+    "success_acc_delete": "Hiba a felhasználó törlése közben.",
+    "success_update_pass": "Jelszó sikeresen frissítve.",
+    "success_update_email": "E-mail sikeresen frissítve."
   }
 }

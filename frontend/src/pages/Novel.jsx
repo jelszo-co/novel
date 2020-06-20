@@ -121,7 +121,7 @@ const Novel = ({
         setNovel({ ...novel, favorite: res.data.favorite });
       } catch (err) {
         console.error(err);
-        setPopup('Hiba!', 'err');
+        setPopup(t('err_fav_novel'), 'err');
       }
     }
   };
@@ -132,7 +132,7 @@ const Novel = ({
         await axios.delete(
           `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`,
         );
-        setPopup('Törölve.');
+        setPopup(t('deleted'));
         getNovels();
         history.push('/list');
       } catch (err) {
@@ -157,7 +157,7 @@ const Novel = ({
         content: res.data.content,
       });
       setEditMode(false);
-      setPopup('Sikeres mentés!');
+      setPopup(t('success_save'));
       setRedirect(res.data.path);
     } catch (err) {
       console.error(err);

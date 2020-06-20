@@ -28,10 +28,10 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   const sendEmail = async () => {
     try {
       await fUser.sendEmailVerification();
-      setPopup('Email sikeresen elküldve.');
+      setPopup(t('success_email_send'));
     } catch (err) {
       console.error(err);
-      setPopup('Hiba az email küldése közben.', 'err');
+      setPopup(t('err_email_send'), 'err');
     }
   };
 
@@ -93,7 +93,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
               type='button'
               onClick={() => {
                 auth().signOut();
-                setPopup('Sikeres kijelentkezés.');
+                setPopup(t('success_logout'));
               }}
             >
               {t('profile_logout')}

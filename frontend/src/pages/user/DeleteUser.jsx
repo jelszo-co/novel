@@ -37,13 +37,13 @@ const DeleteUser = ({ setPopup, history }) => {
       await user.delete();
       await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/user/`);
       cookie.remove('usertoken');
-      setPopup('Fiók sikeresen törölve.');
+      setPopup(t('err_acc_delete'));
     } catch (err) {
       if (err.code === 'auth/wrong-password') {
         alertUser();
       } else {
         console.error(err);
-        setPopup('Hiba a felhasználó törlése közben.', 'err');
+        setPopup(t('success_acc_delete'), 'err');
       }
     }
     return null;

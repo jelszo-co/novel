@@ -54,19 +54,19 @@ const ResetPass = ({ setPopup, history }) => {
         sessionStorage.getItem('oobCode'),
         newPass1,
       );
-      setPopup('Jelszó sikeresen frissítve.');
+      setPopup(t('success_update_pass'));
       sessionStorage.clear();
       history.push('/login');
     } catch (err) {
       switch (err.code) {
         case 'auth/expired-action-code':
-          setPopup('A link lejárt.', 'err');
+          setPopup(t('err_link_expired'), 'err');
           break;
         case 'auth/invalid-action-code':
-          setPopup('Hibás link!', 'err');
+          setPopup(t('err_link_damaged'), 'err');
           break;
         default:
-          setPopup('Hiba az email megváltoztatása közben.', 'err');
+          setPopup(t('err_update_pass'), 'err');
           console.error(err);
           break;
       }
