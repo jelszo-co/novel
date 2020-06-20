@@ -6,7 +6,7 @@ export const loadUser = firebaseUser => async dispatch => {
   const { name, stranger, anonim, authenticated, admin } = res.data;
   let role;
   if (stranger) {
-    role = 'admin'; // TODO Change back to 'stranger'
+    role = 'stranger';
   }
   if (anonim) {
     role = 'anonymous';

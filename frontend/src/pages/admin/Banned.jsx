@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +21,7 @@ const Banned = ({ setPopup, history }) => {
   ]);
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_SRV_ADDR + '/banned')
+      .get(`${process.env.REACT_APP_SRV_ADDR}/banned`)
       .then(res => setBanned(res.data))
       .catch(err => {
         console.error(err);
@@ -29,7 +30,11 @@ const Banned = ({ setPopup, history }) => {
   }, [setPopup, t]);
   return (
     <>
-      <button onClick={() => history.goBack()} className='banned-back'>
+      <button
+        type='button'
+        onClick={() => history.goBack()}
+        className='banned-back'
+      >
         {t('back')}
       </button>
       <Title>{t('admin_banned_title')}</Title>
@@ -39,13 +44,11 @@ const Banned = ({ setPopup, history }) => {
               <p key={id}>
                 {name}
                 <button
+                  type='button'
                   onClick={() => {
                     axios
                       .post(
-                        process.env.REACT_APP_SRV_ADDR +
-                          '/comment/user/' +
-                          id +
-                          '/unban/',
+                        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${id}/unban/`,
                       )
                       .then(res => setBanned(res.data))
                       .catch(err => {
@@ -62,6 +65,11 @@ const Banned = ({ setPopup, history }) => {
       </div>
     </>
   );
+};
+
+Banned.propTypes = {
+  setPopup: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(Banned));

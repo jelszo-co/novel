@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import Title from '../components/Title';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { auth } from '../../firebase';
 import { useTranslation } from 'react-i18next';
+
 import { setPopup } from '../../actions/popup';
+import { auth } from '../../firebase';
+
+import Title from '../components/Title';
 
 import '../../css/user/smallForms.scss';
 
@@ -41,7 +44,7 @@ const UpdatePass = ({ setPopup, history }) => {
       if (currentPass === '') alertUser('current-pass');
       if (newPass === '') alertUser('new-pass');
       if (!valid.case || !valid.length || !valid.num) alertUser('new-pass');
-      return;
+      return null;
     }
     if (!valid.case || !valid.length || !valid.num)
       return alertUser('new-pass');
@@ -64,11 +67,12 @@ const UpdatePass = ({ setPopup, history }) => {
         console.error(err);
       }
     }
+    return null;
   };
 
   return (
     <div id='small-form'>
-      <button onClick={() => history.goBack()} className='back'>
+      <button type='button' onClick={() => history.goBack()} className='back'>
         {t('back')}
       </button>
       <Title>{t('update_pass_title')}</Title>
@@ -150,6 +154,11 @@ const UpdatePass = ({ setPopup, history }) => {
       </form>
     </div>
   );
+};
+
+UpdatePass.propTypes = {
+  setPopup: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(UpdatePass));

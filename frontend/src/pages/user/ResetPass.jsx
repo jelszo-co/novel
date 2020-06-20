@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import Title from '../components/Title';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { auth } from '../../firebase';
 import { useTranslation } from 'react-i18next';
+
+import { auth } from '../../firebase';
 import { setPopup } from '../../actions/popup';
+
+import Title from '../components/Title';
 
 import '../../css/user/smallForms.scss';
 
@@ -41,7 +44,7 @@ const ResetPass = ({ setPopup, history }) => {
       if (newPass1 === '') alertUser('new-pass-1');
       if (newPass2 === '') alertUser('new-pass-2');
       if (!valid.case || !valid.length || !valid.num) alertUser('new-pass-1');
-      return;
+      return null;
     }
     if (!valid.case || !valid.length || !valid.num)
       return alertUser('new-pass-1');
@@ -68,6 +71,7 @@ const ResetPass = ({ setPopup, history }) => {
           break;
       }
     }
+    return null;
   };
 
   return (
@@ -154,6 +158,11 @@ const ResetPass = ({ setPopup, history }) => {
       </form>
     </div>
   );
+};
+
+ResetPass.propTypes = {
+  setPopup: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(ResetPass));

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { auth } from '../../firebase';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import cookie from 'react-cookies';
 
 import { setPopup } from '../../actions/popup';
-import axios from 'axios';
+import { auth } from '../../firebase';
 
 import Title from '../components/Title';
 
 import '../../css/user/deleteUser.scss';
-import cookie from 'react-cookies';
 
 const DeleteUser = ({ setPopup, history }) => {
   const { t } = useTranslation();
@@ -34,7 +35,7 @@ const DeleteUser = ({ setPopup, history }) => {
       const credential = auth.EmailAuthProvider.credential(user.email, pass);
       await user.reauthenticateWithCredential(credential);
       await user.delete();
-      await axios.delete(process.env.REACT_APP_SRV_ADDR + '/user/');
+      await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/user/`);
       cookie.remove('usertoken');
       setPopup('Fiók sikeresen törölve.');
     } catch (err) {
@@ -45,11 +46,12 @@ const DeleteUser = ({ setPopup, history }) => {
         setPopup('Hiba a felhasználó törlése közben.', 'err');
       }
     }
+    return null;
   };
 
   return (
     <div id='delete'>
-      <button onClick={() => history.goBack()} className='back'>
+      <button type='button' onClick={() => history.goBack()} className='back'>
         {t('back')}
       </button>
       <Title>{t('delete_title')}</Title>
@@ -67,6 +69,11 @@ const DeleteUser = ({ setPopup, history }) => {
       </form>
     </div>
   );
+};
+
+DeleteUser.propTypes = {
+  setPopup: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(DeleteUser));

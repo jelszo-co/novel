@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
+import i18next from 'i18next';
 import { auth, GProvider, FProvider } from '../firebase';
 import { setPopup } from '../actions/popup';
 
@@ -16,7 +18,6 @@ import { ReactComponent as Eye } from '../assets/pass_eye.svg';
 import { ReactComponent as EyeCross } from '../assets/pass_eye_cross.svg';
 
 import '../css/all/login.scss';
-import i18next from 'i18next';
 
 const Login = ({ user, setPopup }) => {
   // STATE
@@ -99,6 +100,7 @@ const Login = ({ user, setPopup }) => {
       console.error(err);
       setPopup(t('err_register'), 'err');
     }
+    return null;
   };
 
   const handleGoogle = async () => {
@@ -308,7 +310,9 @@ const Login = ({ user, setPopup }) => {
 
         <form
           id='login-form'
-          onSubmit={e => (resetState === 'login' ? handleLogin(e) : handleForgot(e))}
+          onSubmit={e =>
+            resetState === 'login' ? handleLogin(e) : handleForgot(e)
+          }
           noValidate
         >
           <h3 className='form-title'>{t('form_login_title')}</h3>
@@ -393,6 +397,14 @@ const Login = ({ user, setPopup }) => {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  user: PropTypes.shape({
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
+      .isRequired,
+  }).isRequired,
+  setPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

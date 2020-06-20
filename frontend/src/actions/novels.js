@@ -20,11 +20,12 @@ export const getNovels = () => async dispatch => {
 };
 
 export const getNovel = (title, callback = () => {}) => async dispatch => {
-  let novel, comments;
+  let novel;
+  let comments;
   try {
     [novel, comments] = await Promise.all([
-      axios.get(process.env.REACT_APP_SRV_ADDR + '/novel/' + title),
-      axios.get(process.env.REACT_APP_SRV_ADDR + '/comment/path/' + title),
+      axios.get(`${process.env.REACT_APP_SRV_ADDR}/novel/${title}`),
+      axios.get(`${process.env.REACT_APP_SRV_ADDR}/comment/path/${title}`),
     ]);
   } catch (err) {
     if (err.response && err.response.status === 404) {
@@ -36,16 +37,14 @@ export const getNovel = (title, callback = () => {}) => async dispatch => {
 
   await dispatch({ type: SET_NOVEL, payload: novel.data });
   await dispatch({ type: SET_COMMENTS, payload: comments.data });
-  callback(novel.data);
+  return callback(novel.data);
 };
 
-export const setNovel = novel => async dispatch => {
+export const setNovel = novel => async dispatch =>
   dispatch({ type: SET_NOVEL, payload: novel });
-};
 
-export const setComments = comments => async dispatch => {
+export const setComments = comments => async dispatch =>
   dispatch({ type: SET_COMMENTS, payload: comments });
-};
 
 export const clearNovel = () => async dispatch =>
   dispatch({ type: CLEAR_NOVEL });

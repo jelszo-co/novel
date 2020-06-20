@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import Title from '../components/Title';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { auth } from '../../firebase';
 import { useTranslation } from 'react-i18next';
-import { setPopup } from '../../actions/popup';
 import axios from 'axios';
+
+import { auth } from '../../firebase';
+import { setPopup } from '../../actions/popup';
+
+import Title from '../components/Title';
 
 import '../../css/user/smallForms.scss';
 
@@ -34,7 +37,7 @@ const UpdateEmail = ({ setPopup, history }) => {
       if (email === '') alertUser('email');
       if (!email.match(emailPatt)) alertUser('email');
       if (pass === '') alertUser('password');
-      return;
+      return null;
     }
     if (!email.match(emailPatt)) return alertUser('email');
     const user = auth().currentUser;
@@ -55,11 +58,12 @@ const UpdateEmail = ({ setPopup, history }) => {
         console.error(err);
       }
     }
+    return null;
   };
 
   return (
     <div id='small-form'>
-      <button onClick={() => history.goBack()} className='back'>
+      <button type='button' onClick={() => history.goBack()} className='back'>
         {t('back')}
       </button>
       <Title>{t('update_email_title')}</Title>
@@ -101,6 +105,11 @@ const UpdateEmail = ({ setPopup, history }) => {
       </form>
     </div>
   );
+};
+
+UpdateEmail.propTypes = {
+  setPopup: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(UpdateEmail));

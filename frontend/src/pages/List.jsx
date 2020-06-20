@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -103,6 +104,13 @@ const List = ({ novels: { loading, list } }) => {
       </div>
     )
   );
+};
+
+List.propTypes = {
+  novels: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    list: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

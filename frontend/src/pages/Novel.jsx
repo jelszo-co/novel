@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -17,7 +18,13 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
-import { getNovel, setNovel, setComments, clearNovel, getNovels } from '../actions/novels';
+import {
+  getNovel,
+  setNovel,
+  setComments,
+  clearNovel,
+  getNovels,
+} from '../actions/novels';
 
 import '../css/all/novel.scss';
 
@@ -50,7 +57,9 @@ const Novel = ({
   const setEditData = gibberish => {
     const replacement = gibberish.content
       .split('\n')
-      .map((item, i) => (gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`));
+      .map((item, i) =>
+        gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`,
+      );
 
     return setModifiedEditData({
       content: replacement,
@@ -83,6 +92,7 @@ const Novel = ({
         setPopup(t('err_send_comment'), 'err');
       }
     }
+    return null;
   };
 
   const handleDeauthComment = async () => {
@@ -119,7 +129,9 @@ const Novel = ({
   const handleDelete = async () => {
     if (document.querySelector('.admin-delete-confirm').style.opacity === '1') {
       try {
-        await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`);
+        await axios.delete(
+          `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`,
+        );
         setPopup('Törölve.');
         getNovels();
         history.push('/list');
@@ -171,7 +183,9 @@ const Novel = ({
         type='button'
         className='novel-back'
         onClick={() =>
-          editMode ? window.confirm(t('alert_editing')) && history.goBack() : history.goBack()
+          editMode
+            ? window.confirm(t('alert_editing')) && history.goBack()
+            : history.goBack()
         }
       >
         {t('back')}
@@ -201,13 +215,20 @@ const Novel = ({
                   <Trash />
                 </button>
               </div>
-              <div className='admin-delete-confirm' style={{ opacity: delPopup ? 1 : 0 }}>
+              <div
+                className='admin-delete-confirm'
+                style={{ opacity: delPopup ? 1 : 0 }}
+              >
                 <span />
                 {t('del_popup')}
                 <button type='button' onClick={() => setDelPopup(false)}>
                   {t('cancel')}
                 </button>
-                <button type='button' className='delete' onClick={() => handleDelete()}>
+                <button
+                  type='button'
+                  className='delete'
+                  onClick={() => handleDelete()}
+                >
                   {t('delete')}
                 </button>
               </div>
@@ -219,6 +240,7 @@ const Novel = ({
                 onClick={() => handleFavorite()}
                 onKeyDown={() => handleFavorite()}
                 role='button'
+                tabIndex={0}
               >
                 {favorite ? <StarFull /> : <StarEmpty />}
               </div>
@@ -230,7 +252,11 @@ const Novel = ({
             </>
           )}
         </h2>
-        <Moment format='YYYY. MMMM DD.' locale={t('locale_name')} className='novel-date'>
+        <Moment
+          format='YYYY. MMMM DD.'
+          locale={t('locale_name')}
+          className='novel-date'
+        >
           {uploadedAt}
         </Moment>
       </div>
@@ -307,11 +333,39 @@ const Novel = ({
           />
         </form>
         {comments.map(comment => (
-          <Comment key={comment.id} comment={comment} handleDeauthComment={handleDeauthComment} />
+          <Comment
+            key={comment.id}
+            comment={comment}
+            handleDeauthComment={handleDeauthComment}
+          />
         ))}
       </div>
     </div>
   );
+};
+
+Novel.propTypes = {
+  match: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
+      .isRequired,
+  }).isRequired,
+  loading: PropTypes.bool.isRequired,
+  novel: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    favorite: PropTypes.bool.isRequired,
+    uploadedAt: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    error: PropTypes.bool,
+  }).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.object.isRequired,
+  setPopup: PropTypes.func.isRequired,
+  getNovel: PropTypes.func.isRequired,
+  getNovels: PropTypes.func.isRequired,
+  setNovel: PropTypes.func.isRequired,
+  setComments: PropTypes.func.isRequired,
+  clearNovel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

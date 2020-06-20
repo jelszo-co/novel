@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -45,7 +46,7 @@ const Comment = ({
 }) => {
   const { t } = useTranslation();
   let replyBar = useRef();
-  let commentWrapper = useRef(null);
+  const commentWrapper = useRef(null);
   let replyInput = useRef();
   const [height, setHeight] = useState('');
   let [replyState, setReplyState] = useState(true);
@@ -107,11 +108,12 @@ const Comment = ({
       console.error(err);
       setPopup(t('err_like_comment'), 'err');
     }
+    return null;
   };
 
   const commentSender = sender;
   const commentId = id;
-  const fader = document.querySelectorAll('.fader-' + commentId);
+  const fader = document.querySelectorAll(`.fader-${commentId}`);
 
   const deleteComment = async (cId = id) => {
     try {
@@ -288,10 +290,18 @@ const Comment = ({
             </button>
             {role === 'admin' && (
               <>
-                <button className='admin-btn' onClick={() => deleteComment()}>
+                <button
+                  type='button'
+                  className='admin-btn'
+                  onClick={() => deleteComment()}
+                >
                   <Cross />
                 </button>
-                <button className='admin-btn' onClick={() => banUser()}>
+                <button
+                  type='button'
+                  className='admin-btn'
+                  onClick={() => banUser()}
+                >
                   <Ban className='ban' />
                 </button>
               </>
@@ -362,6 +372,43 @@ const Comment = ({
         </div>
       );
   }
+};
+
+Comment.defaultProps = {
+  isReply: false,
+  cascadedReplyBar: null,
+  cascadedReplyState: null,
+  cascadedSetReplyState: null,
+  cascadedReplyInput: null,
+};
+
+Comment.propTypes = {
+  isReply: PropTypes.bool,
+  comment: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    sender: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    writtenAt: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    likedByMe: PropTypes.bool.isRequired,
+    recipient: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    content: PropTypes.string.isRequired,
+    replies: PropTypes.arrayOf(PropTypes.object),
+    isYou: PropTypes.bool.isRequired,
+    isAdmin: PropTypes.bool.isRequired,
+  }).isRequired,
+  role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
+  cascadedReplyBar: PropTypes.any,
+  cascadedReplyState: PropTypes.any,
+  cascadedSetReplyState: PropTypes.any,
+  cascadedReplyInput: PropTypes.any,
+  handleDeauthComment: PropTypes.func.isRequired,
+  setComments: PropTypes.func.isRequired,
+  setPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

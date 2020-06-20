@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 import Title from '../components/Title';
 import Menu from '../components/Menu';
@@ -11,7 +12,6 @@ import { setPopup } from '../../actions/popup';
 import { auth } from '../../firebase';
 
 import '../../css/user/profile.scss';
-import axios from 'axios';
 
 const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_SRV_ADDR + '/novel/favorites')
+      .get(`${process.env.REACT_APP_SRV_ADDR}/novel/favorites`)
       .then(res => setFavs(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -90,6 +90,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
           </div>
           <div className='col-item col-item-right'>
             <button
+              type='button'
               onClick={() => {
                 auth().signOut();
                 setPopup('Sikeres kijelentkezés.');
@@ -107,8 +108,17 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
 };
 
 Profile.propTypes = {
-  user: PropTypes.object.isRequired,
   setPopup: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
+      .isRequired,
+    fUser: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      emailVerified: PropTypes.bool.isRequired,
+      sendEmailVerification: PropTypes.func.isRequired,
+    }),
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

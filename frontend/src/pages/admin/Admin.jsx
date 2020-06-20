@@ -28,7 +28,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
   const [banned, setBanned] = useState([]);
   const getBanned = useCallback(() => {
     axios
-      .get(process.env.REACT_APP_SRV_ADDR + '/banned')
+      .get(`${process.env.REACT_APP_SRV_ADDR}/banned`)
       .then(res => setBanned(res.data))
       .catch(err => {
         console.error(err);
@@ -37,7 +37,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
   }, [setPopup, t]);
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_SRV_ADDR + '/comment/recent')
+      .get(`${process.env.REACT_APP_SRV_ADDR}/comment/recent`)
       .then(res => setComments(res.data))
       .catch(err => {
         console.error(err);
@@ -58,7 +58,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
             <div key={novel.path} className='comment-wrapper'>
               <h3>
                 {novel.title}
-                <Link to={'/novels/' + novel.path}>
+                <Link to={`/novels/${novel.path}`}>
                   <Reply />
                 </Link>
               </h3>
@@ -88,13 +88,11 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
             <div className='banned-card' key={id}>
               <p>
                 <button
+                  type='button'
                   onClick={() => {
                     axios
                       .post(
-                        process.env.REACT_APP_SRV_ADDR +
-                          '/comment/user/' +
-                          id +
-                          '/unban/',
+                        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${id}/unban/`,
                         {
                           id,
                         },
@@ -121,6 +119,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         <Link to='/update-email'>{t('admin_account_email')}</Link>
         <Link to='/update-pass'>{t('admin_account_pass')}</Link>
         <button
+          type='button'
           onClick={() =>
             auth()
               .signOut()
@@ -178,6 +177,7 @@ const Uploader = ({ setPopup, getNovels }) => {
       setPopup(t('err_admin_upload_novel'), 'err');
       setPhase(0);
     }
+    return null;
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -267,7 +267,7 @@ const Uploader = ({ setPopup, getNovels }) => {
           onSubmit={async e => {
             e.preventDefault();
             await axios.patch(
-              process.env.REACT_APP_SRV_ADDR + '/novel/' + path,
+              `${process.env.REACT_APP_SRV_ADDR}/novel/${path}`,
               {
                 ...novelData,
                 private: false,
@@ -319,8 +319,18 @@ const Uploader = ({ setPopup, getNovels }) => {
   );
 };
 
+Uploader.propTypes = {
+  setPopup: PropTypes.func.isRequired,
+  getNovels: PropTypes.func.isRequired,
+};
+
 Admin.propTypes = {
-  user: PropTypes.object.isRequired,
+  setPopup: PropTypes.func.isRequired,
+  getNovels: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
+      .isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

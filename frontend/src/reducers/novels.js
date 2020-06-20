@@ -5,6 +5,7 @@ import {
   NOVEL_ERROR,
   CLEAR_NOVEL,
 } from '../actions/types';
+
 const initialState = {
   list: {},
   loading: true,

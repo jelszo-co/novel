@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import cookie from 'react-cookies';
 import i18next from 'i18next';
 import axios from 'axios';
@@ -8,7 +10,6 @@ import axios from 'axios';
 import { ReactComponent as Google } from '../../assets/google.svg';
 import { ReactComponent as FB } from '../../assets/facebook.svg';
 import { ReactComponent as Mail } from '../../assets/mail.svg';
-import { useTranslation } from 'react-i18next';
 
 import { auth, GProvider, FProvider } from '../../firebase';
 
@@ -54,7 +55,10 @@ const CommentAuth = ({
   };
 
   return (
-    <div style={style} className={`comment-auth-wrapper comment-auth-wrapper-${lineDir}`}>
+    <div
+      style={style}
+      className={`comment-auth-wrapper comment-auth-wrapper-${lineDir}`}
+    >
       <span className='comment-auth-line' />
       <div className='comment-auth'>
         <button type='button' onClick={() => handleGoogle()}>
@@ -89,5 +93,18 @@ const CommentAuth = ({
 const mapStateToProps = state => ({
   role: state.user.role,
 });
+
+CommentAuth.defaultProps = {
+  lineDir: 'left',
+  callBack: () => {},
+};
+
+CommentAuth.propTypes = {
+  lineDir: PropTypes.string,
+  style: PropTypes.object.isRequired,
+  handleDeauthComment: PropTypes.func.isRequired,
+  setPopup: PropTypes.func.isRequired,
+  callBack: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { setPopup })(CommentAuth);
