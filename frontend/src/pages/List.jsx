@@ -109,7 +109,7 @@ const List = ({ novels: { loading, list } }) => {
 List.propTypes = {
   novels: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    list: PropTypes.arrayOf(PropTypes.object),
+    list: PropTypes.object.isRequired,
   }).isRequired,
 };
 

@@ -34,7 +34,6 @@ const Comment = ({
     replies,
   },
   role,
-  handleDeauthComment,
   setComments,
   setPopup,
   cascadedReplyBar,
@@ -93,6 +92,24 @@ const Comment = ({
         }
       }
     }
+  };
+
+  const handleDeauthReply = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`,
+        {
+          content: reply,
+          recipient: sender.id,
+        },
+      );
+      setComments(res.data);
+      setReply('');
+    } catch (err) {
+      console.error(err);
+      setPopup(t('err_send_comment'), 'err');
+    }
+    return setReplyPopup(false);
   };
 
   const handleLike = async () => {
@@ -351,7 +368,7 @@ const Comment = ({
               </button>
               <CommentAuth
                 lineDir='left'
-                handleDeauthComment={handleDeauthComment}
+                handleDeauthComment={handleDeauthReply}
                 style={{
                   opacity: replyPopup ? 1 : 0,
                   pointerEvents: replyPopup ? 'all' : 'none',
@@ -395,7 +412,7 @@ Comment.propTypes = {
     likedByMe: PropTypes.bool.isRequired,
     recipient: PropTypes.shape({
       name: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
     content: PropTypes.string.isRequired,
     replies: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
@@ -404,8 +421,7 @@ Comment.propTypes = {
   cascadedReplyState: PropTypes.any,
   cascadedSetReplyState: PropTypes.any,
   cascadedReplyInput: PropTypes.any,
-  handleDeauthComment: PropTypes.func.isRequired,
-  setComments: PropTypes.func.isRequired,
+  setComments: PropTypes.func,
   setPopup: PropTypes.func.isRequired,
 };
 

@@ -333,11 +333,7 @@ const Novel = ({
           />
         </form>
         {comments.map(comment => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            handleDeauthComment={handleDeauthComment}
-          />
+          <Comment key={comment.id} comment={comment} />
         ))}
       </div>
     </div>
@@ -352,13 +348,12 @@ Novel.propTypes = {
   }).isRequired,
   loading: PropTypes.bool.isRequired,
   novel: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    favorite: PropTypes.bool.isRequired,
-    uploadedAt: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    favorite: PropTypes.bool,
+    uploadedAt: PropTypes.string,
+    content: PropTypes.string,
     error: PropTypes.bool,
   }).isRequired,
-  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.object.isRequired,
   setPopup: PropTypes.func.isRequired,
   getNovel: PropTypes.func.isRequired,
