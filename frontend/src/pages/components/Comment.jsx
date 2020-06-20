@@ -136,7 +136,9 @@ const Comment = ({
 
   const deleteAllComments = async uId => {
     try {
-      const res = await axios.delete();
+      const res = await axios.delete(
+        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/deleteAll/`,
+      );
       setComments(res.data);
       fader.forEach(el => (el.style.opacity = 0));
       setTimeout(() => {
