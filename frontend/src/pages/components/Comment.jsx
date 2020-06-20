@@ -32,8 +32,6 @@ const Comment = ({
     recipient,
     content,
     replies,
-    isYou,
-    isAdmin,
   },
   role,
   handleDeauthComment,
@@ -194,9 +192,9 @@ const Comment = ({
   );
 
   let senderDisplay;
-  if (isYou) {
+  if (sender.isYou) {
     senderDisplay = <span className='sender-modif'>{t('you')}</span>;
-  } else if (isAdmin) {
+  } else if (sender.isAdmin) {
     senderDisplay = <span className='sender-modif'>{t('author')}</span>;
   } else senderDisplay = <span>{sender.name}</span>;
   switch (modif) {
@@ -389,6 +387,8 @@ Comment.propTypes = {
     sender: PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
+      isYou: PropTypes.bool.isRequired,
+      isAdmin: PropTypes.bool.isRequired,
     }).isRequired,
     writtenAt: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
@@ -398,8 +398,6 @@ Comment.propTypes = {
     }).isRequired,
     content: PropTypes.string.isRequired,
     replies: PropTypes.arrayOf(PropTypes.object),
-    isYou: PropTypes.bool.isRequired,
-    isAdmin: PropTypes.bool.isRequired,
   }).isRequired,
   role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
   cascadedReplyBar: PropTypes.any,
