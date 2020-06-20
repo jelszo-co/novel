@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import gsap, { TweenMax } from 'gsap';
 import PropTypes from 'prop-types';
 
-import '../../css/components/popup.scss';
-
 import { ReactComponent as Cross } from '../../assets/cross.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';
+
+import '../../css/components/popup.scss';
 
 const Popup = ({ popup }) => {
   const cont = useRef();
@@ -35,13 +35,15 @@ const Popup = ({ popup }) => {
     popup !== null &&
     popup.length > 0 && (
       <div className='popup-wrapper'>
-        {popup.map(({ id, msg, type = 'success' }) => (
-          <div className='popup' key={id} ref={cont}>
-            {type === 'err' ? <Cross /> : <Tick />}
-            {msg}
-            <div className='popup-line' ref={line} />
-          </div>
-        ))}
+        {popup.map(({ id, msg, type = 'success' }) => {
+          return (
+            <div className='popup' key={id} ref={cont}>
+              {type === 'err' ? <Cross /> : <Tick />}
+              {msg}
+              <div className='popup-line' ref={line} />
+            </div>
+          );
+        })}
       </div>
     )
   );
