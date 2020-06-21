@@ -12,7 +12,7 @@ const resources = {
 i18n.use(initReactI18next).init({
   resources,
   initImmediate: false,
-  lng: localStorage.getItem('lng') || undefined,
+  lng: localStorage.getItem('lng') ?? 'en',
   languages: ['hu', 'en'],
   load: 'currentOnly',
   keySeparator: false,

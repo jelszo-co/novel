@@ -47,7 +47,7 @@ const Menu = ({ user: { role } }) => {
     i18n.changeLanguage(ln);
   };
 
-  const clg = localStorage.getItem('lng');
+  const clg = localStorage.getItem('lng') ?? 'en';
 
   return showMenu ? (
     <ul id='menu-list' ref={wrapperRef}>
