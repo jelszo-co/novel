@@ -48,6 +48,7 @@ const Menu = ({ user: { role } }) => {
   };
 
   const clg = localStorage.getItem('lng') ?? 'en';
+  if (!localStorage.getItem('lng')) moment.locale('en');
 
   return showMenu ? (
     <ul id='menu-list' ref={wrapperRef}>
