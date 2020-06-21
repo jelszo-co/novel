@@ -19,7 +19,6 @@ import { setComments } from '../../actions/novels';
 import { setPopup } from '../../actions/popup';
 
 import '../../css/components/comment.scss';
-import { auth } from '../../firebase';
 
 const Comment = ({
   isReply = false,
@@ -33,7 +32,7 @@ const Comment = ({
     content,
     replies,
   },
-  role,
+  user: { role, fUser },
   setComments,
   setPopup,
   cascadedReplyBar,
@@ -113,7 +112,7 @@ const Comment = ({
   };
 
   const handleLike = async () => {
-    if (auth().currentUser === null) return setPopup(t('err_login_fav'), 'err');
+    if (fUser === null) return setPopup(t('err_login_fav'), 'err');
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`,
@@ -422,7 +421,6 @@ Comment.propTypes = {
     content: PropTypes.string.isRequired,
     replies: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
   cascadedReplyBar: PropTypes.any,
   cascadedReplyState: PropTypes.any,
   cascadedSetReplyState: PropTypes.any,
@@ -432,7 +430,7 @@ Comment.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  role: state.user.role,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { setComments, setPopup })(Comment);
