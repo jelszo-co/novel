@@ -50,7 +50,7 @@
     "form_login_reset": "Send",
 
     "form_val_1": "more than 6 characters",
-    "form_val_2": "1 uppercase and 1 lowercase characters",
+    "form_val_2": "1 uppercase and 1 lowercase character",
     "form_val_3": "1 number",
 
     "forgot_button": "Forgotten password",
@@ -77,7 +77,7 @@
     "profile_delete_account": "Delete account",
     "profile_logout": "Log out",
     "profile_delete_confirm_msg": "Are you sure you want to delete your account?",
-    "profile_no_fav": "You don't have favourite novels.",
+    "profile_no_fav": "You don't have any favourite novels.",
 
     "admin_comments_title": "Newest comments",
     "admin_comments_link": "Jump to novels",
@@ -115,7 +115,7 @@
     "err_send_response": "An error has occurred while sending the comment.",
     "err_like_login": "You must be logged in to like a message.",
     "err_like_comment": "An error has occurred while liking this comment.",
-    "err_fav_novel": "An error occured during adding novel to favourites.",
+    "err_fav_novel": "An error occurred during adding novel to favourites.",
     "err_del_comment": "An error has occurred while deleting this comment.",
     "err_del_comments": "An error has occurred while deleting these comments.",
     "err_block_user": "An error has occurred while blocking the user.",
@@ -123,11 +123,11 @@
     "err_del_novel": "An error has occurred while deleting the novel.",
     "err_save_novel": "An error has occurred while saving the novel.",
     "err_email_send": "Couldn't send e-mail.",
-    "err_acc_delete": "Acccount deleted successfully.",
+    "err_acc_delete": "Account deleted successfully.",
     "err_link_expired": "The link has expired.",
     "err_link_damaged": "Faulty link!",
-    "err_update_email": "An error occured during changing the e-mail.",
-    "err_update_pass": "An error occured during changing the password.",
+    "err_update_email": "An error occurred during changing the e-mail.",
+    "err_update_pass": "An error occurred during changing the password.",
 
     "err_login": "An error has occurred while logging in.",
     "err_register": "An error has occurred while signing up.",
