@@ -13,13 +13,61 @@ import { setPopup } from '../../actions/popup';
 import { auth } from '../../firebase';
 
 import { ReactComponent as Reply } from '../../assets/reply.svg';
+import { ReactComponent as Cross } from '../../assets/cross.svg';
 
 import '../../css/user/profile.scss';
 
 const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   const { t } = useTranslation();
   const [favs, setFavs] = useState([]);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([
+    {
+      title: 'Konzol Zsolt \u00e9lete',
+      path: 'konzol-zsolt-elete',
+      comments: [
+        {
+          content: 'Egyes\u00e9vel.',
+          senderName: 'Jelszo Reborn',
+          writtenAt: '2020-06-21T13:26:08.997Z',
+          id: 42,
+          recipientName: null,
+          isReply: false,
+        },
+        {
+          content: 'Kommentek',
+          senderName: 'Jelszo Reborn',
+          writtenAt: '2020-06-21T13:26:05.960Z',
+          id: 41,
+          recipientName: null,
+          isReply: false,
+        },
+        {
+          content: 'Teszt',
+          senderName: 'Jelszo Reborn',
+          writtenAt: '2020-06-21T13:26:03.377Z',
+          id: 40,
+          recipientName: null,
+          isReply: false,
+        },
+        {
+          content: 'Mind',
+          senderName: 'Jelszo Reborn',
+          writtenAt: '2020-06-21T13:26:01.335Z',
+          id: 39,
+          recipientName: null,
+          isReply: false,
+        },
+        {
+          content: 'Ezek',
+          senderName: 'Jelszo Reborn',
+          writtenAt: '2020-06-21T13:25:58.337Z',
+          id: 38,
+          recipientName: null,
+          isReply: false,
+        },
+      ],
+    },
+  ]);
 
   useEffect(() => {
     axios
@@ -43,6 +91,17 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
     } catch (err) {
       console.error(err);
       setPopup(t('err_email_send'), 'err');
+    }
+  };
+
+  const handleDelete = async cId => {
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`,
+      );
+      setComments(res.data);
+    } catch (err) {
+      setPopup(t('err_del_comment'), 'err');
     }
   };
 
@@ -101,6 +160,13 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
                     <p className='comment-title'>
                       <span>{t('you')}</span> |{' '}
                       <Moment fromNow>{cmt.writtenAt}</Moment>
+                      <button
+                        type='button'
+                        className='admin-btn'
+                        onClick={() => handleDelete(cmt.id)}
+                      >
+                        <Cross />
+                      </button>
                     </p>
                     <p className='comment-content'>{cmt.content}</p>
                   </div>

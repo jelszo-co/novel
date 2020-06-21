@@ -24,7 +24,7 @@
     "menu_list": "Novels",
     "menu_contact": "Contact",
     "menu_login": "Account",
-    "menu_user": "My Account",
+    "menu_user": "My Profile",
     "menu_admin": "Admin",
 
     "list_title": "Novels",
@@ -69,7 +69,7 @@
     "delete_all_comments": "Delete all of their comments",
 
     "profile_title": "My Profile",
-    "profile_last_comments": "Last comments",
+    "profile_last_comments": "Latest comments",
     "profile_fav_novels": "Favourite comments",
     "profile_email_confirm": "Confirm",
     "profile_change_general": "Change",
