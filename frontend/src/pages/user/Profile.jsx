@@ -86,7 +86,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
           </div>
         </div>
         <div className='col-center'>
-          <h3>{t('profile_last_comments')}</h3>
+          <h3 className='col-center-title'>{t('profile_last_comments')}</h3>
           <div className='recent-comments'>
             {comments.map(novel => (
               <div key={novel.path} className='comment-wrapper'>
@@ -99,7 +99,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
                 {novel.comments.map(cmt => (
                   <div key={cmt.id} className='comment-body'>
                     <p className='comment-title'>
-                      {cmt.senderName} |{' '}
+                      <span>{t('you')}</span> |{' '}
                       <Moment fromNow>{cmt.writtenAt}</Moment>
                     </p>
                     <p className='comment-content'>{cmt.content}</p>

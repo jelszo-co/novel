@@ -99,10 +99,55 @@
 
     .col-center {
       flex: 2.5 1 0px;
-      h3 {
+
+      h3.col-center-title {
         text-align: center;
         font-size: 2.1rem;
         transform: translateY(-25%);
+      }
+
+      .recent-comments {
+        margin-top: 30px;
+        .comment-wrapper {
+          width: 90%;
+          margin: 0 5%;
+
+          h3 {
+            width: 100%;
+            border-bottom: 2pt solid $white;
+            font-size: 1.7rem;
+            svg {
+              margin-left: 10px;
+              display: inline-block;
+              vertical-align: baseline;
+              width: 1.4rem;
+              height: 1.4rem;
+              fill: $white;
+              transform: scaleX(-1);
+            }
+          }
+
+          .comment-body {
+            margin: 20px 0;
+            .comment-title {
+              display: inline-block;
+              font-family: 'Forum';
+              font-size: 1.5rem;
+              border-bottom: 2pt solid $white;
+              span {
+                padding: 0 2px;
+                text-transform: capitalize;
+              }
+              time {
+                font-family: 'Markazi text';
+              }
+            }
+            .comment-content {
+              margin-top: 5px;
+              font-size: 1.4rem;
+            }
+          }
+        }
       }
     }
 
