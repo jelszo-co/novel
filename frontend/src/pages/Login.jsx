@@ -93,7 +93,12 @@ const Login = ({ user, setPopup }) => {
     if (!regEmail.match(emailPatt)) return alertUser('regEmail');
     if (!valid.length || !valid.case || !valid.num) return alertUser('regPass');
     try {
-      await auth().createUserWithEmailAndPassword(regEmail, regPass);
+      const res = await auth().createUserWithEmailAndPassword(
+        regEmail,
+        regPass,
+      );
+      const token = await res.user.getIdToken(true);
+      cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
       await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
         name: fullName,
       });
