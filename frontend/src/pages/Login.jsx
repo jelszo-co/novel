@@ -107,6 +107,8 @@ const Login = ({ user, setPopup }) => {
     try {
       auth().languageCode = i18next.t(['locale_name', 'en']);
       const res = await auth().signInWithPopup(GProvider);
+      const token = await res.user.getIdToken(true);
+      cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
       await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
         name: res.user.displayName,
       });
