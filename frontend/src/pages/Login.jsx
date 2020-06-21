@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import cookie from 'react-cookies';
 import axios from 'axios';
 
 import i18next from 'i18next';
