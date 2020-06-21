@@ -110,9 +110,11 @@ const Login = ({ user, setPopup }) => {
       const res = await auth().signInWithPopup(GProvider);
       const token = await res.user.getIdToken(true);
       cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
-      await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
-        name: res.user.displayName,
-      });
+      if (res.additionalUserInfo.isNewUser) {
+        await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+          name: res.user.displayName,
+        });
+      }
     } catch (err) {
       console.error(err);
       setPopup(t('err_login'), 'err');
@@ -122,7 +124,14 @@ const Login = ({ user, setPopup }) => {
   const handleFB = async () => {
     try {
       auth().languageCode = i18next.t(['locale_name', 'en']);
-      await auth().signInWithPopup(FProvider);
+      const res = await auth().signInWithPopup(FProvider);
+      const token = await res.user.getIdToken(true);
+      cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
+      if (res.additionalUserInfo.isNewUser) {
+        await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
+          name: res.user.displayName,
+        });
+      }
     } catch (err) {
       console.error(err);
       setPopup(t('err_login'), 'err');
