@@ -16,13 +16,21 @@ import '../../css/user/profile.scss';
 const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   const { t } = useTranslation();
   const [favs, setFavs] = useState([]);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/novel/favorites`)
       .then(res => setFavs(res.data))
       .catch(err => console.error(err));
-  }, []);
+    axios
+      .get(`${process.env.REACT_APP_SRV_ADDR}/comment/recent`)
+      .then(res => setComments(res.data))
+      .catch(err => {
+        console.error(err);
+        setPopup(t('err_admin_load_comments'), 'err');
+      });
+  }, [setPopup, t]);
 
   const { email, emailVerified } = fUser;
   const sendEmail = async () => {
@@ -110,13 +118,13 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
 Profile.propTypes = {
   setPopup: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
       .isRequired,
     fUser: PropTypes.shape({
-      email: PropTypes.string.isRequired,
-      emailVerified: PropTypes.bool.isRequired,
-      sendEmailVerification: PropTypes.func.isRequired,
+      email: PropTypes.string,
+      emailVerified: PropTypes.bool,
+      sendEmailVerification: PropTypes.func,
     }),
   }).isRequired,
 };
