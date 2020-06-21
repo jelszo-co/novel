@@ -1,9 +1,10 @@
 import os
-import firebase_admin
-from firebase_admin import credentials
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+
 import django_heroku
+import firebase_admin
+import sentry_sdk
+from firebase_admin import credentials
+from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,10 +25,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authorization',
-    'novel'
+    'novel',
+    'comment',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'authorization.middleware.DisableCSRFOnDebug',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -97,11 +101,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-if not DEBUG:
-    sentry_sdk.init(
-        dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
-        integrations=[DjangoIntegration()], )
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
@@ -111,3 +110,14 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DEBUG_RELEASE = os.environ.get('DEBUG', 0) == '1'
+
+CORS_ORIGIN_ALLOW_ALL = DEBUG_RELEASE
+
+CORS_ALLOW_CREDENTIALS = DEBUG_RELEASE
+
+if not DEBUG_RELEASE:
+    sentry_sdk.init(
+        dsn="https://d503999e72b5465da8b617c494451f51@sentry.io/5174543",
+        integrations=[DjangoIntegration()], )

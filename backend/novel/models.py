@@ -20,7 +20,16 @@ class Novel(models.Model):
         path = self.title.lower()
         self.path = path.replace(' ', '-').replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó',
                                                                                                          'o').replace(
-            'ö', 'o').replace('ő', 'o').replace('ú', 'u').replace('ü', 'u').replace('ű', 'u')
+            'ö', 'o').replace('ő', 'o').replace('ú', 'u').replace('ü', 'u').replace('ű', 'u').replace('?', '').replace(
+            ':', '').replace('@', '').replace('+', '').replace('!', '').replace('(', '').replace(')', '')
         if not self.lore:
             self.lore = ''
         super(Novel, self).save(*args, **kwargs)
+
+
+class Introduction(models.Model):
+    key = models.CharField(max_length=32)
+    value = models.TextField()
+
+    def __str__(self):
+        return f'{self.key}: {self.value}'

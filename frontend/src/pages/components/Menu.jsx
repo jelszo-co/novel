@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import '../../css/components/menu.scss';
 
@@ -19,9 +22,8 @@ const useOutsideAlerter = (ref, changeMenu) => {
   }, [ref, changeMenu]);
 };
 
-const Menu = () => {
+const Menu = ({ user: { role } }) => {
   const { t, i18n } = useTranslation();
-  const [role] = useState('anonymous');
   const [showMenu, changeMenu] = useState(false);
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, changeMenu);
@@ -31,7 +33,7 @@ const Menu = () => {
       case 'anonymous':
         return <Link to='/login'>{t('menu_login')}</Link>;
       case 'user':
-        return <Link to='/account'>{t('menu_user')}</Link>;
+        return <Link to='/profile'>{t('menu_user')}</Link>;
       case 'admin':
         return <Link to='/admin'>{t('menu_admin')}</Link>;
       default:
@@ -41,10 +43,12 @@ const Menu = () => {
 
   const changeLang = ln => {
     localStorage.setItem('lng', ln);
+    moment.locale(ln);
     i18n.changeLanguage(ln);
   };
 
-  const clg = localStorage.getItem('lng');
+  const clg = localStorage.getItem('lng') ?? 'en';
+  if (!localStorage.getItem('lng')) moment.locale('en');
 
   return showMenu ? (
     <ul id='menu-list' ref={wrapperRef}>
@@ -87,4 +91,15 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+Menu.propTypes = {
+  user: PropTypes.shape({
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
+      .isRequired,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps)(Menu);

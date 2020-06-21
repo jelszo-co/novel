@@ -1,0 +1,80 @@
+@import '../variables';
+#small-form {
+  form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+
+    input {
+      margin: 0;
+      padding: 0;
+      width: 300px;
+      font-family: 'Markazi Text';
+      font-size: 1.4rem;
+      border-bottom: 2pt solid $white;
+      &:not(:last-of-type) {
+        margin-bottom: 30px;
+      }
+      &[type='submit'] {
+        margin-top: 20px;
+        width: auto;
+        align-self: center;
+        font-size: 1.6rem;
+        line-height: 1.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+  button {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .pass-validation {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(105%, calc(-50% - 2pt));
+    margin: 0;
+    padding: 0;
+    transition: 0.2s all ease-in-out;
+
+    li {
+      margin: 0;
+      margin-left: 25px;
+      padding: 0;
+
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 1.3rem;
+        position: relative;
+        display: inline-block;
+        transition: 0.2s all ease-in-out;
+
+        span {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          height: 1.5pt;
+          width: 0%;
+          background: $white;
+          transition: 0.3s all ease-in-out;
+        }
+      }
+    }
+  }
+
+  .pass-valid-reset {
+    bottom: 100%;
+    transform: translate(105%, calc(100% - 8pt));
+  }
+}

@@ -1,0 +1,270 @@
+@import '../variables';
+$top: 22.5%;
+$indent: 4%;
+
+#admin {
+  .panel {
+    height: 70%;
+
+    a.panel-link {
+      position: absolute;
+      bottom: 0;
+      font-family: 'Forum', serif;
+      font-size: 1.4rem;
+      text-decoration: none;
+      border-bottom: 3px solid $white;
+      padding: 4px 10px;
+      white-space: nowrap;
+      @media #{$mq-phone} {
+        font-size: 1.2rem;
+        border-bottom: 2px solid $white;
+        margin: 0 -20px;
+        margin-bottom: 40px;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+  }
+
+  .panel-title {
+    font-family: 'Forum', serif;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .panel-left {
+    position: absolute;
+    left: $indent;
+    top: $top;
+
+    a.panel-link {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .comments {
+      max-width: 250px;
+      .comment-wrapper {
+        h3 {
+          font-size: 1.8rem;
+          border-bottom: 2pt solid $white;
+          a {
+            svg {
+              margin-left: 10px;
+              width: 1.5rem;
+              height: 1.5rem;
+              fill: white;
+              transform: scaleX(-1);
+            }
+          }
+        }
+
+        .comment-body {
+          margin: 15px 0 30px;
+
+          p.comment-title {
+            border-bottom: 1pt solid $white;
+            display: inline-block;
+            font-family: 'Forum';
+            font-size: 1.4rem;
+            time {
+              font-family: 'Markazi Text';
+            }
+          }
+          p.comment-content {
+            font-size: 1.4rem;
+          }
+        }
+      }
+    }
+  }
+  .panel-right {
+    text-align: right;
+    position: absolute;
+    right: $indent;
+    top: $top;
+
+    a.panel-link {
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    .banned-list {
+      .banned-card {
+        p {
+          font-size: 1.4rem;
+          margin: 10px 0;
+          button {
+            margin-right: 5px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            svg {
+              width: inherit;
+              height: inherit;
+              fill: $white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .upload {
+    position: absolute;
+    left: 50%;
+    top: $top;
+    transform: translateX(-50%);
+    height: 60%;
+  }
+
+  .account-management {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    @media #{$mq-phone} {
+      width: 100vw;
+      text-align: center;
+    }
+    button,
+    a {
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      @media #{$mq-phone} {
+        display: inline-block;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+.uploader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.2s all ease-in-out;
+
+  button {
+    font-family: 'Forum';
+    font-size: 2rem;
+    padding: 0 8px;
+    border-bottom: 2pt solid $white;
+    transition: 0.1s all ease-in-out;
+    &:hover {
+      border-width: 3pt;
+    }
+  }
+
+  .upload-lang-selector {
+    text-align: center;
+    p {
+      white-space: nowrap;
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+    text-align: center;
+    .upload-btn {
+      display: inline-block;
+      margin: 0 10px;
+      padding: 0;
+      border: none;
+    }
+  }
+
+  .uploader-zone {
+    border: 2pt dashed $white;
+    width: 20vw;
+    height: 20vh;
+
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 1.3rem;
+    }
+  }
+  .upload-progress {
+    img {
+      width: 120px;
+    }
+    p {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+  }
+
+  .upload-success {
+    svg {
+      stroke: $white;
+      width: 100px;
+      height: 100px;
+      display: inline-block;
+      fill: none;
+      stroke-miterlimit: 10;
+      stroke-width: 15px;
+      line,
+      polyline {
+        fill: none;
+        stroke: $white;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 15px;
+      }
+    }
+    p {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  }
+
+  form {
+    p.params-title {
+      text-transform: capitalize;
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+    input {
+      font-family: 'Markazi Text';
+      margin: 0;
+      padding: 0;
+      width: 20vw;
+      height: 1.6rem;
+      text-align: center;
+      &[type='text'] {
+        margin-bottom: 3.6rem;
+        font-size: 1.5rem;
+        font-family: 'Forum';
+        border-bottom: 2pt solid $white;
+      }
+      &[type='submit'] {
+        font-size: 1.4rem;
+        text-decoration: underline;
+        text-transform: capitalize;
+        cursor: pointer;
+      }
+    }
+    textarea {
+      resize: none;
+      width: 20vw;
+      font-family: 'Markazi Text';
+      font-size: 1.3rem;
+      border-bottom: 2pt solid $white;
+    }
+    .icon {
+      margin: 30px 0;
+      text-align: center;
+      svg {
+        width: 50px;
+        height: 50px;
+        fill: $white;
+      }
+    }
+  }
+}

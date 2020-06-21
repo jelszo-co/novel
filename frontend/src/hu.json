@@ -1,8 +1,22 @@
 {
   "translation": {
-    "err_body": "Nálunk ilyen oldal nem létezik.",
-    "landing_welcome": "Üdvözöllek.",
-    "landing_about": "Martyn Nóri vagyok. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A scelerisque purus semper eget duis at tellus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. In nisl nisi scelerisque eu ultrices vitae auctor. Donec adipiscing tristique risus nec feugiat in fermentum posuere urna.",
+    "locale_name": "hu",
+    "cancel": "Mégse",
+    "delete": "Törlés",
+    "deleted": "Törölve.",
+    "back": "Vissza",
+    "save": "Mentés",
+    "discard": "Elvetés",
+    "or": "vagy",
+    "anonymously": "névtelenül",
+    "title": "cím",
+    "description": "leírás",
+    "next": "tovább",
+    "publish": "Publikálás",
+    "you": "te",
+    "author": "szerző",
+
+    "landing_welcome": "Üdvözöllek!",
     "landing_button": "Írásaim",
 
     "menu_invoke": "Menü",
@@ -15,6 +29,7 @@
 
     "list_title": "írásaim",
     "list_search": "Keresés",
+    "list_empty": "Sajnos jelen pillanatban egy novella sincs feltöltve.",
 
     "contact_header": "Kapcsolat",
     "contact_name": "Martyn Nóri",
@@ -22,7 +37,7 @@
     "contact_send_mail": "E-mail küldése",
 
     "login_title": "Fiók",
-    "login_google_title": "Bejelentkezés Google-val",
+    "login_google_title": "Bejelentkezés Google-lal",
     "login_fb_title": "Bejelentkezés Facebook-kal",
 
     "form_register_title": "Regisztráció",
@@ -34,12 +49,107 @@
     "form_login_submit": "Bejelentkezek",
     "form_login_reset": "Küldés",
 
-    "form_val_1": "8+ karakter",
+    "form_val_1": "6+ karakter",
     "form_val_2": "1 kis és 1 nagy karakter",
     "form_val_3": "1 szám",
 
-    "forgot_pass": "Elfelejtett jelszó?",
+    "forgot_button": "Elfelejtett jelszó?",
     "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
-    "forgot_back": "Vissza"
+
+    "fav_popup": "A kedvencekhez adáshoz kérlek jelentkezz be.",
+    "del_popup": "Biztosan törlöd?",
+    "comments_header": "Kommentek",
+    "comment_placeholder": "Komment írása...",
+    "reply_placeholder": "Válasz neki:",
+    "comment_deleted": "kommentje törölve",
+    "to_ban": "tiltása",
+    "banned": "letiltva",
+    "delete_this_comment": "Ez a komment törlése",
+    "delete_all_comments": "Minden komment törlése",
+
+    "profile_title": "Fiókom",
+    "profile_last_comments": "Legutóbbi kommentjeim",
+    "profile_fav_novels": "Kedvenc novelláim",
+    "profile_email_confirm": "Megerősítés",
+    "profile_change_general": "Módosítás",
+    "profile_change_password": "Jelszó módosítása",
+    "profile_delete_account": "Fiók törlése",
+    "profile_logout": "Kijelentkezés",
+    "profile_delete_confirm_msg": "Biztosan törlöd a fiókod?",
+    "profile_no_fav": "Még egy novellát sem jelöltél meg kedvencként.",
+
+    "admin_comments_title": "Legfrissebb kommentek",
+    "admin_comments_link": "Ugrás a novellákhoz",
+    "admin_banned_title": "Tiltott felhasználók",
+    "admin_banned_link": "Összes tiltott felhasználó",
+    "admin_upload_title": "Új novella feltöltése",
+    "admin_account_email": "E-mail módosítása",
+    "admin_account_pass": "Jelszó módosítása",
+    "title_hint": "Az új novellám címe",
+    "description_hint": "Rövid leírás",
+    "upload_begin": "Feltöltés",
+    "upload_dropzone_active": "Engedd el a fájlt a feltöltéshez!",
+    "upload_dropzone_hint": "Húzd ide a fájlt, vagy kattints a manuális feltöltéshez.",
+    "upload_progress": "Feltöltés...",
+    "upload_select_lang": "Milyen nyelvű a novella?",
+
+    "update_email_title": "E-mail frissítése",
+    "update_email_email": "Új e-mail cím",
+    "update_pass_title": "Jelszó frissítése",
+    "current_password": "Jelenlegi jelszó",
+    "new_password": "Új jelszó",
+    "new_password_confirm": "Új jelszó mégegyszer",
+    "unnecessary": "nem kötelező",
+
+    "reset_pass_title": "Jelszó visszaállítása",
+
+    "delete_title": "Fiók törlése",
+    "delete_lore": "Biztos vagy benne? Ez visszavonhatatlan!",
+
+    "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
+
+    "err_novel_list": "Hiba a novellák lekérdezésében.",
+    "err_novel_single": "Hiba a novella lekérdezésében.",
+    "err_body": "Nálunk ilyen oldal nem létezik.",
+    "err_send_response": "Hiba a válasz elküldése közben.",
+    "err_like_login": "Kérlek jelentkezz be a komment kedveléséhez.",
+    "err_like_comment": "Hiba a komment kedvelése közben.",
+    "err_fav_novel": "Hiba a novella kedvencekhez adása közben.",
+    "err_del_comment": "Hiba a komment törlése közben.",
+    "err_del_comments": "Hiba a kommentek törlése közben.",
+    "err_block_user": "Hiba a felhasználó tiltása közben.",
+    "err_send_comment": "Hiba a komment elküldése közben.",
+    "err_del_novel": "Hiba a novella törlése közben.",
+    "err_save_novel": "Hiba a novella mentése közben.",
+    "err_email_send": "Hiba az email elküldése közben.",
+    "err_acc_delete": "Fiók siekresen törölve.",
+    "err_link_expired": "A link lejárt.",
+    "err_link_damaged": "Hibás link!",
+    "err_update_email": "Hiba az email megváltoztatása közben.",
+    "err_update_pass": "Hiba a jelszó megváltoztatása közben.",
+
+    "err_login": "Hiba a bejelentkezés során.",
+    "err_register": "Hiba a regisztráció során.",
+    "err_uname_pass": "Hibás felhasználónév vagy jelszó!",
+    "err_email": "Nem található ilyen e-mail cím.",
+
+    "err_admin_block_users": "Hiba a tiltott felhasználók lekérdezésében.",
+    "err_admin_load_comments": "Hiba a kommentek lekérdezése közben.",
+    "err_admin_unblock_user": "Hiba a felhasználó tiltásának eltávolítása közben.",
+    "err_admin_one_novel": "Egyszerre csak egy novellát tölts fel.",
+    "err_admin_not_doc": "A novellát .doc vagy .docx fájlként töltsd fel.",
+    "err_admin_upload_novel": "Hiba a novella feltöltése közben.",
+
+    "success": "Siker!",
+    "success_login": "Sikeres bejelentkezés.",
+    "success_logout": "Sikeres Kijelentkezés.",
+    "success_save": "Sikeres mentés!",
+    "success_email_send": "Email sikeresen elküldve.",
+    "success_acc_delete": "Fiók sikeresen törölve.",
+    "success_update_pass": "Jelszó sikeresen frissítve.",
+    "success_update_email": "E-mail sikeresen frissítve.",
+
+    "react_err": "A React hibába ütközött.",
+    "react_err_tip": "Próbálkozz az oldal újratöltésével. Ha a probléma továbbra is előfordul, kérlek lépj kapcsolatba velünk."
   }
 }

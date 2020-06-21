@@ -20,9 +20,12 @@ class AuthorizationMiddleware:
                 request.fb_user = user
             except (FirebaseError, User.DoesNotExist):
                 request.fb_user = User.objects.get_or_create(uid='unauthenticated', isAuthenticated=False)[0]
+                request.fb_user.name = "[törölt]"
+                request.fb_user.save()
         else:
             request.fb_user = User.objects.get_or_create(uid='unauthenticated', isAuthenticated=False)[0]
-
+            request.fb_user.name = "[törölt]"
+            request.fb_user.save()
         response = self.get_response(request)
         return response
 
@@ -32,7 +35,7 @@ class DisableCSRFOnDebug:
         self.get_response = get_response
 
     def __call__(self, request):
-        if settings.DEBUG:  # pragma: no cover
+        if settings.DEBUG_RELEASE:  # pragma: no cover
             setattr(request, '_dont_enforce_csrf_checks', True)
         response = self.get_response(request)
         return response

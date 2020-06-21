@@ -1,3 +1,4 @@
+@import "../variables";
 #landing {
   * {
     text-align: center;
@@ -6,6 +7,11 @@
     text-transform: capitalize;
     font-size: 5rem;
     margin-top: 8%;
+
+    @media #{$mq-phone} {
+      margin-top: 14%;
+      font-size: 3rem;
+    }
   }
   p {
     width: 70%;
@@ -15,6 +21,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
+    @media #{$mq-phone} {
+      top: 50%;
+      font-size: 1.5rem;
+    }
   }
   .button {
     position: absolute;
@@ -24,11 +34,16 @@
     font-size: 3rem;
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 2.5pt solid #fff;
+    border-bottom: 2.5pt solid $white;
     line-height: 35px;
     transition: 0.05s all;
     &:hover {
-      border-bottom: 4pt solid #fff;
+      border-bottom: 4pt solid $white;
+    }
+    @media #{$mq-phone} {
+      font-size: 2rem;
+      line-height: 1.7rem;
+      top: 85%;
     }
   }
 }

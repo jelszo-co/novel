@@ -6,6 +6,10 @@
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
+    @media #{$mq-phone} {
+      width: 100vw;
+      text-align: center;
+    }
 
     svg {
       fill: $white;
@@ -15,11 +19,13 @@
       padding: 0;
       cursor: pointer;
       transition: 0.1s all linear;
+
       &:hover {
         transform: scale(1.1);
       }
     }
   }
+
   #form-cont {
     position: absolute;
     top: 30%;
@@ -29,23 +35,58 @@
     flex-direction: row;
     width: 55%;
     justify-content: space-between;
+    @media #{$mq-phone} {
+      transform: translate(-50%, -50%);
+      top: 60%;
+      width: 80vw;
+    }
+
     form {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 50vh;
-      //margin: 0 80pt;
       width: 35%;
+      @media #{$mq-phone} {
+        width: 40%;
+      }
+
       h3 {
         text-align: center;
         font-size: 1.5rem;
-        text-align: center;
+        @media #{$mq-phone} {
+        }
+      }
+
+      input {
+        box-sizing: border-box;
+        background: none;
+        background-image: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+        font-family: 'Markazi text', serif;
+        font-size: 1.8rem;
+        line-height: 1.6rem;
+        align-self: center;
+        border-bottom: 2.5pt solid $white;
+        transition: 0.1s all ease-in-out;
+
+        &[type='submit'] {
+          cursor: pointer;
+        }
+
+        @media #{$mq-phone} {
+          font-size: 1.5rem;
+        }
       }
 
       .form-group {
         display: flex;
+        position: relative;
         flex-direction: column;
         transition: 0.2s all ease-in-out;
+
         input {
           border-bottom: 2pt solid $white;
           font-size: 1.3rem;
@@ -53,48 +94,52 @@
           margin: 20px 0;
           align-self: stretch;
           transition: 0.1s all ease-in-out;
-        }
-        p.forgot-back {
-          position: absolute;
-          top: 0;
-          left: 0;
-          transform: translateY(-200%);
-          font-size: 1.4rem;
-          cursor: pointer;
-          transition: 0.1s all ease-in-out;
-          opacity: 0;
-        }
 
-        .form-group-forgot-pass {
-          display: block;
-          margin: 20px 0;
-          align-self: stretch;
-          transition: 0.2s all ease-in-out;
-          input {
-            margin: 0;
-            width: 100%;
+          &:first-child {
+            margin-top: 0;
           }
-          p.forgot-link {
-            margin: 0;
-            margin-top: 3pt;
-            text-align: right;
-            text-decoration: underline;
+
+          @media #{$mq-phone} {
             font-size: 1.2rem;
-            cursor: pointer;
-          }
-          p.forgot-instructions {
-            text-align: center;
-            margin: 5.5px 0;
-            font-size: 1.15rem;
-            line-height: 1.2rem;
-            width: 96%;
-            margin-left: 2%;
           }
         }
-        position: relative;
       }
+
       #reg-password {
         margin-bottom: 0;
+        padding-right: 25px;
+      }
+
+      .show-pass {
+        button {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin: 0;
+          padding: 0;
+          cursor: pointer;
+          background: none;
+          border: none;
+          outline: none;
+          fill: $white;
+
+          svg {
+            width: 22px;
+            height: 22px;
+          }
+
+          svg.show-pass-eye {
+            fill: none;
+            stroke: $white;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 32px;
+
+            circle {
+              stroke-miterlimit: 10;
+            }
+          }
+        }
       }
 
       .pass-validation {
@@ -105,10 +150,12 @@
         margin: 0;
         padding: 0;
         transition: 0.2s all ease-in-out;
+
         li {
           margin: 0;
           margin-left: 25px;
           padding: 0;
+
           p {
             margin: 0;
             padding: 0;
@@ -116,6 +163,7 @@
             position: relative;
             display: inline-block;
             transition: 0.2s all ease-in-out;
+
             span {
               display: block;
               position: absolute;
@@ -131,21 +179,65 @@
         }
       }
 
-      input {
-        box-sizing: border-box;
-        background: none;
-        background-image: none;
-        border: none;
-        margin: 0;
-        padding: 0;
-        font-family: 'Markazi Text';
-        font-size: 1.8rem;
-        line-height: 1.6rem;
-        align-self: center;
-        border-bottom: 2.5pt solid $white;
+      .form-group-login {
+        position: relative;
         transition: 0.2s all ease-in-out;
-        &[type='submit'] {
+
+        input {
+          border-bottom: 2pt solid $white;
+          font-size: 1.3rem;
+          line-height: 1rem;
+          margin-top: 40px;
+          width: 100%;
+          display: inline-block;
+          transition: 0.1s all ease-in-out;
+          @media #{$mq-phone} {
+            font-size: 1.2rem;
+          }
+        }
+
+        button {
+          border: none;
+          background: none;
+          margin: 0;
+          padding: 0;
+          font-family: 'Markazi text', serif;
+          font-size: 1.2rem;
+          text-decoration: underline;
+          float: right;
           cursor: pointer;
+          @media #{$mq-phone} {
+            white-space: nowrap;
+          }
+        }
+
+        button.forgot-back {
+          float: left;
+        }
+
+        p.login-response {
+          position: absolute;
+          width: 100%;
+          text-align: center;
+          bottom: -40%;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 1.3rem;
+          color: $alert;
+          transition: 0.1s all ease-in-out;
+          opacity: 0;
+        }
+
+        p.forgot-instructions {
+          margin: 30px 0;
+          text-align: center;
+          font-size: 1.2rem;
+        }
+
+        p.forgot-success {
+          text-align: center;
+          font-size: 2rem;
+          vertical-align: middle;
         }
       }
     }

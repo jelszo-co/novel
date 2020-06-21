@@ -21,14 +21,21 @@
     border-bottom: 2.25pt solid $white;
     color: $white;
     padding: 2pt 0;
-    font-family: 'Markazi Text';
+    font-family: 'Markazi text', serif;
     font-size: 1.4rem;
   }
 }
 
 #list {
+  .list-empty {
+    text-align: center;
+    font-size: 1.5rem;
+  }
   .list-container {
     width: 700px;
+    @media #{$mq-phone} {
+      width: 93vw;
+    }
     .year-heading {
       display: flex;
       flex-direction: row;
@@ -59,6 +66,10 @@
         font-size: 3rem;
         vertical-align: top;
         line-height: 2.4rem;
+        @media #{$mq-phone} {
+          font-size: 2rem;
+          line-height: 1.8rem;
+        }
       }
 
       .novel-lore {
@@ -73,6 +84,9 @@
         background: $white;
         align-self: center;
         margin: 20px 0;
+        @media #{$mq-phone} {
+          width: 95%;
+        }
       }
 
       .date-cont {

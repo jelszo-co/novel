@@ -1,10 +1,16 @@
+@import "../variables";
 .title {
   position: absolute;
   top: 25px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Forum';
+  font-family: "Forum", serif;
   font-size: 5rem;
   text-align: center;
   text-transform: capitalize;
+  white-space: nowrap;
+  @media #{$mq-phone} {
+    font-size: 3rem;
+    top: 50px;
+  }
 }

@@ -1,0 +1,207 @@
+@import '../variables';
+#profile {
+  .content-wrapper {
+    position: absolute;
+    top: 57.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .profile-popup {
+      display: none;
+      opacity: 0;
+      transition: 0.2s all ease-in-out;
+    }
+
+    .col-side {
+      flex: 1 1 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .border-left {
+      border-left: 2pt solid $white;
+      padding: 4pt 6pt;
+    }
+
+    .col-item-left {
+      *:not(:first-child) {
+        margin-top: 5px;
+      }
+      .name {
+        font-family: 'Forum', serif;
+        font-size: 1.5rem;
+      }
+
+      .email {
+        font-size: 1.3rem;
+      }
+
+      .email-confirm {
+        display: inline;
+        background: $white;
+        color: $bg;
+        border: none;
+        border-radius: 7px;
+        padding: 4px 10px;
+        margin: 0;
+        margin-left: 5px;
+        font-family: 'Markazi text', serif;
+        text-decoration: none;
+        text-transform: lowercase;
+        font-size: 1.2rem;
+      }
+
+      .change-upleft {
+        text-transform: uppercase;
+        font-size: 1.1rem;
+      }
+
+      button:nth-child(2) {
+        margin-top: 15px;
+      }
+
+      .delete-confirm {
+        position: relative;
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        button {
+          display: inline;
+          margin: 0;
+          margin: 0 4px;
+          font-size: 1.2rem;
+        }
+        .dangerous {
+          color: $alert;
+        }
+      }
+    }
+
+    .col-item-right {
+      text-align: right;
+      button {
+        border-right: 2pt solid $white;
+        padding: 5pt 6pt;
+        float: right;
+        margin: 0;
+      }
+
+      .fav-title {
+        font-family: 'Forum', serif;
+        font-size: 1.5rem;
+      }
+    }
+
+    .col-center {
+      flex: 2.5 1 0px;
+
+      h3.col-center-title {
+        text-align: center;
+        font-size: 2.1rem;
+        transform: translateY(-25%);
+      }
+
+      .recent-comments {
+        margin-top: 30px;
+        .comment-wrapper {
+          width: 90%;
+          margin: 0 5%;
+
+          h3 {
+            width: 100%;
+            border-bottom: 2pt solid $white;
+            font-size: 1.7rem;
+            svg {
+              margin-left: 10px;
+              display: inline-block;
+              vertical-align: baseline;
+              width: 1.4rem;
+              height: 1.4rem;
+              fill: $white;
+              transform: scaleX(-1);
+            }
+          }
+
+          .comment-body {
+            margin: 20px 0;
+            .comment-title {
+              position: relative;
+              display: inline-block;
+              font-family: 'Forum';
+              font-size: 1.5rem;
+              border-bottom: 2pt solid $white;
+              span {
+                padding: 0 2px;
+                text-transform: capitalize;
+              }
+              time {
+                font-family: 'Markazi text';
+              }
+              .admin-btn {
+                position: absolute;
+                right: -5%;
+                top: 50%;
+                transform: translate(100%, -35%);
+                display: block;
+                margin-left: 10px;
+                svg {
+                  stroke: $white;
+                  stroke-width: 20px;
+                  fill: none;
+                  width: 32px;
+                  height: 32px;
+                }
+              }
+            }
+            .comment-content {
+              margin-top: 5px;
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+    }
+
+    .fav-novels {
+      margin-top: 25px;
+      border-right: 2pt solid $white;
+      .no-fav {
+        display: block;
+        font-size: 1.4rem;
+        margin: 0;
+        margin-right: 10px;
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        font-family: 'Forum';
+        font-size: 1.7rem;
+        margin: 0;
+        margin-right: 10px;
+
+        &:not(:last-of-type) {
+          margin-bottom: 25px;
+        }
+      }
+    }
+
+    button,
+    .profile-action {
+      margin: 0;
+      padding: 0;
+      display: block;
+      background: none;
+      border: none;
+      font-family: 'Markazi text', serif;
+      font-size: 1.5rem;
+      line-height: 1.1rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

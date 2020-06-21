@@ -1,0 +1,195 @@
+@import '../variables';
+.comment {
+  width: 80%;
+  margin: 25px calc(10% - 3pt);
+  border: 3pt solid transparent;
+  .title-bar {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    span {
+      font-weight: normal;
+      font-family: 'Forum';
+    }
+    p:not(.likes) {
+      border-bottom: 2pt solid $white;
+      padding-bottom: 3px;
+      .sender-you {
+        background: $white;
+        border-radius: 5px;
+        padding: 0 5px;
+        color: $bg;
+        text-transform: capitalize;
+      }
+      .sender-admin {
+        font-family: 'Forum';
+        span {
+          font-family: 'Markazi text';
+          font-size: 1.5rem;
+          vertical-align: top;
+          background: $white;
+          border-radius: 5px;
+          padding: 0 5px;
+          color: $bg;
+        }
+      }
+    }
+    p {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
+    .likes {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0 10px;
+      p {
+        margin: 0;
+        margin-left: 3px;
+      }
+    }
+  }
+  button,
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: $white;
+  }
+
+  .admin-btn {
+    margin-left: 10px;
+    svg {
+      stroke: $white;
+      stroke-width: 20px;
+      fill: none;
+      width: 30px;
+      height: 30px;
+    }
+    .ban {
+      stroke: none;
+      fill: $white;
+    }
+  }
+
+  .comment-content {
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    span {
+      border-bottom: 2pt solid $white;
+      display: inline-block;
+    }
+  }
+
+  .reply-bar {
+    position: relative;
+    display: block; // to be: block
+    opacity: 0; // to be: 1
+    width: 80%;
+    margin-left: 10%;
+    margin-top: -1.6rem; // to be: 10px
+    transition: 0.2s all ease-in-out;
+
+    input {
+      width: calc(100% - 105px);
+      border-bottom: 2pt solid $white;
+      font-family: 'Markazi text';
+      font-size: 1.4rem;
+      padding: 0.1rem 65px 0.1rem 0;
+    }
+    button[type='submit'] {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      background: none;
+      border: none;
+      fill: $white;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .char-limit {
+      position: absolute;
+      top: 0.1rem;
+      right: 40px;
+      font-size: 1.4rem;
+      opacity: 0.8;
+      @media #{$mq-phone} {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.comment-reply {
+  width: 80%;
+  margin: 25px 10% 0;
+}
+
+.fader {
+  transition: 0.2s all ease-in-out;
+}
+
+.deleted,
+.banned {
+  position: relative;
+  border: 3pt dashed $white;
+  margin: 25px calc(10% - 3pt);
+  width: 80%;
+  .text {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    * {
+      display: inline-block;
+      font-size: 1.3rem;
+      line-height: 1.1rem;
+    }
+    span {
+      border-bottom: 2pt solid $white;
+    }
+    button {
+      margin-left: 10px;
+      text-decoration: underline;
+    }
+  }
+}
+
+.success {
+  position: relative;
+  border: 3pt dashed $white;
+  margin: 25px calc(10% - 3pt);
+  width: 80%;
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+  }
+}
+
+.comment-close {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  svg,
+  line {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: $white;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 32px;
+  }
+}

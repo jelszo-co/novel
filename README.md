@@ -7,7 +7,7 @@
 
 <p align='center'>
 <img src='https://img.shields.io/github/license/jelszo-co/novel?style=flat-square'>
-<img src='https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjelszo-co%2Fnovel%2Fbadge%3Fref%3Ddev&style=flat-square'>
+<img src='https://travis-ci.com/jelszo-co/novel.svg?branch=master'>
 <img src='https://img.shields.io/github/repo-size/jelszo-co/novel?color=%2370cc00&label=Repo%20size&style=flat-square'>
 <img src='https://api.codacy.com/project/badge/Grade/bf56d16a163f4916aebfb8ba18d11f81?style=flat-square'>
 </p>

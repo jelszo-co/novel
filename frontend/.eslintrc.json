@@ -13,6 +13,7 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -22,15 +23,32 @@
   },
   "plugins": ["react"],
   "rules": {
+    "strict": 0,
     "jsx-quotes": "off",
     "arrow-parens": [2, "as-needed"],
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "react/no-array-index-key": "off",
+    "no-console": "off",
+    "no-shadow": "off",
+    "no-param-reassign": "off",
+    "no-return-assign": "off"
   },
   "overrides": [
+    { "files": "src/pages/Login.jsx", "rules": { "no-nested-ternary": "off" } },
     {
-      "files": "src/pages/List.jsx",
+      "files": "src/pages/admin/Admin.jsx",
       "rules": {
-        "react/no-array-index-key": "off"
+        "react/jsx-props-no-spreading": "off"
+      }
+    },
+    {
+      "files": "src/pages/Novel.jsx",
+      "rules": { "no-alert": "off" }
+    },
+    {
+      "files": "src/actions/*",
+      "rules": {
+        "import/prefer-default-export": "off"
       }
     }
   ]

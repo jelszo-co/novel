@@ -1,0 +1,262 @@
+@import '../variables';
+
+#novel {
+  .novel-header {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+
+    .novel-title {
+      position: relative;
+      font-size: 4rem;
+      max-width: 90vw;
+      @media #{$mq-phone} {
+        font-size: 2rem;
+        max-width: 80vw;
+      }
+
+      input {
+        font-family: 'Forum', serif;
+        font-size: 4rem;
+        border-bottom: 4pt solid $white;
+        width: 40vw;
+      }
+    }
+
+    .novel-date {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.6rem;
+      font-weight: 200;
+      letter-spacing: 1px;
+      @media #{$mq-phone} {
+        display: inline;
+      }
+    }
+
+    .favorite {
+      display: inline;
+      margin-left: 20px;
+      cursor: pointer;
+      @media #{$mq-phone} {
+        margin-left: 0;
+      }
+    }
+
+    svg {
+      height: 2.6rem;
+      width: 2.6rem;
+      fill: $white;
+      vertical-align: middle;
+      margin-bottom: 6px;
+    }
+
+    .fav-popup {
+      display: inline;
+      font-family: 'Markazi text', serif;
+      font-size: 1.5rem;
+      vertical-align: middle;
+      transition: 0.2s all ease-in-out;
+      @media #{$mq-phone} {
+        display: none;
+      }
+
+      span {
+        display: inline-block;
+        width: 20px;
+        height: 1pt;
+        background: $white;
+        vertical-align: middle;
+        margin-left: 20px;
+        margin-right: 10px;
+      }
+
+      a {
+        margin-left: 10px;
+      }
+    }
+    .admin-actions {
+      display: inline;
+      margin-left: 20px;
+      @media #{$mq-phone} {
+        margin: 0;
+        &::before {
+          content: '\A';
+          white-space: pre;
+        }
+      }
+
+      button {
+        display: inline;
+        vertical-align: middle;
+        margin: 0 5px;
+        padding: 0;
+
+        svg {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+    .admin-delete-confirm {
+      display: inline;
+      font-family: 'Markazi text', serif;
+      font-size: 1.5rem;
+      vertical-align: middle;
+      transition: 0.2s all ease-in-out;
+      @media #{$mq-phone} {
+        display: none;
+      }
+
+      span {
+        display: inline-block;
+        width: 17px;
+        height: 1pt;
+        background: $white;
+        vertical-align: middle;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      button {
+        margin: 0;
+        padding: 0;
+        margin-left: 10px;
+        font-size: 1.3rem;
+        text-decoration: underline;
+      }
+
+      button.delete {
+        color: $alert;
+      }
+    }
+  }
+
+  .novel-back {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: $white;
+    @media #{$mq-phone} {
+      top: 1%;
+    }
+  }
+
+  .novel-content {
+    margin-top: 25vh;
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+    font-size: 1.7rem;
+    letter-spacing: 0.1px;
+    line-height: 2rem;
+    @media #{$mq-phone} {
+      font-size: 1.4rem;
+      width: 80%;
+      margin-left: 10vw;
+      margin-top: 25vh;
+      line-height: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      background: none;
+      border: 3pt dashed $white;
+      font-family: 'Markazi text', serif;
+      text-align: center;
+      font-size: inherit;
+      width: 100%;
+      margin-left: -5%;
+      padding: 5%;
+      resize: none;
+    }
+
+    .edit-actions {
+      float: right;
+      margin: 0;
+      padding: 0;
+      margin-right: calc(-5% - 6pt);
+
+      button {
+        font-family: inherit;
+        font-size: inherit;
+        text-decoration: underline;
+        margin: 0 5px;
+        padding: 0;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .comments-header {
+    margin-top: 6%;
+    margin-left: 25pt;
+    font-family: 'Forum', serif;
+    font-size: 3.5rem;
+  }
+
+  .comments {
+    width: 60%;
+    margin: 4% 20% 15vh;
+    @media #{$mq-phone} {
+      width: 80%;
+      margin-left: 10vw;
+    }
+
+    .write {
+      width: 100%;
+      position: relative;
+
+      input {
+        width: calc(100% - 130px);
+        background: none;
+        border: none;
+        border-bottom: 2.5pt solid $white;
+        font-family: 'Markazi text', serif;
+        font-size: 1.8rem;
+        line-height: 1rem;
+        padding: 0.1rem 80px 0.1rem 0;
+        margin: 0;
+        @media #{$mq-phone} {
+          font-size: 1rem;
+        }
+      }
+
+      .char-limit {
+        position: absolute;
+        top: 0.3rem;
+        right: 50px;
+        font-size: 1.6rem;
+        opacity: 0.8;
+        @media #{$mq-phone} {
+          font-size: 0.8rem;
+        }
+      }
+
+      button[type='submit'] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        fill: $white;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+
+        svg {
+          width: 45px;
+          height: 45px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+#err-bound {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  h1 {
+    font-size: 4rem;
+  }
+  p {
+    margin-top: 20px;
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,84 @@
+os: linux
+dist: bionic
+jobs:
+  include:
+  - language: node_js
+    node_js: 12
+    name: Frontend test
+    cache: yarn
+    stage: test
+    before_install: cd frontend
+    install: yarn install
+    script: yarn test
+    after_script:
+    - curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest
+      | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux")))
+      | .[0].browser_download_url')"
+    - chmod +x codacy-coverage-reporter
+    - "./codacy-coverage-reporter report -r coverage/clover.xml"
+    after_success:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --success --message "Frontend test passed"
+    after_failure:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --message "Frontend test failed"
+  - language: python
+    python: 3.7.6
+    name: Backend test
+    cache: pip
+    stage: test
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv
+      -in firebase.json.enc -out backend/firebase.json -d
+    - cd backend
+    install: pip install -r requirements.txt
+    script: coverage run --omit "*/venv/*,manage.py"  manage.py test && coverage xml
+    after_script:
+    - curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest
+      | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux")))
+      | .[0].browser_download_url')"
+    - chmod +x codacy-coverage-reporter
+    - "./codacy-coverage-reporter report -r coverage.xml"
+    after_success:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --success --message "Backend test passed"
+    after_failure:
+    - cd ..
+    - chmod +x send_discord
+    - ./send_discord --message "Backend test failed"
+  - stage: deploy
+    name: Deploy to heroku
+    if: (branch = dev or branch = master) and type = push
+    language: node_js
+    node_js: 12
+    cache: yarn
+    before_install:
+    - openssl aes-256-cbc -K $encrypted_bf57d00e42e8_key -iv $encrypted_bf57d00e42e8_iv -in firebase.json.enc -out backend/firebase.json -d
+    - cd frontend
+    install:
+    - yarn install
+    - yarn build
+    script:
+    - mkdir ../backend/frontend
+    - cp ./build/* ../backend/frontend/ -r
+    - cd ../..
+    - git clone https://$HEROKU_USERNAME:$HEROKU_API_KEY@git.heroku.com/$HEROKU_NAME.git heroku
+    - cp novel/backend/* heroku/ -r
+    - cd heroku/
+    - git add .
+    after_script:
+    - cd ../heroku/
+    - git commit -am "deploy"
+    - git push
+    after_success:
+    - cd ../novel
+    - chmod +x send_discord
+    - ./send_discord --success --message "Deploy successful"
+    after_failure:
+    - cd ../novel
+    - chmod +x send_discord
+    - ./send_discord --message "Deploy failed"
+
