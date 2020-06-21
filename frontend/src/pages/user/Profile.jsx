@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
+import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -10,6 +11,8 @@ import Menu from '../components/Menu';
 
 import { setPopup } from '../../actions/popup';
 import { auth } from '../../firebase';
+
+import { ReactComponent as Reply } from '../../assets/reply.svg';
 
 import '../../css/user/profile.scss';
 
@@ -84,6 +87,27 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
         </div>
         <div className='col-center'>
           <h3>{t('profile_last_comments')}</h3>
+          <div className='recent-comments'>
+            {comments.map(novel => (
+              <div key={novel.path} className='comment-wrapper'>
+                <h3>
+                  {novel.title}
+                  <Link to={`/novels/${novel.path}`}>
+                    <Reply />
+                  </Link>
+                </h3>
+                {novel.comments.map(cmt => (
+                  <div key={cmt.id} className='comment-body'>
+                    <p className='comment-title'>
+                      {cmt.senderName} |{' '}
+                      <Moment fromNow>{cmt.writtenAt}</Moment>
+                    </p>
+                    <p className='comment-content'>{cmt.content}</p>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
         <div className='col-side'>
           <div className='col-item col-item-right'>

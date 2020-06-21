@@ -210,9 +210,13 @@ const Comment = ({
 
   let senderDisplay;
   if (sender.isYou) {
-    senderDisplay = <span className='sender-modif'>{t('you')}</span>;
+    senderDisplay = <span className='sender-you'>{t('you')}</span>;
   } else if (sender.isAdmin) {
-    senderDisplay = <span className='sender-modif'>Nóri {t('author')}</span>;
+    senderDisplay = (
+      <span className='sender-admin'>
+        Nóri <span>{t('author')}</span>
+      </span>
+    );
   } else senderDisplay = <span>{sender.name}</span>;
   switch (modif) {
     case 'deleted':

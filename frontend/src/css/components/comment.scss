@@ -16,12 +16,24 @@
     p:not(.likes) {
       border-bottom: 2pt solid $white;
       padding-bottom: 3px;
-      .sender-modif {
+      .sender-you {
         background: $white;
         border-radius: 5px;
         padding: 0 5px;
         color: $bg;
         text-transform: capitalize;
+      }
+      .sender-admin {
+        font-family: 'Forum';
+        span {
+          font-family: 'Markazi text';
+          font-size: 1.5rem;
+          vertical-align: top;
+          background: $white;
+          border-radius: 5px;
+          padding: 0 5px;
+          color: $bg;
+        }
       }
     }
     p {
