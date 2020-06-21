@@ -136,15 +136,17 @@ const Comment = ({
         `${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`,
       );
       setComments(res.data);
-      fader.forEach(el => (el.style.opacity = 0));
-      setTimeout(() => {
-        if (modif === 'banned') {
-          setModif('success');
-        } else {
-          setModif('deleted');
-        }
-        fader.forEach(el => (el.style.opacity = 1));
-      }, 200);
+      if (role === 'admin') {
+        fader.forEach(el => (el.style.opacity = 0));
+        setTimeout(() => {
+          if (modif === 'banned') {
+            setModif('success');
+          } else {
+            setModif('deleted');
+          }
+          fader.forEach(el => (el.style.opacity = 1));
+        }, 200);
+      }
     } catch (err) {
       console.error(err);
       setPopup(t('err_del_comment'), 'err');
@@ -307,23 +309,23 @@ const Comment = ({
             >
               <Reply />
             </button>
+            {(role === 'admin' || sender.isYou) && (
+              <button
+                type='button'
+                className='admin-btn'
+                onClick={() => deleteComment()}
+              >
+                <Cross />
+              </button>
+            )}
             {role === 'admin' && (
-              <>
-                <button
-                  type='button'
-                  className='admin-btn'
-                  onClick={() => deleteComment()}
-                >
-                  <Cross />
-                </button>
-                <button
-                  type='button'
-                  className='admin-btn'
-                  onClick={() => banUser()}
-                >
-                  <Ban className='ban' />
-                </button>
-              </>
+              <button
+                type='button'
+                className='admin-btn'
+                onClick={() => banUser()}
+              >
+                <Ban className='ban' />
+              </button>
             )}
           </div>
           <p className='comment-content'>
