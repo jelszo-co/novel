@@ -147,6 +147,9 @@
     "success_email_send": "Email sent successfully.",
     "success_acc_delete": "Account deleted successfully.",
     "success_update_pass": "Password updated successfully.",
-    "success_update_email": "E-mail updated successfully."
+    "success_update_email": "E-mail updated successfully.",
+
+    "react_err": "React has encountered an error.",
+    "react_err_tip": "Try reloading the page. if the problem persists, please contact us."
   }
 }

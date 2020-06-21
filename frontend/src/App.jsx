@@ -24,6 +24,7 @@ import UpdateEmail from './pages/user/UpdateEmail';
 import UpdatePass from './pages/user/UpdatePass';
 import ResetPass from './pages/user/ResetPass';
 import ActionCenter from './pages/components/ActionCenter';
+import ErrorBoundary from './pages/ErrorBoundary';
 
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
@@ -44,30 +45,32 @@ const App = () => {
     });
   }, []);
   return (
-    <Provider store={store}>
-      <Router>
-        <Popup />
-        <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/list' component={List} />
-          <Route exact path='/contact' component={Contact} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/novels/:title' component={Novel} />
+    <ErrorBoundary>
+      <Provider store={store}>
+        <Router>
+          <Popup />
+          <Switch>
+            <Route exact path='/' component={Landing} />
+            <Route exact path='/list' component={List} />
+            <Route exact path='/contact' component={Contact} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/novels/:title' component={Novel} />
 
-          <Route exact path='/profile' component={Profile} />
-          <Route exact path='/delete' component={DeleteUser} />
-          <Route exact path='/update-email' component={UpdateEmail} />
-          <Route exact path='/update-pass' component={UpdatePass} />
-          <Route exact path='/reset-pass' component={ResetPass} />
-          <Route exact path='/action-center' component={ActionCenter} />
+            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/delete' component={DeleteUser} />
+            <Route exact path='/update-email' component={UpdateEmail} />
+            <Route exact path='/update-pass' component={UpdatePass} />
+            <Route exact path='/reset-pass' component={ResetPass} />
+            <Route exact path='/action-center' component={ActionCenter} />
 
-          <Route exact path='/admin' component={Admin} />
-          <Route exact path='/admin/banned' component={Banned} />
+            <Route exact path='/admin' component={Admin} />
+            <Route exact path='/admin/banned' component={Banned} />
 
-          <Route component={Err} />
-        </Switch>
-      </Router>
-    </Provider>
+            <Route component={Err} />
+          </Switch>
+        </Router>
+      </Provider>
+    </ErrorBoundary>
   );
 };
 

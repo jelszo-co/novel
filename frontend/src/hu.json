@@ -147,6 +147,9 @@
     "success_email_send": "Email sikeresen elküldve.",
     "success_acc_delete": "Fiók sikeresen törölve.",
     "success_update_pass": "Jelszó sikeresen frissítve.",
-    "success_update_email": "E-mail sikeresen frissítve."
+    "success_update_email": "E-mail sikeresen frissítve.",
+
+    "react_err": "A React hibába ütközött.",
+    "react_err_tip": "Próbálkozz az oldal újratöltésével. Ha a probléma továbbra is előfordul, kérlek lépj kapcsolatba velünk."
   }
 }
