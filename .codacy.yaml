@@ -1,0 +1,5 @@
+---
+engines:
+  eslint:
+    enabled: true
+    base_sub_dir: frontend/
