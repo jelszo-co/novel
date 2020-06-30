@@ -336,7 +336,7 @@ const Comment = ({
                 key={reply.id}
                 comment={reply}
                 isReply
-                role={role}
+                user={{ role, fUser }}
                 setPopup={setPopup}
                 cascadedReplyBar={replyBar}
                 cascadedReplyState={replyState}
