@@ -1,0 +1,36 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/frontend"
+  schedule:
+    interval: daily
+    time: "08:00"
+    timezone: Europe/Budapest
+  open-pull-requests-limit: 99
+  target-branch: dev
+  assignees:
+  - tasztalos69
+  ignore:
+  - dependency-name: moment
+    versions:
+    - "> 2.25.0"
+    - "< 2.26"
+  - dependency-name: "@testing-library/jest-dom"
+    versions:
+    - "> 5.7.0"
+  - dependency-name: "@testing-library/react"
+    versions:
+    - "> 10.0.4"
+  - dependency-name: "@testing-library/user-event"
+    versions:
+    - "> 10.2.4"
+- package-ecosystem: pip
+  directory: "/backend"
+  schedule:
+    interval: daily
+    time: "08:00"
+    timezone: Europe/Budapest
+  open-pull-requests-limit: 99
+  target-branch: dev
+  assignees:
+  - bnctth
