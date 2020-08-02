@@ -73,7 +73,10 @@ const Novel = ({
 
   const handleComment = async () => {
     if (comment.length > 0) {
-      if (role === 'stranger') return setMainCommentPopup(!mainCommentPopup);
+      if (role === 'stranger') {
+        setMainCommentPopup(!mainCommentPopup);
+        if (isMobile) alert('A kommenteléshez előbb be kell jelentkezned.');
+      }
       try {
         const res = await axios.post(
           `${process.env.REACT_APP_SRV_ADDR}/comment/path/${match.params.title}`,

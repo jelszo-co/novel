@@ -22,16 +22,7 @@ import '../../css/components/comment.scss';
 
 const Comment = ({
   isReply = false,
-  comment: {
-    id,
-    sender,
-    writtenAt,
-    likes,
-    likedByMe,
-    recipient,
-    content,
-    replies,
-  },
+  comment: { id, sender, writtenAt, likes, likedByMe, recipient, content, replies },
   user: { role, fUser },
   setComments,
   setPopup,
@@ -51,6 +42,8 @@ const Comment = ({
   const limit = 300;
   const [char, setChar] = useState(limit);
   const [reply, setReply] = useState('');
+
+  const isMobile = window.innerWidth <= 800;
 
   if (isReply) {
     replyBar = cascadedReplyBar;
@@ -72,15 +65,13 @@ const Comment = ({
     if (reply.length > 0) {
       if (role === 'stranger') {
         setReplyPopup(!replyPopup);
+        if (isMobile) alert('A válaszhoz előbb be kell jelentkezned.');
       } else {
         try {
-          const res = await axios.post(
-            `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`,
-            {
-              content: reply,
-              recipient: sender.id,
-            },
-          );
+          const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`, {
+            content: reply,
+            recipient: sender.id,
+          });
           setComments(res.data);
           setReply('');
           setReplyState(false);
@@ -95,13 +86,10 @@ const Comment = ({
 
   const handleDeauthReply = async () => {
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`,
-        {
-          content: reply,
-          recipient: sender.id,
-        },
-      );
+      const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`, {
+        content: reply,
+        recipient: sender.id,
+      });
       setComments(res.data);
       setReply('');
     } catch (err) {
@@ -114,9 +102,7 @@ const Comment = ({
   const handleLike = async () => {
     if (fUser === null) return setPopup(t('err_login_fav'), 'err');
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`,
-      );
+      const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/like`);
       setComments(res.data);
     } catch (err) {
       console.error(err);
@@ -131,9 +117,7 @@ const Comment = ({
 
   const deleteComment = async (cId = id) => {
     try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`,
-      );
+      const res = await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`);
       setComments(res.data);
       if (role === 'admin') {
         fader.forEach(el => (el.style.opacity = 0));
@@ -171,9 +155,7 @@ const Comment = ({
 
   const banUser = async (uId = sender.id) => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/ban/`,
-      );
+      await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/user/${uId}/ban/`);
       fader.forEach(el => (el.style.opacity = 0));
       setTimeout(() => {
         if (modif === 'deleted') {
@@ -244,10 +226,7 @@ const Comment = ({
             <button type='button' onClick={() => deleteComment(commentId)}>
               {t('delete_this_comment')}
             </button>
-            <button
-              type='button'
-              onClick={() => deleteAllComments(commentSender.id)}
-            >
+            <button type='button' onClick={() => deleteAllComments(commentSender.id)}>
               {t('delete_all_comments')}
             </button>
           </div>
@@ -266,15 +245,21 @@ const Comment = ({
     default:
       return (
         <div
-          className={`comment fader fader-${commentId} ${
-            isReply ? 'comment-reply' : ''
-          }`}
+          className={`comment fader fader-${commentId}${isReply ? ' comment-reply' : ''}`}
           ref={commentWrapper}
         >
           <div className='title-bar'>
-            <p>
-              {senderDisplay} | <Moment fromNow>{writtenAt}</Moment>
-            </p>
+            {isMobile ? (
+              <p>
+                {senderDisplay}
+                <br />
+                <Moment fromNow>{writtenAt}</Moment>
+              </p>
+            ) : (
+              <p>
+                {senderDisplay} | <Moment fromNow>{writtenAt}</Moment>
+              </p>
+            )}
             <div className='likes'>
               {likedByMe ? (
                 <button type='button' onClick={() => handleLike()}>
@@ -286,43 +271,32 @@ const Comment = ({
                 </button>
               )}
               <p className='likes'>{likes}</p>
-            </div>
-            <button
-              type='button'
-              onClick={() => {
-                setReplyState(!replyState);
-                replyBar.current.style.pointerEvents = replyState
-                  ? 'all'
-                  : 'none';
-                replyBar.current.style.marginTop = replyState
-                  ? '10px'
-                  : '-1.6rem';
-                replyBar.current.style.opacity = replyState ? 1 : 0;
-                if (!replyState) {
-                  setTimeout(() => {
-                    setReply('');
-                    setReplyPopup(false);
-                  }, 200);
-                }
-              }}
-            >
-              <Reply />
-            </button>
-            {(role === 'admin' || sender.isYou) && (
               <button
+                className='reply-btn'
                 type='button'
-                className='admin-btn'
-                onClick={() => deleteComment()}
+                onClick={() => {
+                  setReplyState(!replyState);
+                  replyBar.current.style.pointerEvents = replyState ? 'all' : 'none';
+                  replyBar.current.style.marginTop = replyState ? '10px' : '-1.6rem';
+                  replyBar.current.style.opacity = replyState ? 1 : 0;
+                  if (!replyState) {
+                    setTimeout(() => {
+                      setReply('');
+                      setReplyPopup(false);
+                    }, 200);
+                  }
+                }}
               >
+                <Reply />
+              </button>
+            </div>
+            {(role === 'admin' || sender.isYou) && (
+              <button type='button' className='admin-btn' onClick={() => deleteComment()}>
                 <Cross />
               </button>
             )}
             {role === 'admin' && (
-              <button
-                type='button'
-                className='admin-btn'
-                onClick={() => banUser()}
-              >
+              <button type='button' className='admin-btn' onClick={() => banUser()}>
                 <Ban className='ban' />
               </button>
             )}

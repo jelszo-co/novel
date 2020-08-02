@@ -39,7 +39,7 @@
       margin-left: 20px;
       cursor: pointer;
       @media #{$mq-phone} {
-        margin-left: 0;
+        margin-left: 5px;
       }
     }
 
@@ -49,6 +49,10 @@
       fill: $white;
       vertical-align: middle;
       margin-bottom: 6px;
+      @media #{$mq-phone} {
+        height: 1.8rem;
+        width: 1.8rem;
+      }
     }
 
     .fav-popup {
@@ -141,6 +145,7 @@
     color: $white;
     @media #{$mq-phone} {
       top: 1%;
+      font-size: 1.6rem;
     }
   }
 
@@ -231,7 +236,9 @@
         padding: 0.1rem 80px 0.1rem 0;
         margin: 0;
         @media #{$mq-phone} {
-          font-size: 1rem;
+          font-size: 1.2rem;
+          padding-right: 50px;
+          width: calc(100% - 90px);
         }
       }
 
@@ -242,7 +249,8 @@
         font-size: 1.6rem;
         opacity: 0.8;
         @media #{$mq-phone} {
-          font-size: 0.8rem;
+          font-size: 1rem;
+          right: 40px;
         }
       }
 
@@ -260,6 +268,10 @@
         svg {
           width: 45px;
           height: 45px;
+          @media #{$mq-phone} {
+            width: 35px;
+            height: 35px;
+          }
         }
       }
     }
