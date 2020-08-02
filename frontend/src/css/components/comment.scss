@@ -1,8 +1,11 @@
 @import '../variables';
 .comment {
   width: 80%;
-  margin: 25px calc(10% - 3pt);
+  margin: 25px calc(5% - 3pt);
   border: 3pt solid transparent;
+  @media #{$mq-phone} {
+    width: 90%;
+  }
   .title-bar {
     position: relative;
     display: flex;

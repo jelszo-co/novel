@@ -18,13 +18,7 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Trash } from '../assets/trash.svg';
 
 import { setPopup } from '../actions/popup';
-import {
-  getNovel,
-  setNovel,
-  setComments,
-  clearNovel,
-  getNovels,
-} from '../actions/novels';
+import { getNovel, setNovel, setComments, clearNovel, getNovels } from '../actions/novels';
 
 import '../css/all/novel.scss';
 
@@ -54,12 +48,12 @@ const Novel = ({
   const [mainCommentPopup, setMainCommentPopup] = useState(false);
   const [redirectOnSave, setRedirect] = useState('');
 
+  const isMobile = window.innerWidth <= 800;
+
   const setEditData = gibberish => {
     const replacement = gibberish.content
       .split('\n')
-      .map((item, i) =>
-        gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`,
-      );
+      .map((item, i) => (gibberish.content.split('\n').length === i + 1 ? item : `${item}\n`));
 
     return setModifiedEditData({
       content: replacement,
@@ -113,6 +107,7 @@ const Novel = ({
   const handleFavorite = async () => {
     if (role !== ('user' || 'admin')) {
       setFavPopup(!favPopup);
+      if (isMobile) alert('A kedvencekhez adáshoz kérlek jelentkezz be!');
     } else {
       try {
         const res = await axios.post(
@@ -129,9 +124,7 @@ const Novel = ({
   const handleDelete = async () => {
     if (document.querySelector('.admin-delete-confirm').style.opacity === '1') {
       try {
-        await axios.delete(
-          `${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`,
-        );
+        await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/novel/${match.params.title}/`);
         setPopup(t('deleted'));
         getNovels();
         history.push('/list');
@@ -183,9 +176,7 @@ const Novel = ({
         type='button'
         className='novel-back'
         onClick={() =>
-          editMode
-            ? window.confirm(t('alert_editing')) && history.goBack()
-            : history.goBack()
+          editMode ? window.confirm(t('alert_editing')) && history.goBack() : history.goBack()
         }
       >
         {t('back')}
@@ -215,20 +206,13 @@ const Novel = ({
                   <Trash />
                 </button>
               </div>
-              <div
-                className='admin-delete-confirm'
-                style={{ opacity: delPopup ? 1 : 0 }}
-              >
+              <div className='admin-delete-confirm' style={{ opacity: delPopup ? 1 : 0 }}>
                 <span />
                 {t('del_popup')}
                 <button type='button' onClick={() => setDelPopup(false)}>
                   {t('cancel')}
                 </button>
-                <button
-                  type='button'
-                  className='delete'
-                  onClick={() => handleDelete()}
-                >
+                <button type='button' className='delete' onClick={() => handleDelete()}>
                   {t('delete')}
                 </button>
               </div>
@@ -252,11 +236,7 @@ const Novel = ({
             </>
           )}
         </h2>
-        <Moment
-          format='YYYY. MMMM DD.'
-          locale={t('locale_name')}
-          className='novel-date'
-        >
+        <Moment format='YYYY. MMMM DD.' locale={t('locale_name')} className='novel-date'>
           {uploadedAt}
         </Moment>
       </div>
@@ -343,8 +323,7 @@ const Novel = ({
 Novel.propTypes = {
   match: PropTypes.object.isRequired,
   user: PropTypes.shape({
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
-      .isRequired,
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
   }).isRequired,
   loading: PropTypes.bool.isRequired,
   novel: PropTypes.shape({
