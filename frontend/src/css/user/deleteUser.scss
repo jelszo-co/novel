@@ -12,6 +12,9 @@
     }
     p {
       font-size: 1.4rem;
+      @media #{$mq-phone} {
+        text-align: center;
+      }
     }
     input[type='password'] {
       width: 90%;

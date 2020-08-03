@@ -48,10 +48,19 @@
     padding: 0;
     transition: 0.2s all ease-in-out;
 
+    @media #{$mq-phone} {
+      right: 50%;
+      transform: translate(50%, 150%);
+    }
+
     li {
       margin: 0;
       margin-left: 25px;
       padding: 0;
+
+      @media #{$mq-phone} {
+        white-space: nowrap;
+      }
 
       p {
         margin: 0;
