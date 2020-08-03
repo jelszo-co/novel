@@ -52,6 +52,7 @@
     #login-form {
       @media #{$mq-phone} {
         margin-top: 150px;
+        margin-bottom: 150px;
       }
     }
 
@@ -250,6 +251,10 @@
           color: $alert;
           transition: 0.1s all ease-in-out;
           opacity: 0;
+
+          @media #{$mq-phone} {
+            bottom: -80%;
+          }
         }
 
         p.forgot-instructions {

@@ -11,6 +11,13 @@
     flex-direction: row;
     justify-content: space-between;
 
+    @media #{$mq-phone} {
+      flex-direction: column;
+      height: auto;
+      transform: translateX(-50%);
+      top: 25%;
+    }
+
     .profile-popup {
       display: none;
       opacity: 0;
@@ -22,17 +29,33 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      @media #{$mq-phone} {
+        order: 2;
+      }
+    }
+
+    .col-side-left {
+      @media #{$mq-phone} {
+        order: 3;
+      }
     }
 
     .border-left {
       border-left: 2pt solid $white;
       padding: 4pt 6pt;
+
+      @media #{$mq-phone} {
+        border: none;
+        text-align: center;
+        margin-top: 15px;
+      }
     }
 
     .col-item-left {
       *:not(:first-child) {
         margin-top: 5px;
       }
+
       .name {
         font-family: 'Forum', serif;
         font-size: 1.5rem;
@@ -84,11 +107,22 @@
 
     .col-item-right {
       text-align: right;
+      @media #{$mq-phone} {
+        margin-top: 50px;
+        text-align: center;
+      }
       button {
         border-right: 2pt solid $white;
         padding: 5pt 6pt;
         float: right;
         margin: 0;
+        @media #{$mq-phone} {
+          float: unset;
+          border: none;
+          display: inline-block;
+          margin-top: 20px;
+          padding: 0;
+        }
       }
 
       .fav-title {
@@ -99,6 +133,10 @@
 
     .col-center {
       flex: 2.5 1 0px;
+
+      @media #{$mq-phone} {
+        order: 1;
+      }
 
       h3.col-center-title {
         text-align: center;
@@ -170,6 +208,9 @@
     .fav-novels {
       margin-top: 25px;
       border-right: 2pt solid $white;
+      @media #{$mq-phone} {
+        border: none;
+      }
       .no-fav {
         display: block;
         font-size: 1.4rem;
@@ -202,6 +243,7 @@
       line-height: 1.1rem;
       text-decoration: underline;
       cursor: pointer;
+      margin-bottom: 50px;
     }
   }
 }
