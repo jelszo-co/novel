@@ -75,7 +75,7 @@ const Novel = ({
     if (comment.length > 0) {
       if (role === 'stranger') {
         setMainCommentPopup(!mainCommentPopup);
-        if (isMobile) alert('A kommenteléshez előbb be kell jelentkezned.');
+        if (isMobile) alert('form_login_title', 'alert_comment_login');
       }
       try {
         const res = await axios.post(
@@ -110,7 +110,7 @@ const Novel = ({
   const handleFavorite = async () => {
     if (role !== ('user' || 'admin')) {
       setFavPopup(!favPopup);
-      if (isMobile) alert('A kedvencekhez adáshoz kérlek jelentkezz be!');
+      if (isMobile) alert('form_login_title', 'fav_popup');
     } else {
       try {
         const res = await axios.post(

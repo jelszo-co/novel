@@ -108,6 +108,8 @@
     "delete_lore": "Are you sure? This can't be undone!",
 
     "alert_editing": "You're editing a novel. Do you want to exit?",
+    "alert_reply_login": "To reply, you must log in first.",
+    "alert_comment_login": "To comment, you must log in first.",
 
     "err_novel_list": "An error has occurred while listing the novels.",
     "err_novel_single": "An error has occurred while listing the novel.",

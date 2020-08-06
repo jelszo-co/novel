@@ -10,6 +10,7 @@ import { getNovels } from './actions/novels';
 import './css/app.scss';
 
 import Popup from './pages/components/Popup';
+import Alert from './pages/components/Alert';
 import Landing from './pages/Landing';
 import List from './pages/List';
 import Contact from './pages/Contact';
@@ -29,6 +30,7 @@ import ErrorBoundary from './pages/ErrorBoundary';
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
 import { loadUser } from './actions/user';
+import { setAlert } from './actions/alert';
 
 const App = () => {
   useEffect(() => {
@@ -43,12 +45,14 @@ const App = () => {
         cookie.remove('usertoken');
       }
     });
+    window.alert = (title, text) => store.dispatch(setAlert(title, text));
   }, []);
   return (
     <ErrorBoundary>
       <Provider store={store}>
         <Router>
           <Popup />
+          <Alert />
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route exact path='/list' component={List} />

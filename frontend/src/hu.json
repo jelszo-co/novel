@@ -55,6 +55,7 @@
 
     "forgot_button": "Elfelejtett jelszó?",
     "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
+    "success": "Siker!",
 
     "fav_popup": "A kedvencekhez adáshoz kérlek jelentkezz be.",
     "del_popup": "Biztosan törlöd?",
@@ -107,6 +108,8 @@
     "delete_lore": "Biztos vagy benne? Ez visszavonhatatlan!",
 
     "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
+    "alert_reply_login": "A válaszhoz előbb be kell jelentkezned.",
+    "alert_comment_login": "A kommenteléshez előbb be kell jelentkezned.",
 
     "err_novel_list": "Hiba a novellák lekérdezésében.",
     "err_novel_single": "Hiba a novella lekérdezésében.",
@@ -140,7 +143,6 @@
     "err_admin_not_doc": "A novellát .doc vagy .docx fájlként töltsd fel.",
     "err_admin_upload_novel": "Hiba a novella feltöltése közben.",
 
-    "success": "Siker!",
     "success_login": "Sikeres bejelentkezés.",
     "success_logout": "Sikeres Kijelentkezés.",
     "success_save": "Sikeres mentés!",
@@ -150,6 +152,6 @@
     "success_update_email": "E-mail sikeresen frissítve.",
 
     "react_err": "A React hibába ütközött.",
-    "react_err_tip": "Próbálkozz az oldal újratöltésével. Ha a probléma továbbra is előfordul, kérlek lépj kapcsolatba velünk."
+    "react_err_tip": "Próbálkozz az oldal újratöltésével. Ha a probléma továbbra is fennáll, kérlek lépj kapcsolatba velünk."
   }
 }

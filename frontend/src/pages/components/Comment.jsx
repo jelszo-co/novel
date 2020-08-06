@@ -65,7 +65,7 @@ const Comment = ({
     if (reply.length > 0) {
       if (role === 'stranger') {
         setReplyPopup(!replyPopup);
-        if (isMobile) alert('A válaszhoz előbb be kell jelentkezned.');
+        if (isMobile) alert('form_login_title', 'alert_reply_login');
       } else {
         try {
           const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${id}/reply`, {
