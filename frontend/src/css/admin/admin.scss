@@ -181,6 +181,9 @@ $indent: 4%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: 0.2s all ease-in-out;
+  @media #{$mq-phone} {
+    width: 80vw;
+  }
 
   button {
     font-family: 'Forum';
@@ -191,6 +194,10 @@ $indent: 4%;
     &:hover {
       border-width: 3pt;
     }
+  }
+
+  input[type='file'] {
+    text-align: center;
   }
 
   .upload-lang-selector {
@@ -271,6 +278,10 @@ $indent: 4%;
       width: 20vw;
       height: 1.6rem;
       text-align: center;
+
+      @media #{$mq-phone} {
+        width: 100%;
+      }
       &[type='text'] {
         margin-bottom: 3.6rem;
         font-size: 1.5rem;
@@ -290,6 +301,9 @@ $indent: 4%;
       font-family: 'Markazi Text';
       font-size: 1.3rem;
       border-bottom: 2pt solid $white;
+      @media #{$mq-phone} {
+        width: 100%;
+      }
     }
     .icon {
       margin: 30px 0;

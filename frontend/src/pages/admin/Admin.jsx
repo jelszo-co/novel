@@ -91,12 +91,9 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
                   type='button'
                   onClick={() => {
                     axios
-                      .post(
-                        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${id}/unban/`,
-                        {
-                          id,
-                        },
-                      )
+                      .post(`${process.env.REACT_APP_SRV_ADDR}/comment/user/${id}/unban/`, {
+                        id,
+                      })
                       .then(res => setBanned(res.data))
                       .catch(err => {
                         console.error(err);
@@ -134,6 +131,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
 };
 
 const Uploader = ({ setPopup, getNovels }) => {
+  const isMobile = window.innerWidth <= 800;
   const { t } = useTranslation();
   const [phase, setPhase] = useState(0);
   const [novelData, setNovelData] = useState({
@@ -160,15 +158,11 @@ const Uploader = ({ setPopup, getNovels }) => {
   const onDrop = async files => {
     try {
       if (files.length > 1) return setPopup(t('err_admin_one_novel'), 'err');
-      if (!/(.doc|.docx)/i.test(files[0].name))
-        return setPopup(t('err_admin_not_doc'), 'err');
+      if (!/(.doc|.docx)/i.test(files[0].name)) return setPopup(t('err_admin_not_doc'), 'err');
       increment();
       const data = new FormData();
       data.append('noveldoc', files[0]);
-      const res = await axios.post(
-        `${process.env.REACT_APP_SRV_ADDR}/novel/new`,
-        data,
-      );
+      const res = await axios.post(`${process.env.REACT_APP_SRV_ADDR}/novel/new`, data);
       setNovelData({ ...novelData, ...res.data });
       console.log({ ...novelData, ...res.data });
       increment();
@@ -179,6 +173,7 @@ const Uploader = ({ setPopup, getNovels }) => {
     }
     return null;
   };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   let component;
@@ -191,16 +186,18 @@ const Uploader = ({ setPopup, getNovels }) => {
       );
       break;
     case 1:
-      component = (
-        <div {...getRootProps({ className: 'uploader-zone' })}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>{t('upload_dropzone_active')}</p>
-          ) : (
-            <p>{t('upload_dropzone_hint')}</p>
-          )}
-        </div>
-      );
+      isMobile
+        ? (component = <input type='file' onChange={e => onDrop(e.target.files)} />)
+        : (component = (
+            <div {...getRootProps({ className: 'uploader-zone' })}>
+              <input {...getInputProps()} />
+              {isDragActive ? (
+                <p>{t('upload_dropzone_active')}</p>
+              ) : (
+                <p>{t('upload_dropzone_hint')}</p>
+              )}
+            </div>
+          ));
       break;
     case 2:
       component = (
@@ -248,9 +245,7 @@ const Uploader = ({ setPopup, getNovels }) => {
             type='text'
             value={title}
             placeholder={t('title_hint')}
-            onChange={({ target }) =>
-              setNovelData({ ...novelData, title: target.value })
-            }
+            onChange={({ target }) => setNovelData({ ...novelData, title: target.value })}
           />
           <div className='icon'>
             <Word />
@@ -266,13 +261,10 @@ const Uploader = ({ setPopup, getNovels }) => {
           className='novel-params'
           onSubmit={async e => {
             e.preventDefault();
-            await axios.patch(
-              `${process.env.REACT_APP_SRV_ADDR}/novel/${path}`,
-              {
-                ...novelData,
-                private: false,
-              },
-            );
+            await axios.patch(`${process.env.REACT_APP_SRV_ADDR}/novel/${path}`, {
+              ...novelData,
+              private: false,
+            });
             increment();
             getNovels();
             setTimeout(() => {
@@ -288,9 +280,7 @@ const Uploader = ({ setPopup, getNovels }) => {
             value={lore}
             placeholder={t('description_hint')}
             spellCheck='false'
-            onChange={({ target }) =>
-              setNovelData({ ...novelData, lore: target.value })
-            }
+            onChange={({ target }) => setNovelData({ ...novelData, lore: target.value })}
           />
           <div className='icon'>
             <Word />
@@ -328,8 +318,7 @@ Admin.propTypes = {
   setPopup: PropTypes.func.isRequired,
   getNovels: PropTypes.func.isRequired,
   user: PropTypes.shape({
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
-      .isRequired,
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
   }).isRequired,
 };
 
