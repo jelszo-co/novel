@@ -1,4 +1,10 @@
 @import '../variables';
+#banned-wrapper {
+  .title {
+    white-space: normal;
+  }
+}
+
 #banned {
   width: 80vw;
   height: auto;
@@ -11,10 +17,17 @@
   grid-column-gap: 30px;
   grid-row-gap: 30px;
   text-align: center;
+  @media #{$mq-phone} {
+    grid-template-columns: repeat(2, 1fr);
+    top: 40%;
+  }
 
   p {
     font-size: 1.5rem;
     display: inline-block;
+    @media #{$mq-phone} {
+      white-space: nowrap;
+    }
     button {
       margin-left: 5px;
       display: inline-block;
@@ -36,4 +49,8 @@
   right: 2%;
   font-size: 2rem;
   cursor: pointer;
+  @media #{$mq-phone} {
+    font-size: 1.7rem;
+    right: 4%;
+  }
 }
