@@ -5,6 +5,13 @@ $indent: 4%;
 #admin {
   .panel {
     height: 70%;
+    @media #{$mq-phone} {
+      width: 90vw;
+      height: 70vh;
+      margin-left: 5vw;
+      border-bottom: 2pt solid $white;
+      margin-bottom: 50px;
+    }
 
     a.panel-link {
       position: absolute;
@@ -18,9 +25,9 @@ $indent: 4%;
       @media #{$mq-phone} {
         font-size: 1.2rem;
         border-bottom: 2px solid $white;
-        margin: 0 -20px;
+        margin: 0;
         margin-bottom: 40px;
-        white-space: normal;
+        white-space: nowrap;
         text-align: center;
       }
     }
@@ -36,6 +43,13 @@ $indent: 4%;
     position: absolute;
     left: $indent;
     top: $top;
+    @media #{$mq-phone} {
+      margin-top: 50%;
+      position: relative;
+      text-align: center;
+      left: unset;
+      top: unset;
+    }
 
     a.panel-link {
       left: 50%;
@@ -83,6 +97,12 @@ $indent: 4%;
     position: absolute;
     right: $indent;
     top: $top;
+    @media #{$mq-phone} {
+      position: relative;
+      text-align: center;
+      right: unset;
+      top: unset;
+    }
 
     a.panel-link {
       right: 50%;
@@ -117,6 +137,18 @@ $indent: 4%;
     top: $top;
     transform: translateX(-50%);
     height: 60%;
+    @media #{$mq-phone} {
+      position: relative;
+      width: 90vw;
+      height: 70vh;
+      margin-left: 5vw;
+      left: unset;
+      top: unset;
+      transform: none;
+      text-align: center;
+      border-bottom: 2pt solid $white;
+      margin-bottom: 50px;
+    }
   }
 
   .account-management {
@@ -127,6 +159,8 @@ $indent: 4%;
     @media #{$mq-phone} {
       width: 100vw;
       text-align: center;
+      position: relative;
+      margin-bottom: 100px;
     }
     button,
     a {
