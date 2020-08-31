@@ -7,9 +7,10 @@ $indent: 4%;
     height: 70%;
     @media #{$mq-phone} {
       width: 90vw;
-      height: 70vh;
+      min-height: 70vh;
       margin-left: 5vw;
       border-bottom: 2pt solid $white;
+      padding-bottom: 50px;
       margin-bottom: 50px;
     }
 
@@ -23,6 +24,8 @@ $indent: 4%;
       padding: 4px 10px;
       white-space: nowrap;
       @media #{$mq-phone} {
+        position: relative;
+        bottom: unset;
         font-size: 1.2rem;
         border-bottom: 2px solid $white;
         margin: 0;
@@ -54,10 +57,17 @@ $indent: 4%;
     a.panel-link {
       left: 50%;
       transform: translateX(-50%);
+      @media #{$mq-phone} {
+        left: unset;
+        transform: none;
+      }
     }
 
     .comments {
       max-width: 250px;
+      @media #{$mq-phone} {
+        max-width: unset;
+      }
       .comment-wrapper {
         h3 {
           font-size: 1.8rem;
@@ -107,6 +117,10 @@ $indent: 4%;
     a.panel-link {
       right: 50%;
       transform: translateX(50%);
+      @media #{$mq-phone} {
+        right: unset;
+        transform: none;
+      }
     }
 
     .banned-list {

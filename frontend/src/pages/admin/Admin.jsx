@@ -73,9 +73,13 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
             </div>
           ))}
         </div>
-        <Link to='/list' className='panel-link'>
-          {t('admin_comments_link')}
-        </Link>
+        {comments.length > 0 ? (
+          <Link to='/list' className='panel-link'>
+            {t('admin_comments_link')}
+          </Link>
+        ) : (
+          ''
+        )}
       </div>
       <div className='upload'>
         <p className='panel-title'>{t('admin_upload_title')}</p>
@@ -108,9 +112,13 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
             </div>
           ))}
         </div>
-        <Link to='/admin/banned' className='panel-link'>
-          {t('admin_banned_link')}
-        </Link>
+        {banned.length > 0 ? (
+          <Link to='/admin/banned' className='panel-link'>
+            {t('admin_banned_link')}
+          </Link>
+        ) : (
+          ''
+        )}
       </div>
       <div className='account-management'>
         <Link to='/update-email'>{t('admin_account_email')}</Link>
@@ -186,18 +194,14 @@ const Uploader = ({ setPopup, getNovels }) => {
       );
       break;
     case 1:
-      isMobile
-        ? (component = <input type='file' onChange={e => onDrop(e.target.files)} />)
-        : (component = (
-            <div {...getRootProps({ className: 'uploader-zone' })}>
-              <input {...getInputProps()} />
-              {isDragActive ? (
-                <p>{t('upload_dropzone_active')}</p>
-              ) : (
-                <p>{t('upload_dropzone_hint')}</p>
-              )}
-            </div>
-          ));
+      component = isMobile ? (
+        <input type='file' onChange={e => onDrop(e.target.files)} />
+      ) : (
+        <div {...getRootProps({ className: 'uploader-zone' })}>
+          <input {...getInputProps()} />
+          {isDragActive ? <p>{t('upload_dropzone_active')}</p> : <p>{t('upload_dropzone_hint')}</p>}
+        </div>
+      );
       break;
     case 2:
       component = (
