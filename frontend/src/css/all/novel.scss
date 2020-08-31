@@ -151,7 +151,8 @@
 
   .novel-content {
     margin-top: 25vh;
-    text-align: center;
+    text-align: justify;
+
     width: 60%;
     margin-left: 20%;
     font-size: 1.7rem;
@@ -173,7 +174,7 @@
       background: none;
       border: 3pt dashed $white;
       font-family: 'Markazi text', serif;
-      text-align: center;
+      text-align: justify;
       font-size: inherit;
       width: 100%;
       margin-left: -5%;
