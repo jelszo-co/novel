@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { withRouter, Redirect } from 'react-router-dom';
@@ -16,6 +16,12 @@ const EditWelcome = ({ user, history, setPopup }) => {
 
   const [text, setText] = useState('');
   const [lang, setLang] = useState('HU');
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_SRV_ADDR}/introduction?lang=${lang}`)
+      .then(res => setText(res.data.introduction));
+  }, [lang]);
 
   const handleSubmit = async e => {
     e.preventDefault();
