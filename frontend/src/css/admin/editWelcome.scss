@@ -1,0 +1,33 @@
+@import '../variables';
+#welcome-edit {
+  form {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+    textarea {
+      width: 50vw;
+      height: 50vh;
+      border-bottom: 2pt solid $white;
+      font-family: 'Markazi text';
+      font-size: 1.5rem;
+      resize: none;
+    }
+    button {
+      display: inline-block;
+      font-size: 1.8rem;
+      margin: 20px 30px 0;
+    }
+  }
+
+  .w-lng {
+    transition: 0.2s all ease-in-out;
+    border-bottom: 2pt solid transparent;
+    margin-bottom: 15px;
+  }
+  .w-lng-active {
+    border-bottom: 2pt solid $white;
+  }
+}

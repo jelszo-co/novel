@@ -121,6 +121,7 @@ const Admin = ({ user: { role }, setPopup, getNovels }) => {
         )}
       </div>
       <div className='account-management'>
+        <Link to='/admin/welcome-edit'>{t('admin_welcome_edit')}</Link>
         <Link to='/update-email'>{t('admin_account_email')}</Link>
         <Link to='/update-pass'>{t('admin_account_pass')}</Link>
         <button

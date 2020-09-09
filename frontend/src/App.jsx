@@ -26,6 +26,7 @@ import UpdatePass from './pages/user/UpdatePass';
 import ResetPass from './pages/user/ResetPass';
 import ActionCenter from './pages/components/ActionCenter';
 import ErrorBoundary from './pages/ErrorBoundary';
+import EditWelcome from './pages/admin/EditWelcome';
 
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
@@ -69,6 +70,7 @@ const App = () => {
 
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/admin/banned' component={Banned} />
+            <Route exact path='/admin/welcome-edit' component={EditWelcome} />
 
             <Route component={Err} />
           </Switch>

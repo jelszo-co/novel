@@ -86,6 +86,8 @@
     "admin_upload_title": "Új novella feltöltése",
     "admin_account_email": "E-mail módosítása",
     "admin_account_pass": "Jelszó módosítása",
+    "admin_welcome_edit": "Bemutatkozás szerkesztése",
+    "welcome_edit_success": "Bemutatkozás sikeresen frissítve!",
     "title_hint": "Az új novellám címe",
     "description_hint": "Rövid leírás",
     "upload_begin": "Feltöltés",
@@ -130,6 +132,7 @@
     "err_link_damaged": "Hibás link!",
     "err_update_email": "Hiba az email megváltoztatása közben.",
     "err_update_pass": "Hiba a jelszó megváltoztatása közben.",
+    "err_welcome_edit": "Hiba a bemutatkozás szerkesztése közben.",
 
     "err_login": "Hiba a bejelentkezés során.",
     "err_register": "Hiba a regisztráció során.",

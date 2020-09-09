@@ -86,6 +86,8 @@
     "admin_upload_title": "Upload new novel",
     "admin_account_email": "Change e-mail address",
     "admin_account_pass": "Change password",
+    "admin_welcome_edit": "Edit welcome text",
+    "welcome_edit_success": "Welcome text updated!",
     "title_hint": "Title of the novel",
     "description_hint": "Short role",
     "upload_begin": "Upload",
@@ -130,6 +132,7 @@
     "err_link_damaged": "Faulty link!",
     "err_update_email": "An error occurred during changing the e-mail.",
     "err_update_pass": "An error occurred during changing the password.",
+    "err_welcome_edit": "An error occurred while updating welcome text.",
 
     "err_login": "An error has occurred while logging in.",
     "err_register": "An error has occurred while signing up.",
