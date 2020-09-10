@@ -19,14 +19,14 @@ const EditWelcome = ({ user, history, setPopup }) => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_SRV_ADDR}/introduction?lang=${lang}`)
+      .get(`${process.env.REACT_APP_SRV_ADDR}/introduction/?lang=${lang}`)
       .then(res => setText(res.data.introduction));
   }, [lang]);
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_SRV_ADDR}/introduction`, {
+      await axios.post(`${process.env.REACT_APP_SRV_ADDR}/introduction/`, {
         introduction: text,
         lang,
       });
