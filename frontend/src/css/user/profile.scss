@@ -247,7 +247,9 @@
       line-height: 1.1rem;
       text-decoration: underline;
       cursor: pointer;
-      margin-bottom: 50px;
+      @media #{$mq-phone} {
+        margin-bottom: 50px;
+      }
     }
   }
 }

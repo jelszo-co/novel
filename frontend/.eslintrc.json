@@ -3,12 +3,7 @@
     "browser": true,
     "es6": true
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier",
-    "prettier/react"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb", "prettier", "prettier/react"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -31,7 +26,8 @@
     "no-console": "off",
     "no-shadow": "off",
     "no-param-reassign": "off",
-    "no-return-assign": "off"
+    "no-return-assign": "off",
+    "no-alert": "off"
   },
   "overrides": [
     { "files": "src/pages/Login.jsx", "rules": { "no-nested-ternary": "off" } },
@@ -40,10 +36,6 @@
       "rules": {
         "react/jsx-props-no-spreading": "off"
       }
-    },
-    {
-      "files": "src/pages/Novel.jsx",
-      "rules": { "no-alert": "off" }
     },
     {
       "files": "src/actions/*",

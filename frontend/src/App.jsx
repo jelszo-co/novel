@@ -46,7 +46,15 @@ const App = () => {
         cookie.remove('usertoken');
       }
     });
-    window.alert = (title, text) => store.dispatch(setAlert(title, text));
+    /**
+     * Override the default alert function
+     * @param {localeString} title - Title of the alert
+     * @param {localeString} text - Message of the alert
+     * @param {boolean} [false] isPassword - Whether to display a pass input and an OK button
+     * @param {function} [function=() => {}] callback - A callback fn
+     */
+    window.alert = (title, text, isInput, callback) =>
+      store.dispatch(setAlert(title, text, isInput, callback));
   }, []);
   return (
     <ErrorBoundary>

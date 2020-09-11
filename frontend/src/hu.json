@@ -40,6 +40,10 @@
     "login_google_title": "Bejelentkezés Google-lal",
     "login_fb_title": "Bejelentkezés Facebook-kal",
 
+    "account_connect": "Összekapcsolás",
+    "account_connect_pass": "Ahhoz, hogy összekacsold a fiókjaid, add emg a jelszavad.",
+    "account_connect_google": "Ahhoz, hogy összekacsold a fiókjaid, jelentkezz be Google-el.",
+
     "form_register_title": "Regisztráció",
     "form_login_title": "Bejelentkezés",
     "form_name": "Teljes Név",
@@ -137,6 +141,7 @@
     "err_login": "Hiba a bejelentkezés során.",
     "err_register": "Hiba a regisztráció során.",
     "err_uname_pass": "Hibás felhasználónév vagy jelszó!",
+    "err_pass": "Hibás jelszó!",
     "err_email": "Nem található ilyen e-mail cím.",
 
     "err_admin_block_users": "Hiba a tiltott felhasználók lekérdezésében.",
