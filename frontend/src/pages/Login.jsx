@@ -9,6 +9,7 @@ import axios from 'axios';
 import i18next from 'i18next';
 import { auth, GProvider, FProvider } from '../firebase';
 import { setPopup } from '../actions/popup';
+import { delAlert } from '../actions/alert';
 
 import Title from './components/Title';
 import Menu from './components/Menu';
@@ -20,7 +21,7 @@ import { ReactComponent as EyeCross } from '../assets/pass_eye_cross.svg';
 
 import '../css/all/login.scss';
 
-const Login = ({ user, setPopup }) => {
+const Login = ({ user, setPopup, delAlert }) => {
   // STATE
   const { t } = useTranslation();
   const [registerData, setRegisterData] = useState({
@@ -93,10 +94,7 @@ const Login = ({ user, setPopup }) => {
     if (!regEmail.match(emailPatt)) return alertUser('regEmail');
     if (!valid.length || !valid.case || !valid.num) return alertUser('regPass');
     try {
-      const res = await auth().createUserWithEmailAndPassword(
-        regEmail,
-        regPass,
-      );
+      const res = await auth().createUserWithEmailAndPassword(regEmail, regPass);
       const token = await res.user.getIdToken(true);
       cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
       await axios.put(`${process.env.REACT_APP_SRV_ADDR}/user/`, {
@@ -120,6 +118,7 @@ const Login = ({ user, setPopup }) => {
           name: res.user.displayName,
         });
       }
+      setPopup(t('success_login'));
     } catch (err) {
       console.error(err);
       setPopup(t('err_login'), 'err');
@@ -130,6 +129,7 @@ const Login = ({ user, setPopup }) => {
     try {
       auth().languageCode = i18next.t(['locale_name', 'en']);
       const res = await auth().signInWithPopup(FProvider);
+
       const token = await res.user.getIdToken(true);
       cookie.save('usertoken', token, { path: '/', sameSite: 'lax' });
       if (res.additionalUserInfo.isNewUser) {
@@ -137,9 +137,50 @@ const Login = ({ user, setPopup }) => {
           name: res.user.displayName,
         });
       }
+      setPopup(t('success_login'));
+      return null;
     } catch (err) {
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        const { email, credential: pendingCred } = err;
+        const methods = await auth().fetchSignInMethodsForEmail(email);
+        if (methods[0] === 'password') {
+          // Password connection
+          alert('account_connect', 'account_connect_pass', true, async pass => {
+            try {
+              const resUser = await auth().signInWithEmailAndPassword(email, pass);
+              resUser.user.linkWithCredential(pendingCred);
+              delAlert();
+              setPopup(t('success_login'));
+            } catch (err) {
+              console.error(err);
+              delAlert();
+              if (err.code === 'auth/wrong-password') {
+                setPopup(t('err_pass'), 'err');
+              } else {
+                setPopup(t('err_login'), 'err');
+              }
+            }
+            return null;
+          });
+        }
+
+        alert('account_connect', 'account_connect_google', false, async () => {
+          try {
+            const res = await auth().signInWithPopup(GProvider);
+            await res.user.linkAndRetrieveDataWithCredential(pendingCred);
+            setPopup(t('success_login'));
+            delAlert();
+          } catch (err) {
+            console.error(err);
+            delAlert();
+            setPopup(t('err_login'), 'err');
+          }
+        });
+        return null;
+      }
       console.error(err);
       setPopup(t('err_login'), 'err');
+      return null;
     }
   };
 
@@ -327,9 +368,7 @@ const Login = ({ user, setPopup }) => {
 
         <form
           id='login-form'
-          onSubmit={e =>
-            resetState === 'login' ? handleLogin(e) : handleForgot(e)
-          }
+          onSubmit={e => (resetState === 'login' ? handleLogin(e) : handleForgot(e))}
           noValidate
         >
           <h3 className='form-title'>{t('form_login_title')}</h3>
@@ -418,8 +457,7 @@ const Login = ({ user, setPopup }) => {
 
 Login.propTypes = {
   user: PropTypes.shape({
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
-      .isRequired,
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
   }).isRequired,
   setPopup: PropTypes.func.isRequired,
 };
@@ -428,4 +466,4 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { setPopup })(Login);
+export default connect(mapStateToProps, { setPopup, delAlert })(Login);

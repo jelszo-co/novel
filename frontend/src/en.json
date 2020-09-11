@@ -40,6 +40,10 @@
     "login_google_title": "Log in with Google",
     "login_fb_title": "Log in with Facebook",
 
+    "account_connect": "Connect accounts",
+    "account_connect_pass": "To connect your accounts, enter your password.",
+    "account_connect_google": "To connect your accounts, log in with Google.",
+
     "form_register_title": "Sign up",
     "form_login_title": "Sign in",
     "form_name": "Full name",
@@ -136,7 +140,8 @@
 
     "err_login": "An error has occurred while logging in.",
     "err_register": "An error has occurred while signing up.",
-    "err_uname_pass": "Bad username or password!",
+    "err_uname_pass": "Wrong username or password!",
+    "err_pass": "Wrong password!",
     "err_email": "E-mail not found.",
 
     "err_admin_block_users": "An error has occurred while listing blocked users.",
