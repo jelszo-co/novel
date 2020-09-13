@@ -11,7 +11,7 @@
 <img src='https://img.shields.io/github/repo-size/jelszo-co/novel?color=%2370cc00&label=Repo%20size&style=flat-square'>
 <img src='https://api.codacy.com/project/badge/Grade/bf56d16a163f4916aebfb8ba18d11f81?style=flat-square'>
 </p>
-
+ 
 ## Creators
 Created by [__Jelszo Co__](https://github.com/jelszo-co):
 
