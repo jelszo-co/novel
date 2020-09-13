@@ -5,6 +5,14 @@ $indent: 4%;
 #admin {
   .panel {
     height: 70%;
+    @media #{$mq-phone} {
+      width: 90vw;
+      min-height: 70vh;
+      margin-left: 5vw;
+      border-bottom: 2pt solid $white;
+      padding-bottom: 50px;
+      margin-bottom: 50px;
+    }
 
     a.panel-link {
       position: absolute;
@@ -16,11 +24,13 @@ $indent: 4%;
       padding: 4px 10px;
       white-space: nowrap;
       @media #{$mq-phone} {
+        position: relative;
+        bottom: unset;
         font-size: 1.2rem;
         border-bottom: 2px solid $white;
-        margin: 0 -20px;
+        margin: 0;
         margin-bottom: 40px;
-        white-space: normal;
+        white-space: nowrap;
         text-align: center;
       }
     }
@@ -36,14 +46,28 @@ $indent: 4%;
     position: absolute;
     left: $indent;
     top: $top;
+    @media #{$mq-phone} {
+      margin-top: 50%;
+      position: relative;
+      text-align: center;
+      left: unset;
+      top: unset;
+    }
 
     a.panel-link {
       left: 50%;
       transform: translateX(-50%);
+      @media #{$mq-phone} {
+        left: unset;
+        transform: none;
+      }
     }
 
     .comments {
       max-width: 250px;
+      @media #{$mq-phone} {
+        max-width: unset;
+      }
       .comment-wrapper {
         h3 {
           font-size: 1.8rem;
@@ -83,10 +107,20 @@ $indent: 4%;
     position: absolute;
     right: $indent;
     top: $top;
+    @media #{$mq-phone} {
+      position: relative;
+      text-align: center;
+      right: unset;
+      top: unset;
+    }
 
     a.panel-link {
       right: 50%;
       transform: translateX(50%);
+      @media #{$mq-phone} {
+        right: unset;
+        transform: none;
+      }
     }
 
     .banned-list {
@@ -117,6 +151,18 @@ $indent: 4%;
     top: $top;
     transform: translateX(-50%);
     height: 60%;
+    @media #{$mq-phone} {
+      position: relative;
+      width: 90vw;
+      height: 70vh;
+      margin-left: 5vw;
+      left: unset;
+      top: unset;
+      transform: none;
+      text-align: center;
+      border-bottom: 2pt solid $white;
+      margin-bottom: 50px;
+    }
   }
 
   .account-management {
@@ -127,6 +173,8 @@ $indent: 4%;
     @media #{$mq-phone} {
       width: 100vw;
       text-align: center;
+      position: relative;
+      margin-bottom: 100px;
     }
     button,
     a {
@@ -147,6 +195,9 @@ $indent: 4%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: 0.2s all ease-in-out;
+  @media #{$mq-phone} {
+    width: 80vw;
+  }
 
   button {
     font-family: 'Forum';
@@ -157,6 +208,10 @@ $indent: 4%;
     &:hover {
       border-width: 3pt;
     }
+  }
+
+  input[type='file'] {
+    text-align: center;
   }
 
   .upload-lang-selector {
@@ -237,6 +292,10 @@ $indent: 4%;
       width: 20vw;
       height: 1.6rem;
       text-align: center;
+
+      @media #{$mq-phone} {
+        width: 100%;
+      }
       &[type='text'] {
         margin-bottom: 3.6rem;
         font-size: 1.5rem;
@@ -256,6 +315,9 @@ $indent: 4%;
       font-family: 'Markazi Text';
       font-size: 1.3rem;
       border-bottom: 2pt solid $white;
+      @media #{$mq-phone} {
+        width: 100%;
+      }
     }
     .icon {
       margin: 30px 0;

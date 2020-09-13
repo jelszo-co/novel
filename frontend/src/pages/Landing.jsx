@@ -12,11 +12,7 @@ const Landing = () => {
   const { t } = useTranslation();
   useEffect(() => {
     axios
-      .get(
-        `${process.env.REACT_APP_SRV_ADDR 
-          }/introduction?lang=${ 
-          t('locale_name').toUpperCase()}`,
-      )
+      .get(`${process.env.REACT_APP_SRV_ADDR}/introduction/?lang=${t('locale_name').toUpperCase()}`)
       .then(res => setIntro(res.data))
       .catch(err => console.error(err));
   }, [t]);

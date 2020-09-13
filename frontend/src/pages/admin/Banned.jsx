@@ -15,10 +15,7 @@ import '../../css/admin/banned.scss';
 
 const Banned = ({ setPopup, history }) => {
   const { t } = useTranslation();
-  const [banned, setBanned] = useState([
-    { name: 'Unknown', id: 5 },
-    { name: 'Jelszo Co.', id: 2 },
-  ]);
+  const [banned, setBanned] = useState([]);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SRV_ADDR}/banned`)
@@ -29,12 +26,8 @@ const Banned = ({ setPopup, history }) => {
       });
   }, [setPopup, t]);
   return (
-    <>
-      <button
-        type='button'
-        onClick={() => history.goBack()}
-        className='banned-back'
-      >
+    <div id='banned-wrapper'>
+      <button type='button' onClick={() => history.goBack()} className='banned-back'>
         {t('back')}
       </button>
       <Title>{t('admin_banned_title')}</Title>
@@ -47,9 +40,7 @@ const Banned = ({ setPopup, history }) => {
                   type='button'
                   onClick={() => {
                     axios
-                      .post(
-                        `${process.env.REACT_APP_SRV_ADDR}/comment/user/${id}/unban/`,
-                      )
+                      .post(`${process.env.REACT_APP_SRV_ADDR}/comment/user/${id}/unban/`)
                       .then(res => setBanned(res.data))
                       .catch(err => {
                         console.error(err);
@@ -63,7 +54,7 @@ const Banned = ({ setPopup, history }) => {
             ))
           : ''}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -40,6 +40,10 @@
     "login_google_title": "Log in with Google",
     "login_fb_title": "Log in with Facebook",
 
+    "account_connect": "Connect accounts",
+    "account_connect_pass": "To connect your accounts, enter your password.",
+    "account_connect_google": "To connect your accounts, log in with Google.",
+
     "form_register_title": "Sign up",
     "form_login_title": "Sign in",
     "form_name": "Full name",
@@ -70,7 +74,7 @@
 
     "profile_title": "My Profile",
     "profile_last_comments": "Latest comments",
-    "profile_fav_novels": "Favourite comments",
+    "profile_fav_novels": "Favourite novels",
     "profile_email_confirm": "Confirm",
     "profile_change_general": "Change",
     "profile_change_password": "Change password",
@@ -86,6 +90,8 @@
     "admin_upload_title": "Upload new novel",
     "admin_account_email": "Change e-mail address",
     "admin_account_pass": "Change password",
+    "admin_welcome_edit": "Edit welcome text",
+    "welcome_edit_success": "Welcome text updated!",
     "title_hint": "Title of the novel",
     "description_hint": "Short role",
     "upload_begin": "Upload",
@@ -108,6 +114,8 @@
     "delete_lore": "Are you sure? This can't be undone!",
 
     "alert_editing": "You're editing a novel. Do you want to exit?",
+    "alert_reply_login": "To reply, you must log in first.",
+    "alert_comment_login": "To comment, you must log in first.",
 
     "err_novel_list": "An error has occurred while listing the novels.",
     "err_novel_single": "An error has occurred while listing the novel.",
@@ -128,10 +136,12 @@
     "err_link_damaged": "Faulty link!",
     "err_update_email": "An error occurred during changing the e-mail.",
     "err_update_pass": "An error occurred during changing the password.",
+    "err_welcome_edit": "An error occurred while updating welcome text.",
 
     "err_login": "An error has occurred while logging in.",
     "err_register": "An error has occurred while signing up.",
-    "err_uname_pass": "Bad username or password!",
+    "err_uname_pass": "Wrong username or password!",
+    "err_pass": "Wrong password!",
     "err_email": "E-mail not found.",
 
     "err_admin_block_users": "An error has occurred while listing blocked users.",

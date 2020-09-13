@@ -10,6 +10,7 @@ import { getNovels } from './actions/novels';
 import './css/app.scss';
 
 import Popup from './pages/components/Popup';
+import Alert from './pages/components/Alert';
 import Landing from './pages/Landing';
 import List from './pages/List';
 import Contact from './pages/Contact';
@@ -25,10 +26,12 @@ import UpdatePass from './pages/user/UpdatePass';
 import ResetPass from './pages/user/ResetPass';
 import ActionCenter from './pages/components/ActionCenter';
 import ErrorBoundary from './pages/ErrorBoundary';
+import EditWelcome from './pages/admin/EditWelcome';
 
 import { auth } from './firebase';
 import { AUTH_FAIL } from './actions/types';
 import { loadUser } from './actions/user';
+import { setAlert } from './actions/alert';
 
 const App = () => {
   useEffect(() => {
@@ -43,12 +46,22 @@ const App = () => {
         cookie.remove('usertoken');
       }
     });
+    /**
+     * Override the default alert function
+     * @param {localeString} title - Title of the alert
+     * @param {localeString} text - Message of the alert
+     * @param {boolean} [false] isPassword - Whether to display a pass input and an OK button
+     * @param {function} [function=() => {}] callback - A callback fn
+     */
+    window.alert = (title, text, isInput, callback) =>
+      store.dispatch(setAlert(title, text, isInput, callback));
   }, []);
   return (
     <ErrorBoundary>
       <Provider store={store}>
         <Router>
           <Popup />
+          <Alert />
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route exact path='/list' component={List} />
@@ -65,6 +78,7 @@ const App = () => {
 
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/admin/banned' component={Banned} />
+            <Route exact path='/admin/welcome-edit' component={EditWelcome} />
 
             <Route component={Err} />
           </Switch>

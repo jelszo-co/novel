@@ -20,54 +20,7 @@ import '../../css/user/profile.scss';
 const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   const { t } = useTranslation();
   const [favs, setFavs] = useState([]);
-  const [comments, setComments] = useState([
-    {
-      title: 'Konzol Zsolt \u00e9lete',
-      path: 'konzol-zsolt-elete',
-      comments: [
-        {
-          content: 'Egyes\u00e9vel.',
-          senderName: 'Jelszo Reborn',
-          writtenAt: '2020-06-21T13:26:08.997Z',
-          id: 42,
-          recipientName: null,
-          isReply: false,
-        },
-        {
-          content: 'Kommentek',
-          senderName: 'Jelszo Reborn',
-          writtenAt: '2020-06-21T13:26:05.960Z',
-          id: 41,
-          recipientName: null,
-          isReply: false,
-        },
-        {
-          content: 'Teszt',
-          senderName: 'Jelszo Reborn',
-          writtenAt: '2020-06-21T13:26:03.377Z',
-          id: 40,
-          recipientName: null,
-          isReply: false,
-        },
-        {
-          content: 'Mind',
-          senderName: 'Jelszo Reborn',
-          writtenAt: '2020-06-21T13:26:01.335Z',
-          id: 39,
-          recipientName: null,
-          isReply: false,
-        },
-        {
-          content: 'Ezek',
-          senderName: 'Jelszo Reborn',
-          writtenAt: '2020-06-21T13:25:58.337Z',
-          id: 38,
-          recipientName: null,
-          isReply: false,
-        },
-      ],
-    },
-  ]);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     axios
@@ -96,9 +49,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
 
   const handleDelete = async cId => {
     try {
-      const res = await axios.delete(
-        `${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`,
-      );
+      const res = await axios.delete(`${process.env.REACT_APP_SRV_ADDR}/comment/id/${cId}/`);
       setComments(res.data);
     } catch (err) {
       setPopup(t('err_del_comment'), 'err');
@@ -110,17 +61,13 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
       <Menu />
       <Title>{t('profile_title')}</Title>
       <div className='content-wrapper'>
-        <div className='col-side'>
+        <div className='col-side col-side-left'>
           <div className='col-item col-item-left border-left'>
             <p className='name'>{name}</p>
             <p className='email'>
               {email}{' '}
               {!emailVerified && (
-                <button
-                  type='button'
-                  className='email-confirm'
-                  onClick={() => sendEmail()}
-                >
+                <button type='button' className='email-confirm' onClick={() => sendEmail()}>
                   {t('profile_email_confirm')}
                 </button>
               )}
@@ -131,11 +78,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
           </div>
           <div className='col-item col-item-left'>
             <div className='border-left'>
-              <Link
-                className='profile-action'
-                style={{ marginBottom: '10px' }}
-                to='/update-pass'
-              >
+              <Link className='profile-action' style={{ marginBottom: '10px' }} to='/update-pass'>
                 {t('profile_change_password')}
               </Link>
               <Link className='profile-action' to='/delete'>
@@ -158,8 +101,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
                 {novel.comments.map(cmt => (
                   <div key={cmt.id} className='comment-body'>
                     <p className='comment-title'>
-                      <span>{t('you')}</span> |{' '}
-                      <Moment fromNow>{cmt.writtenAt}</Moment>
+                      <span>{t('you')}</span> | <Moment fromNow>{cmt.writtenAt}</Moment>
                       <button
                         type='button'
                         className='admin-btn'
@@ -175,7 +117,7 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
             ))}
           </div>
         </div>
-        <div className='col-side'>
+        <div className='col-side col-side-right'>
           <div className='col-item col-item-right'>
             <p className='fav-title'>{t('profile_fav_novels')}</p>
             <div className='fav-novels'>
@@ -209,8 +151,7 @@ Profile.propTypes = {
   setPopup: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
-      .isRequired,
+    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
     fUser: PropTypes.shape({
       email: PropTypes.string,
       emailVerified: PropTypes.bool,

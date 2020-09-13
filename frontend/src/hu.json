@@ -40,6 +40,10 @@
     "login_google_title": "Bejelentkezés Google-lal",
     "login_fb_title": "Bejelentkezés Facebook-kal",
 
+    "account_connect": "Összekapcsolás",
+    "account_connect_pass": "Ahhoz, hogy összekacsold a fiókjaid, add emg a jelszavad.",
+    "account_connect_google": "Ahhoz, hogy összekacsold a fiókjaid, jelentkezz be Google-el.",
+
     "form_register_title": "Regisztráció",
     "form_login_title": "Bejelentkezés",
     "form_name": "Teljes Név",
@@ -55,6 +59,7 @@
 
     "forgot_button": "Elfelejtett jelszó?",
     "forgot_instructions": "A megadott e-mail címre küldünk egy  linket, amit követve megváltoztathatod a jelszavad.",
+    "success": "Siker!",
 
     "fav_popup": "A kedvencekhez adáshoz kérlek jelentkezz be.",
     "del_popup": "Biztosan törlöd?",
@@ -85,6 +90,8 @@
     "admin_upload_title": "Új novella feltöltése",
     "admin_account_email": "E-mail módosítása",
     "admin_account_pass": "Jelszó módosítása",
+    "admin_welcome_edit": "Bemutatkozás szerkesztése",
+    "welcome_edit_success": "Bemutatkozás sikeresen frissítve!",
     "title_hint": "Az új novellám címe",
     "description_hint": "Rövid leírás",
     "upload_begin": "Feltöltés",
@@ -107,6 +114,8 @@
     "delete_lore": "Biztos vagy benne? Ez visszavonhatatlan!",
 
     "alert_editing": "Épp szerkesztesz! Biztosan kilépsz?",
+    "alert_reply_login": "A válaszhoz előbb be kell jelentkezned.",
+    "alert_comment_login": "A kommenteléshez előbb be kell jelentkezned.",
 
     "err_novel_list": "Hiba a novellák lekérdezésében.",
     "err_novel_single": "Hiba a novella lekérdezésében.",
@@ -127,10 +136,12 @@
     "err_link_damaged": "Hibás link!",
     "err_update_email": "Hiba az email megváltoztatása közben.",
     "err_update_pass": "Hiba a jelszó megváltoztatása közben.",
+    "err_welcome_edit": "Hiba a bemutatkozás szerkesztése közben.",
 
     "err_login": "Hiba a bejelentkezés során.",
     "err_register": "Hiba a regisztráció során.",
     "err_uname_pass": "Hibás felhasználónév vagy jelszó!",
+    "err_pass": "Hibás jelszó!",
     "err_email": "Nem található ilyen e-mail cím.",
 
     "err_admin_block_users": "Hiba a tiltott felhasználók lekérdezésében.",
@@ -140,7 +151,6 @@
     "err_admin_not_doc": "A novellát .doc vagy .docx fájlként töltsd fel.",
     "err_admin_upload_novel": "Hiba a novella feltöltése közben.",
 
-    "success": "Siker!",
     "success_login": "Sikeres bejelentkezés.",
     "success_logout": "Sikeres Kijelentkezés.",
     "success_save": "Sikeres mentés!",
@@ -150,6 +160,6 @@
     "success_update_email": "E-mail sikeresen frissítve.",
 
     "react_err": "A React hibába ütközött.",
-    "react_err_tip": "Próbálkozz az oldal újratöltésével. Ha a probléma továbbra is előfordul, kérlek lépj kapcsolatba velünk."
+    "react_err_tip": "Próbálkozz az oldal újratöltésével. Ha a probléma továbbra is fennáll, kérlek lépj kapcsolatba velünk."
   }
 }

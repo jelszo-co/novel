@@ -1,14 +1,23 @@
 @import '../variables';
 .comment {
   width: 80%;
-  margin: 25px calc(10% - 3pt);
+  margin: 25px calc(5% - 3pt);
   border: 3pt solid transparent;
+  @media #{$mq-phone} {
+    width: 95%;
+    margin: 35px calc(2.5% - 3pt);
+  }
   .title-bar {
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 10px;
+    @media #{$mq-phone} {
+      justify-content: space-between;
+      border-bottom: 2pt solid $white;
+    }
+
     span {
       font-weight: normal;
       font-family: 'Forum';
@@ -16,6 +25,9 @@
     p:not(.likes) {
       border-bottom: 2pt solid $white;
       padding-bottom: 3px;
+      @media #{$mq-phone} {
+        border: none;
+      }
       .sender-you {
         background: $white;
         border-radius: 5px;
@@ -49,6 +61,9 @@
         margin: 0;
         margin-left: 3px;
       }
+      @media #{$mq-phone} {
+        justify-self: end;
+      }
     }
   }
   button,
@@ -56,6 +71,13 @@
     width: 1.5rem;
     height: 1.5rem;
     fill: $white;
+    @media #{$mq-phone} {
+      justify-self: right;
+    }
+  }
+
+  .reply-btn {
+    margin-left: 10px;
   }
 
   .admin-btn {
@@ -91,12 +113,22 @@
     margin-top: -1.6rem; // to be: 10px
     transition: 0.2s all ease-in-out;
 
+    @media #{$mq-phone} {
+      width: 85%;
+      margin-left: 7.5%;
+    }
+
     input {
       width: calc(100% - 105px);
       border-bottom: 2pt solid $white;
       font-family: 'Markazi text';
       font-size: 1.4rem;
       padding: 0.1rem 65px 0.1rem 0;
+      @media #{$mq-phone} {
+        font-size: 1.2rem;
+        width: calc(100% - 90px);
+        padding-right: 50px;
+      }
     }
     button[type='submit'] {
       position: absolute;
@@ -112,6 +144,10 @@
       svg {
         width: 40px;
         height: 40px;
+        @media #{$mq-phone} {
+          width: 35px;
+          height: 35px;
+        }
       }
     }
 
@@ -122,7 +158,8 @@
       font-size: 1.4rem;
       opacity: 0.8;
       @media #{$mq-phone} {
-        font-size: 0.8rem;
+        font-size: 1rem;
+        margin-top: 3px;
       }
     }
   }
@@ -131,6 +168,10 @@
 .comment-reply {
   width: 80%;
   margin: 25px 10% 0;
+  @media #{$mq-phone} {
+    width: 85%;
+    margin: 35px 7.5% 0;
+  }
 }
 
 .fader {

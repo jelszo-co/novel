@@ -3,6 +3,10 @@
 .comment-auth-wrapper {
   position: absolute;
   transition: 0.2s all ease-in-out;
+
+  @media #{$mq-phone} {
+    display: none;
+  }
   .comment-auth-line {
     position: absolute;
     display: block;

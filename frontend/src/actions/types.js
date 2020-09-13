@@ -1,5 +1,7 @@
 export const SET_POPUP = 'SET_POPUP';
 export const DEL_POPUP = 'DEL_POPUP';
+export const SET_ALERT = 'SET_ALERT';
+export const DEL_ALERT = 'DEL_ALERT';
 export const GOT_NOVELS = 'GOT_NOVELS';
 export const SET_NOVEL = 'SET_NOVEL';
 export const SET_COMMENTS = 'SET_COMMENTS';

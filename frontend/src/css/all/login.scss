@@ -7,8 +7,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     @media #{$mq-phone} {
-      width: 100vw;
-      text-align: center;
+      top: 25%;
+      width: 100%;
+      text-align: left;
     }
 
     svg {
@@ -23,6 +24,10 @@
       &:hover {
         transform: scale(1.1);
       }
+
+      &:last-child {
+        float: right;
+      }
     }
   }
 
@@ -36,9 +41,19 @@
     width: 55%;
     justify-content: space-between;
     @media #{$mq-phone} {
-      transform: translate(-50%, -50%);
-      top: 60%;
+      transform: translateX(-50%);
+      top: 30%;
       width: 80vw;
+      flex-direction: column;
+      align-items: center;
+      justify-content: stretch;
+    }
+
+    #login-form {
+      @media #{$mq-phone} {
+        margin-top: 150px;
+        margin-bottom: 150px;
+      }
     }
 
     form {
@@ -48,7 +63,8 @@
       height: 50vh;
       width: 35%;
       @media #{$mq-phone} {
-        width: 40%;
+        width: 100%;
+        height: 40vh;
       }
 
       h3 {
@@ -151,10 +167,19 @@
         padding: 0;
         transition: 0.2s all ease-in-out;
 
+        @media #{$mq-phone} {
+          right: 100%;
+          transform: translate(100%, 200%);
+        }
+
         li {
           margin: 0;
           margin-left: 25px;
           padding: 0;
+
+          @media #{$mq-phone} {
+            white-space: nowrap;
+          }
 
           p {
             margin: 0;
@@ -226,6 +251,10 @@
           color: $alert;
           transition: 0.1s all ease-in-out;
           opacity: 0;
+
+          @media #{$mq-phone} {
+            bottom: -80%;
+          }
         }
 
         p.forgot-instructions {
