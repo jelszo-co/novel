@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -94,12 +93,5 @@ const Menu = ({ user: { role } }) => {
 const mapStateToProps = state => ({
   user: state.user,
 });
-
-Menu.propTypes = {
-  user: PropTypes.shape({
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger'])
-      .isRequired,
-  }).isRequired,
-};
 
 export default connect(mapStateToProps)(Menu);

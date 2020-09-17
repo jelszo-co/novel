@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -145,19 +144,6 @@ const Profile = ({ user: { name, role, fUser }, setPopup }) => {
   ) : (
     <Redirect to='/login' />
   );
-};
-
-Profile.propTypes = {
-  setPopup: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
-    fUser: PropTypes.shape({
-      email: PropTypes.string,
-      emailVerified: PropTypes.bool,
-      sendEmailVerification: PropTypes.func,
-    }),
-  }).isRequired,
 };
 
 const mapStateToProps = state => ({

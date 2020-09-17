@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -321,28 +320,6 @@ const Novel = ({
       </div>
     </div>
   );
-};
-
-Novel.propTypes = {
-  match: PropTypes.object.isRequired,
-  user: PropTypes.shape({
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
-  }).isRequired,
-  loading: PropTypes.bool.isRequired,
-  novel: PropTypes.shape({
-    title: PropTypes.string,
-    favorite: PropTypes.bool,
-    uploadedAt: PropTypes.string,
-    content: PropTypes.string,
-    error: PropTypes.bool,
-  }).isRequired,
-  history: PropTypes.object.isRequired,
-  setPopup: PropTypes.func.isRequired,
-  getNovel: PropTypes.func.isRequired,
-  getNovels: PropTypes.func.isRequired,
-  setNovel: PropTypes.func.isRequired,
-  setComments: PropTypes.func.isRequired,
-  clearNovel: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

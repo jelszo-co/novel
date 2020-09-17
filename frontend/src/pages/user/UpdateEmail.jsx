@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -74,9 +73,7 @@ const UpdateEmail = ({ setPopup, history }) => {
           autoComplete='name'
           autoCorrect='on'
           value={name}
-          onChange={({ target }) =>
-            setFormData({ ...formData, name: target.value })
-          }
+          onChange={({ target }) => setFormData({ ...formData, name: target.value })}
           placeholder={`${t('form_name')} (${t('unnecessary')})`}
         />
         <input
@@ -85,9 +82,7 @@ const UpdateEmail = ({ setPopup, history }) => {
           autoComplete='email'
           autoCorrect='on'
           value={email}
-          onChange={({ target }) =>
-            setFormData({ ...formData, email: target.value })
-          }
+          onChange={({ target }) => setFormData({ ...formData, email: target.value })}
           placeholder={t('update_email_email')}
         />
         <input
@@ -96,20 +91,13 @@ const UpdateEmail = ({ setPopup, history }) => {
           autoComplete='current-password'
           autoCorrect='off'
           value={pass}
-          onChange={({ target }) =>
-            setFormData({ ...formData, pass: target.value })
-          }
+          onChange={({ target }) => setFormData({ ...formData, pass: target.value })}
           placeholder={t('current_password')}
         />
         <input type='submit' value={t('save')} />
       </form>
     </div>
   );
-};
-
-UpdateEmail.propTypes = {
-  setPopup: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(UpdateEmail));

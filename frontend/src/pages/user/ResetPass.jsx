@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -46,14 +45,10 @@ const ResetPass = ({ setPopup, history }) => {
       if (!valid.case || !valid.length || !valid.num) alertUser('new-pass-1');
       return null;
     }
-    if (!valid.case || !valid.length || !valid.num)
-      return alertUser('new-pass-1');
+    if (!valid.case || !valid.length || !valid.num) return alertUser('new-pass-1');
     if (newPass1 !== newPass2) return alertUser('new-pass-2');
     try {
-      await auth().confirmPasswordReset(
-        sessionStorage.getItem('oobCode'),
-        newPass1,
-      );
+      await auth().confirmPasswordReset(sessionStorage.getItem('oobCode'), newPass1);
       setPopup(t('success_update_pass'));
       sessionStorage.clear();
       history.push('/login');
@@ -103,14 +98,9 @@ const ResetPass = ({ setPopup, history }) => {
           autoCorrect='off'
           value={newPass2}
           placeholder={t('new_password_confirm')}
-          onChange={({ target: { value } }) =>
-            setFormData({ ...formData, newPass2: value })
-          }
+          onChange={({ target: { value } }) => setFormData({ ...formData, newPass2: value })}
         />
-        <ul
-          className='pass-validation pass-valid-reset'
-          style={{ opacity: showValidator }}
-        >
+        <ul className='pass-validation pass-valid-reset' style={{ opacity: showValidator }}>
           <li>
             <p
               style={{
@@ -158,11 +148,6 @@ const ResetPass = ({ setPopup, history }) => {
       </form>
     </div>
   );
-};
-
-ResetPass.propTypes = {
-  setPopup: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(ResetPass));

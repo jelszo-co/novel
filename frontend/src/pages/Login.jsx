@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -454,13 +453,6 @@ const Login = ({ user, setPopup, delAlert }) => {
       </div>
     </div>
   );
-};
-
-Login.propTypes = {
-  user: PropTypes.shape({
-    role: PropTypes.oneOf(['admin', 'user', 'anonymous', 'stranger']).isRequired,
-  }).isRequired,
-  setPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
