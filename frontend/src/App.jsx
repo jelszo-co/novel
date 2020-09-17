@@ -14,6 +14,7 @@ import Alert from './pages/components/Alert';
 import Landing from './pages/Landing';
 import List from './pages/List';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import Login from './pages/Login';
 import Novel from './pages/Novel';
 import Profile from './pages/user/Profile';
@@ -68,6 +69,7 @@ const App = () => {
             <Route exact path='/contact' component={Contact} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/novels/:title' component={Novel} />
+            <Route exact path='/privacy-policy' component={PrivacyPolicy} />
 
             <Route exact path='/profile' component={Profile} />
             <Route exact path='/delete' component={DeleteUser} />

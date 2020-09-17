@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import Menu from './components/Menu';
@@ -22,6 +23,9 @@ const Contact = () => {
           martynnori@gmail.com
         </a>
       </div>
+      <Link to='/privacy-policy' className='priv-btn'>
+        {t('privacy_policy')}
+      </Link>
     </div>
   );
 };

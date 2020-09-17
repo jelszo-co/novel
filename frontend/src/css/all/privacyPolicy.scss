@@ -1,0 +1,19 @@
+@import '../variables';
+
+#privacy-policy {
+  p {
+    margin: 100px 20vw;
+    width: 60vw;
+    text-align: center;
+    font-family: 'Markazi text';
+    font-size: 1.5rem;
+    white-space: normal;
+  }
+  .privpol-back {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+}

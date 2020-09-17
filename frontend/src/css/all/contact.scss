@@ -1,4 +1,4 @@
-@import "../variables";
+@import '../variables';
 #contact {
   .card {
     position: absolute;
@@ -15,7 +15,7 @@
       margin: 0 0 10px;
 
       &:nth-child(1) {
-        font-family: "Forum", serif;
+        font-family: 'Forum', serif;
         font-size: 2.5rem;
         @media #{$mq-phone} {
           font-size: 2rem;
@@ -44,11 +44,25 @@
     }
 
     .role {
-      font-family: "Markazi text", serif;
+      font-family: 'Markazi text', serif;
       font-size: 2.7rem;
       @media #{$mq-phone} {
         font-size: 2rem;
       }
     }
+  }
+
+  .priv-btn {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-decoration: none;
+    border-bottom: 2pt solid $white;
+    font-family: 'Markazi text';
+    font-size: 1.6rem;
+    line-height: 1.3rem;
   }
 }
