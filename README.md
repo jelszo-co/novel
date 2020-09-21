@@ -1,5 +1,5 @@
 <p align='center'>
-<img width='175px' src='https://raw.githubusercontent.com/jelszo-co/novel/dev/frontend/public/favicon_black.png'>
+<img width='175px' src='https://raw.githubusercontent.com/jelszo-co/novel/dev/frontend/public/favicon.png'>
 </p>
 <h1 align='center'>Novel</h1>
 <h3 align="center">The website of Nóri Martyn, an emerging novel writer</h3>
