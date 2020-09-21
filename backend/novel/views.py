@@ -172,6 +172,7 @@ class IntroductionView(View):
         if not ('lang' in body and isinstance(body['introduction'], str)):
             return JsonResponse({'error': 'lang property missing'}, status=400)
         intro, _ = Introduction.objects.update_or_create(key=body['lang'], value=body['introduction'])
+        intro.save()
         return JsonResponse({'introduction': intro.value})
 
     def get(self, request, *args, **kwargs):
