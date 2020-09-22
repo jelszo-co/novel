@@ -6,7 +6,7 @@
   h1 {
     text-transform: capitalize;
     font-size: 5rem;
-    margin-top: 8%;
+    margin-top: 3%;
 
     @media #{$mq-phone} {
       margin-top: 25%;
@@ -22,7 +22,13 @@
     transform: translate(-50%, -50%);
     font-size: 2rem;
     @media #{$mq-phone} {
-      top: 50%;
+      position: relative;
+      top: unset;
+      left: unset;
+      transform: none;
+      margin-top: 8%;
+      width: 80vw;
+      margin-left: 10vw;
       font-size: 1.5rem;
     }
   }
@@ -41,9 +47,14 @@
       border-bottom: 4pt solid $white;
     }
     @media #{$mq-phone} {
+      display: inline-block;
       font-size: 2rem;
       line-height: 1.7rem;
-      top: 85%;
+      position: relative;
+      top: unset;
+      left: unset;
+      transform: translateX(-50%);
+      margin: 50px 0 100px 50vw;
     }
   }
 }

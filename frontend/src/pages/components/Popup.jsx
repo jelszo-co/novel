@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import gsap, { TweenMax } from 'gsap';
-import PropTypes from 'prop-types';
 
 import { ReactComponent as Cross } from '../../assets/cross.svg';
 import { ReactComponent as Tick } from '../../assets/tick.svg';
@@ -17,12 +16,7 @@ const Popup = ({ popup }) => {
   });
 
   useEffect(() => {
-    TweenMax.fromTo(
-      line.current,
-      3.5,
-      { width: '0%' },
-      { width: '100%', ease: 'linear' },
-    );
+    TweenMax.fromTo(line.current, 3.5, { width: '0%' }, { width: '100%', ease: 'linear' });
     TweenMax.fromTo(
       cont.current,
       0.2,
@@ -47,10 +41,6 @@ const Popup = ({ popup }) => {
       </div>
     )
   );
-};
-
-Popup.propTypes = {
-  popup: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({

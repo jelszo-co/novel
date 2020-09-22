@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import '../../css/components/title.scss';
 
@@ -11,11 +10,6 @@ const Title = ({ children, style }) => (
 
 Title.defaultProps = {
   style: {},
-};
-
-Title.propTypes = {
-  children: PropTypes.string.isRequired,
-  style: PropTypes.object,
 };
 
 export default Title;

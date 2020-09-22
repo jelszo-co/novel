@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -25,18 +24,12 @@ const List = ({ novels: { loading, list } }) => {
         return text;
       }
       return parts.map((part, i) => (
-        <span
-          key={i}
-          className={
-            part.toLowerCase() === param.toLowerCase() ? 'matched' : ''
-          }
-        >
+        <span key={i} className={part.toLowerCase() === param.toLowerCase() ? 'matched' : ''}>
           {part}
         </span>
       ));
     };
-    if (inp.length === 0)
-      return <p className='list-empty'>{t('list_empty')}</p>;
+    if (inp.length === 0) return <p className='list-empty'>{t('list_empty')}</p>;
     return inp.map(yr => {
       const cyr = Object.keys(yr)[0];
       const cNovels =
@@ -54,9 +47,7 @@ const List = ({ novels: { loading, list } }) => {
           {cNovels.map(({ title, lore, path, uploadedAt }, j) => (
             <div className='novel-card' key={title}>
               <Link to={`/novels/${path}`}>
-                <h3 className='novel-title'>
-                  {param ? highlight(title) : title}
-                </h3>
+                <h3 className='novel-title'>{param ? highlight(title) : title}</h3>
                 <p className='novel-lore'>{lore}</p>
                 {j !== cNovels.length - 1 && <span className='list-line' />}
               </Link>
@@ -94,23 +85,13 @@ const List = ({ novels: { loading, list } }) => {
           {listNovels(list.HU)}
         </div>
         {listMode === 'dual' && (
-          <div
-            id='en'
-            className={`list-container ${listMode === 'dual' && 'dual-en'}`}
-          >
+          <div id='en' className={`list-container ${listMode === 'dual' && 'dual-en'}`}>
             {listNovels(list.EN)}
           </div>
         )}
       </div>
     )
   );
-};
-
-List.propTypes = {
-  novels: PropTypes.shape({
-    loading: PropTypes.bool.isRequired,
-    list: PropTypes.object.isRequired,
-  }).isRequired,
 };
 
 const mapStateToProps = state => ({

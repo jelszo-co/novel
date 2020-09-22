@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -56,11 +55,6 @@ const Banned = ({ setPopup, history }) => {
       </div>
     </div>
   );
-};
-
-Banned.propTypes = {
-  setPopup: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(Banned));

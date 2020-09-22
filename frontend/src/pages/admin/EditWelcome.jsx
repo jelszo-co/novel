@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -64,12 +63,6 @@ const EditWelcome = ({ user, history, setPopup }) => {
       </form>
     </div>
   );
-};
-
-EditWelcome.propTypes = {
-  user: PropTypes.object.isRequired,
-  setPopup: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

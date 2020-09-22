@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -46,15 +45,11 @@ const UpdatePass = ({ setPopup, history }) => {
       if (!valid.case || !valid.length || !valid.num) alertUser('new-pass');
       return null;
     }
-    if (!valid.case || !valid.length || !valid.num)
-      return alertUser('new-pass');
+    if (!valid.case || !valid.length || !valid.num) return alertUser('new-pass');
 
     const user = auth().currentUser;
     try {
-      const credential = auth.EmailAuthProvider.credential(
-        user.email,
-        currentPass,
-      );
+      const credential = auth.EmailAuthProvider.credential(user.email, currentPass);
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPass);
       setPopup(t('success_update_pass'));
@@ -83,9 +78,7 @@ const UpdatePass = ({ setPopup, history }) => {
           autoComplete='current-password'
           autoCorrect='on'
           value={currentPass}
-          onChange={({ target }) =>
-            setFormData({ ...formData, currentPass: target.value })
-          }
+          onChange={({ target }) => setFormData({ ...formData, currentPass: target.value })}
           placeholder={t('current_password')}
         />
         <input
@@ -154,11 +147,6 @@ const UpdatePass = ({ setPopup, history }) => {
       </form>
     </div>
   );
-};
-
-UpdatePass.propTypes = {
-  setPopup: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(UpdatePass));

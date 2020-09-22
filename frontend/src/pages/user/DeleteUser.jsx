@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -69,11 +68,6 @@ const DeleteUser = ({ setPopup, history }) => {
       </form>
     </div>
   );
-};
-
-DeleteUser.propTypes = {
-  setPopup: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, { setPopup })(withRouter(DeleteUser));

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -366,41 +365,6 @@ const Comment = ({
         </div>
       );
   }
-};
-
-Comment.defaultProps = {
-  isReply: false,
-  cascadedReplyBar: null,
-  cascadedReplyState: null,
-  cascadedSetReplyState: null,
-  cascadedReplyInput: null,
-};
-
-Comment.propTypes = {
-  isReply: PropTypes.bool,
-  comment: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    sender: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      isYou: PropTypes.bool.isRequired,
-      isAdmin: PropTypes.bool.isRequired,
-    }).isRequired,
-    writtenAt: PropTypes.string.isRequired,
-    likes: PropTypes.number.isRequired,
-    likedByMe: PropTypes.bool.isRequired,
-    recipient: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-    content: PropTypes.string.isRequired,
-    replies: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  cascadedReplyBar: PropTypes.any,
-  cascadedReplyState: PropTypes.any,
-  cascadedSetReplyState: PropTypes.any,
-  cascadedReplyInput: PropTypes.any,
-  setComments: PropTypes.func,
-  setPopup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
