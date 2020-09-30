@@ -170,9 +170,9 @@ $indent: 4%;
     bottom: 2%;
     left: 50%;
     transform: translateX(-50%);
+    text-align: center;
     @media #{$mq-phone} {
       width: 100vw;
-      text-align: center;
       position: relative;
       margin-bottom: 100px;
     }
@@ -181,9 +181,11 @@ $indent: 4%;
       text-decoration: none;
       margin: 0 10px;
       font-size: 1.5rem;
+      white-space: nowrap;
       @media #{$mq-phone} {
         display: inline-block;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        margin-bottom: 30px;
       }
     }
   }
