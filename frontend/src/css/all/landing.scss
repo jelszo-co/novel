@@ -20,7 +20,8 @@
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2rem;
+    font-size: 1.7rem;
+    line-height: 2.1rem;
     @media #{$mq-phone} {
       position: relative;
       top: unset;
