@@ -19,7 +19,7 @@ Created by [__Jelszo Co__](https://github.com/jelszo-co):
 
 * [__Tóth Bence__](https://github.com/bnctth) - *Backend developer*
 
-* [__Jóvári Norbert__](https://github.com/JvrR9945) - *DevOps Engineer*
+* [__Jóvári Norbert__](https://github.com/JvrR9945) - *Magician*
 
 ## Technology
 <!-- TODO add links for tech -->
