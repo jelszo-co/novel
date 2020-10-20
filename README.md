@@ -3,7 +3,7 @@
 </p>
 <h1 align='center'>Novel</h1>
 <h3 align="center">The website of Nóri Martyn, an emerging novel writer</h3>
-<p align='center'><a href='https://github.com/jelszo-co/novel'>Visit Site</a> • <a href='https://github.com/jelszo-co/novel/issues/new'>Report issue</a></p>
+<p align='center'><a href='https://martynnovels.com'>Visit Site</a> • <a href='https://github.com/jelszo-co/novel/issues/new'>Report issue</a></p>
 
 <p align='center'>
 <img src='https://img.shields.io/github/license/jelszo-co/novel?style=flat-square'>
