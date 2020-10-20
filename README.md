@@ -40,4 +40,4 @@ Created by [__Jelszo Co__](https://github.com/jelszo-co):
 
 ## License
 
-This product is licensed under the MIT license. For further information, see [LICENSE](LICENSE).
+This site is licensed under the MIT license. For further information, see [LICENSE](LICENSE).
