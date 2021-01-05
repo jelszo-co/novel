@@ -10,7 +10,7 @@
     "@testing-library/react": "^10.0.4",
     "@testing-library/user-event": "^10.2.4",
     "ajv": "^6.12.4",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "firebase": "^7.19.1",
     "gsap": "^3.5.1",
     "i18next": "^19.7.0",
